@@ -10,8 +10,8 @@ public class Registration {
     private UI ui;
     private UserDao userDao;
 
-    Registration() {
-        this.userDao = new UserDao();
+    Registration(UserDao userDao) {
+        this.userDao = userDao;
         userDao.connect();
         ui = new UI();
         enterUserData();

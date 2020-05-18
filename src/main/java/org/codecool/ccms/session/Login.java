@@ -9,8 +9,8 @@ import java.util.List;
 public class Login {
     private UserDao userDao;
 
-    Login(){
-        this.userDao = new UserDao();
+    Login(UserDao userDao){
+        this.userDao = userDao;
     }
 
     public User loginAttempt(String userEmail, String userPassword) {
