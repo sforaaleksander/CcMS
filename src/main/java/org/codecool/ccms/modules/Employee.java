@@ -1,8 +1,5 @@
 package org.codecool.ccms.modules;
 
-import org.codecool.ccms.modules.Attendance;
-import org.codecool.ccms.modules.User;
-
 public class Employee extends User {
     private int income;
 
