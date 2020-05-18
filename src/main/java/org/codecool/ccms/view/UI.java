@@ -2,16 +2,18 @@ package org.codecool.ccms.view;
 
 import org.codecool.ccms.inputProvider.IO;
 
+import java.io.PrintStream;
 import java.sql.ResultSet;
 
 public class UI {
+    private PrintStream output;
     private IO io;
 
     public UI() {
-        io = new IO();
+        this.output = new PrintStream(System.out);
+        this.io = new IO();
     }
 
-    //TODO
     public void gatherEmptyInput(String message) {
         io.gatherEmptyInput(message);
     }
@@ -34,5 +36,18 @@ public class UI {
 
     public void printTableFromDB(ResultSet results) {
         //TODO
+    }
+
+    public void welcomeMessage() {
+        output.println("Welcome to Codecool Management System");
+    }
+
+//    public void displayLoginOrRegistrationMenu() {
+//        output.println("(1) Login");
+//        output.println("(2) Register");
+//    }
+
+    public void displayMenu() {
+
     }
 }
