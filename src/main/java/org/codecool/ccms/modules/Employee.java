@@ -10,4 +10,8 @@ public class Employee extends User {
         super(name, surname, email, password, attendance);
         this.income = income;
     }
+
+    public int getIncome() {
+        return income;
+    }
 }

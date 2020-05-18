@@ -7,4 +7,8 @@ public class Student extends User {
         super(name, surname, email, password, attendance);
         this.module = module;
     }
+
+    public Module getModule() {
+        return module;
+    }
 }
