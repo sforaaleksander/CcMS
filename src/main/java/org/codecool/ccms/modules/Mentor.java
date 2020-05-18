@@ -1,6 +1,4 @@
-package org.codecool.ccms;
-
-import org.codecool.ccms.modules.Attendance;
+package org.codecool.ccms.modules;
 
 public class Mentor extends Employee {
 

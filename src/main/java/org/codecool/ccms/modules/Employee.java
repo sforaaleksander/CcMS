@@ -1,4 +1,4 @@
-package org.codecool.ccms;
+package org.codecool.ccms.modules;
 
 import org.codecool.ccms.modules.Attendance;
 import org.codecool.ccms.modules.User;

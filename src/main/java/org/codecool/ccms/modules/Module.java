@@ -1,4 +1,4 @@
-package org.codecool.ccms;
+package org.codecool.ccms.modules;
 
 public enum Module {
     PROGBASIC,

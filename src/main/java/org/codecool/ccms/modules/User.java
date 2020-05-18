@@ -7,7 +7,7 @@ public abstract class User {
     private String password;
     private Attendance attendance;
 
-    User(){}
+    User(String name, String surname, String email, String password, Attendance attendance){}
 
     public String getName() {
         return name;

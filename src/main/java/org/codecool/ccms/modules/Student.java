@@ -1,7 +1,4 @@
-package org.codecool.ccms;
-
-import org.codecool.ccms.modules.Attendance;
-import org.codecool.ccms.modules.User;
+package org.codecool.ccms.modules;
 
 public class Student extends User {
     private Module module;
