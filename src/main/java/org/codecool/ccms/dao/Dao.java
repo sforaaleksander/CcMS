@@ -14,7 +14,7 @@ public abstract class Dao {
     protected Statement statement;
     protected UI ui = new UI();
 
-    public static final String DB_NAME = "src/main/resources/online_shop.db";
+    public static final String DB_NAME = "src/main/resources/cCMS_JAT.db";
     public static final String CONNECTION_STRING = "jdbc:sqlite:" + DB_NAME;
 
     public void connect() {
