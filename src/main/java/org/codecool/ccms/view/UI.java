@@ -1,4 +1,6 @@
-package org.codecool.ccms.ui;
+package org.codecool.ccms.view;
+
+import org.codecool.ccms.inputProvider.IO;
 
 import java.sql.ResultSet;
 

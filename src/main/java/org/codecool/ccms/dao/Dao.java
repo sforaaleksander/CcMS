@@ -1,6 +1,6 @@
 package org.codecool.ccms.dao;
 
-import org.codecool.ccms.ui.UI;
+import org.codecool.ccms.view.UI;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
