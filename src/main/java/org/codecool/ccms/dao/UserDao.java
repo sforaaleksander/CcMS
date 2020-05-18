@@ -38,11 +38,18 @@ public class UserDao extends Dao{
         return users;
     }
 
-    public void connect() {
-        //TODO
-    }
 
     public void insertUser(String[] values) {
-        //TODO
+        String[] columns = { "name", "surname", "email", "password", "phone", "Id_role" };
+
+        for (int i = 0; i < 5; i++) {
+            values[i] = String.format("'%s'", values[i]);
+        }
+        insert("Users", columns, values);
+    }
+
+    public void updateUser(String id, String column, String newValue) {
+        newValue = String.format("'%s'", newValue);
+        update("Users", id, column, newValue);
     }
 }
