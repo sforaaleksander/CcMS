@@ -1,13 +1,41 @@
 package org.codecool.ccms.dao;
 
 import org.codecool.ccms.modules.User;
+import org.codecool.ccms.modules.UserFactory;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-public class UserDao {
-    public List<User> getUsers(String s) {
-        //TODO
-    return null;
+public class UserDao extends Dao{
+
+    public List<User> getUsers(String query) {
+        List<User> users = new ArrayList<>();
+        connect();
+
+        try {
+            ResultSet results = statement.executeQuery(query);
+            while (results.next()) {
+                int id = results.getInt("id");
+                String name = results.getString("name");
+                String surname = results.getString("surname");
+                String email = results.getString("email");
+                String password = results.getString("password");
+                int roleId = results.getInt("roleId");
+
+                User user = UserFactory.makeUser(id, name, surname, email, password, roleId);
+                users.add(user);
+
+            }
+            results.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
     }
 
     public void connect() {
