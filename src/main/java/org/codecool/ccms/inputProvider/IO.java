@@ -1,4 +1,4 @@
-package org.codecool.ccms.ui;
+package org.codecool.ccms.inputProvider;
 
 
 import java.util.Scanner;

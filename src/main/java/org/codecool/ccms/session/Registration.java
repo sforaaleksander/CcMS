@@ -2,7 +2,7 @@ package org.codecool.ccms.session;
 
 import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.modules.User;
-import org.codecool.ccms.ui.UI;
+import org.codecool.ccms.view.UI;
 
 import java.util.List;
 

@@ -6,7 +6,7 @@ import org.codecool.ccms.modules.User;
 import java.sql.SQLException;
 import java.util.List;
 
-public class Login extends Dao {
+public class Login {
     private UserDao userDao;
 
     Login(){

@@ -1,4 +1,8 @@
-package org.codecool.ccms.ui;
+package org.codecool.ccms.view;
+
+import org.codecool.ccms.inputProvider.IO;
+
+import java.sql.ResultSet;
 
 public class UI {
     private IO io;
@@ -26,5 +30,9 @@ public class UI {
 
     public void clearScreen() {
         System.out.print("\033[H\033[2J");
+    }
+
+    public void printTableFromDB(ResultSet results) {
+        //TODO
     }
 }
