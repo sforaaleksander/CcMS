@@ -4,18 +4,21 @@ package org.codecool.ccms.controllers;
 import org.codecool.ccms.modules.User;
 import org.codecool.ccms.session.Session;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MenuController {
     private Map<Integer, Object[]> actionMap;
 
     public MenuController(){
+        actionMap = new HashMap<>();
         Object[] login = {"Login", login()};
         Object[] register = {"Register", register()};
         Object[] exit = {"Exit", exit()};
         actionMap.put(1, login);
         actionMap.put(2, register);
-        actionMap.put(3, exit);
+        actionMap.put(0, exit);
     }
 
     public void menuMapUpdate(Map<Integer, Object[]> actionMap) {
@@ -24,26 +27,32 @@ public class MenuController {
     }
 
     public String[][] toStringTable(){
-        String[][] table = new String[actionMap.size()][2];
-
+        final int ID = 0;
+        final int ACTION = 1;
+        final int ACTION_NAME = 0;
+        final int NUMBER_OF_COLUMNS = 2;
+        String[][] table = new String[actionMap.size()][NUMBER_OF_COLUMNS];
         for (Map.Entry<Integer, Object[]> entry : actionMap.entrySet()) {
-                table[entry.getKey()-1][0] = Integer.toString(entry.getKey());
-                table[entry.getKey()-1][1] = (String) entry.getValue()[0];
+                table[entry.getKey()][ID] = Integer.toString(entry.getKey());
+                table[entry.getKey()][ACTION] = (String) entry.getValue()[ACTION_NAME];
         }
         return table;
     }
 
 
-    public User login(){
-        return null;
+    public Boolean login(){
+        System.out.println("LOGIN");
+        return true;
     }
 
-    public User register(){
-        return null;
+    public Boolean register(){
+        System.out.println("REGISTER");
+
+        return true;
     }
 
-    public Object exit(){
-        return null;
+    public Boolean exit(){
+        return true;
     }
 
 }
