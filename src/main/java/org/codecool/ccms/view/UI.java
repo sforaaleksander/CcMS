@@ -7,11 +7,9 @@ import java.io.PrintStream;
 import java.sql.ResultSet;
 
 public class UI {
-    private PrintStream output;
     private IO io;
 
     public UI() {
-        this.output = new PrintStream(System.out);
         this.io = new IO();
     }
 
@@ -40,7 +38,7 @@ public class UI {
     }
 
     public void welcomeMessage() {
-        output.println("Welcome to Codecool Management System");
+        System.out.println("Welcome to Codecool Management System");
     }
 
 //    public void displayLoginOrRegistrationMenu() {
