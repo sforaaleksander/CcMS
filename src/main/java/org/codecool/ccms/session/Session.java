@@ -21,8 +21,7 @@ public class Session {
     }
 
     private void loginRegisterMenu() {
-        String[] headers = {"no", "action"};
-        ui.displayMenu(headers, menuController.toStringTable());
+        ui.displayMenu(menuController.toStringTable());
     }
 
 

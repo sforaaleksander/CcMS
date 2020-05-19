@@ -9,16 +9,19 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MenuController {
-    private Map<Integer, Object[]> actionMap;
+    private Map<Integer, String> namesMap;
+    private Map<Integer, Runnable> actionsMap;
 
     public MenuController(){
-        actionMap = new HashMap<>();
-        Object[] login = {"Login", login()};
-        Object[] register = {"Register", register()};
-        Object[] exit = {"Exit", exit()};
-        actionMap.put(1, login);
-        actionMap.put(2, register);
-        actionMap.put(0, exit);
+        actionsMap = new HashMap<>();
+        namesMap = new HashMap<>();
+        namesMap.put(1, "Login");
+        namesMap.put(2, "Register");
+        namesMap.put(0, "Exit");
+
+        actionsMap.put(1, this::login);
+        actionsMap.put(2, this::register);
+        actionsMap.put(0, this::exit);
     }
 
     public void menuMapUpdate(Map<Integer, Object[]> actionMap) {
@@ -29,12 +32,11 @@ public class MenuController {
     public String[][] toStringTable(){
         final int ID = 0;
         final int ACTION = 1;
-        final int ACTION_NAME = 0;
         final int NUMBER_OF_COLUMNS = 2;
-        String[][] table = new String[actionMap.size()][NUMBER_OF_COLUMNS];
-        for (Map.Entry<Integer, Object[]> entry : actionMap.entrySet()) {
+        String[][] table = new String[actionsMap.size()][NUMBER_OF_COLUMNS];
+        for (Map.Entry<Integer, String> entry : namesMap.entrySet()) {
                 table[entry.getKey()][ID] = Integer.toString(entry.getKey());
-                table[entry.getKey()][ACTION] = (String) entry.getValue()[ACTION_NAME];
+                table[entry.getKey()][ACTION] = entry.getValue();
         }
         return table;
     }

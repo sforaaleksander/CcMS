@@ -48,7 +48,8 @@ public class UI {
 //        output.println("(2) Register");
 //    }
 
-    public void displayMenu(String[] headers, String[][] data) {
+    public void displayMenu(String[][] data) {
+        String[] headers = {"no", "action"};
         System.out.println(FlipTable.of(headers, data));
     }
 }
