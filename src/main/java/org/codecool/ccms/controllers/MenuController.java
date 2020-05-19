@@ -18,6 +18,10 @@ public class MenuController {
         actionsMap.put(0, new MenuOption(0, "Exit", this::exit));
     }
 
+    public Map<Integer, MenuOption> getActionsMap() {
+        return actionsMap;
+    }
+
     public void menuMapUpdate(Map<Integer, MenuOption> actionMap) {
         actionMap.clear();
         // TODO populate with new menu methods

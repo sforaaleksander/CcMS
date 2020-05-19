@@ -6,6 +6,8 @@ import org.codecool.ccms.inputProvider.IO;
 import org.codecool.ccms.view.UI;
 import org.codecool.ccms.view.View;
 
+import java.util.stream.Collectors;
+
 
 public class Session {
     private UserDao userDao;
@@ -13,20 +15,24 @@ public class Session {
     private IO io;
     private View view;
     private MenuController menuController;
+    public boolean isActive;
 
     public Session() {
+        this.isActive = true;
         this.userDao = new UserDao();
         this.ui = new UI();
         this.io = new IO();
         this.view = new View();
         this.menuController = new MenuController();
+        this.view.setCommandList(menuController.getActionsMap().values().stream().collect(Collectors.toList()));
         ui.welcomeMessage();
-        loginRegisterMenu();
     }
 
-    private void loginRegisterMenu() {
-        ui.displayMenu(menuController.toStringTable());
+    public void nextFrame(){
+        this.view.displayContent();
     }
+
+
 
 
 }
