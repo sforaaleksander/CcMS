@@ -1,15 +1,21 @@
 package org.codecool.ccms.controllers;
 
 
+import org.codecool.ccms.modules.User;
+import org.codecool.ccms.session.Session;
+
 import java.util.Map;
 
 public class MenuController {
     private Map<Integer, Object[]> actionMap;
 
     public MenuController(){
-        actionMap.put(1, {"Login", login()});
-        actionMap.put(2, {"Register", register()});
-        actionMap.put(3, {"Exit", exit()});
+        Object[] login = {"Login", login()};
+        Object[] register = {"Register", register()};
+        Object[] exit = {"Exit", exit()};
+        actionMap.put(1, login);
+        actionMap.put(2, register);
+        actionMap.put(3, exit);
     }
 
     public void menuMapUpdate(Map<Integer, Object[]> actionMap) {
@@ -26,4 +32,18 @@ public class MenuController {
         }
         return table;
     }
+
+
+    public User login(){
+        return null;
+    }
+
+    public User register(){
+        return null;
+    }
+
+    public Object exit(){
+        return null;
+    }
+
 }

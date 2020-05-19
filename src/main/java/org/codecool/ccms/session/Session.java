@@ -15,28 +15,15 @@ public class Session {
         this.userDao = new UserDao();
         this.ui = new UI();
         this.io = new IO();
-        this.welcome();
-//        this.loginRegisterChoice();
         this.menuController = new MenuController();
-
-        menuController
-    }
-
-    private void welcome() {
         ui.welcomeMessage();
-        loginRegisterChoice();
+        loginRegisterMenu();
     }
 
-    private void loginRegisterChoice() {
-            boolean registered = false;
-            do {
-                ui.displayLoginOrRegistrationMenu();
-                String input = ui.gatherInput("What to do?: ");
-                if (input.equals("2")) {
-                    new Registration(userDao);
-                } else if (input.equals("1")) {
-                    registered = true;
-                }
-            } while (!registered);
-        }
+    private void loginRegisterMenu() {
+        String[] headers = {"no", "action"};
+        ui.displayMenu(headers, menuController.toStringTable());
+    }
+
+
 }

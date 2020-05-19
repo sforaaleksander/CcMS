@@ -1,5 +1,6 @@
 package org.codecool.ccms.view;
 
+import com.jakewharton.fliptables.FlipTable;
 import org.codecool.ccms.inputProvider.IO;
 
 import java.io.PrintStream;
@@ -47,7 +48,7 @@ public class UI {
 //        output.println("(2) Register");
 //    }
 
-    public void displayMenu() {
-
+    public void displayMenu(String[] headers, String[][] data) {
+        System.out.println(FlipTable.of(headers, data));
     }
 }
