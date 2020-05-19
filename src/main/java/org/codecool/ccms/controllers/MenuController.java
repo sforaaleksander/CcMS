@@ -9,14 +9,15 @@ import java.util.Map;
 
 public class MenuController {
     private Map<Integer, MenuOption> actionMap;
-    private final SessionController sessionController;
 
-    public MenuController(SessionController sessionController){
-        this.sessionController = sessionController;
+    public MenuController(Login login){
         actionMap = new HashMap<>();
-
-        actionMap.put(1, new MenuOption("Login", sessionController::handleLogin));
+        actionMap.put(1, new MenuOption("Login", login::loginAttempt));
         actionMap.put(0, new MenuOption("Exit", this::exit));
+    }
+
+    public Map<Integer, MenuOption> getActionMap() {
+        return actionMap;
     }
 
     public void menuMapUpdate(Map<Integer, Object[]> actionMap) {
