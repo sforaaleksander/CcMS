@@ -30,6 +30,8 @@ public class Session {
 
     public void nextFrame(){
         this.view.displayContent();
+        int action = ui.gatherIntInput("Choose action:", 0, menuController.getActionsMap().size());
+        menuController.getActionsMap().get(action).getAction().run();
     }
 
 

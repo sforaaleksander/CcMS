@@ -1,11 +1,5 @@
 package org.codecool.ccms.controllers;
-
-
-import org.codecool.ccms.modules.User;
-import org.codecool.ccms.session.Session;
-
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MenuController {
@@ -36,7 +30,6 @@ public class MenuController {
         return table;
     }
 
-
     public Boolean login(){
         System.out.println("LOGIN");
         return true;
@@ -44,7 +37,6 @@ public class MenuController {
 
     public Boolean register(){
         System.out.println("REGISTER");
-
         return true;
     }
 

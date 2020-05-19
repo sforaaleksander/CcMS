@@ -4,7 +4,6 @@ import org.codecool.ccms.modules.Displayable;
 
 public class MenuOption implements Displayable {
 
-
     private int id;
     private String name;
     private Runnable action;
