@@ -9,9 +9,13 @@ import java.util.List;
 public class Login {
     private UserDao userDao;
 
-    Login(UserDao userDao){
+    public Login(UserDao userDao){
         this.userDao = userDao;
     }
+
+//    public static void logIn() {
+//         Login login = new Login();
+//    }
 
     public User loginAttempt(String userEmail, String userPassword) {
         userDao.connect();
