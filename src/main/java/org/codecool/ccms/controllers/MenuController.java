@@ -1,29 +1,22 @@
 package org.codecool.ccms.controllers;
 
-
 import org.codecool.ccms.modules.User;
 import org.codecool.ccms.session.Login;
 import org.codecool.ccms.session.Session;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class MenuController {
-    private Map<Integer, String> namesMap;
-    private Map<Integer, Runnable> actionsMap;
+    private Map<Integer, MenuOption> actionMap;
     private final SessionController sessionController;
 
     public MenuController(SessionController sessionController){
         this.sessionController = sessionController;
-        actionsMap = new HashMap<>();
-        namesMap = new HashMap<>();
-        namesMap.put(1, "Login");
-        namesMap.put(2, "Register");
-        namesMap.put(0, "Exit");
+        actionMap = new HashMap<>();
 
-        actionsMap.put(1, sessionController.handleLogin());
-        actionsMap.put(0, this::exit);
+        actionMap.put(1, new MenuOption("Login", sessionController::handleLogin));
+        actionMap.put(0, new MenuOption("Exit", this::exit));
     }
 
     public void menuMapUpdate(Map<Integer, Object[]> actionMap) {
@@ -35,10 +28,10 @@ public class MenuController {
         final int ID = 0;
         final int ACTION = 1;
         final int NUMBER_OF_COLUMNS = 2;
-        String[][] table = new String[actionsMap.size()][NUMBER_OF_COLUMNS];
-        for (Map.Entry<Integer, String> entry : namesMap.entrySet()) {
+        String[][] table = new String[actionMap.size()][NUMBER_OF_COLUMNS];
+        for (Map.Entry<Integer, MenuOption> entry : actionMap.entrySet()) {
                 table[entry.getKey()][ID] = Integer.toString(entry.getKey());
-                table[entry.getKey()][ACTION] = entry.getValue();
+                table[entry.getKey()][ACTION] = entry.getValue().getOptionName();
         }
         return table;
     }
