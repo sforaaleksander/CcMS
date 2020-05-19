@@ -1,19 +1,33 @@
 package org.codecool.ccms.controllers;
 
-public class MenuOption {
-    private String optionName;
-    private Runnable runnable;
+import org.codecool.ccms.modules.Displayable;
 
-    public MenuOption(String optionName, Runnable runnable) {
-        this.optionName = optionName;
-        this.runnable = runnable;
+public class MenuOption implements Displayable {
+
+    private int id;
+    private String name;
+    private Runnable action;
+
+    MenuOption(int id, String name, Runnable action){
+        this.id = id;
+        this.name = name;
+        this.action = action;
     }
 
-    public String getOptionName() {
-        return optionName;
+    public int getId() {
+        return id;
     }
 
-    public Runnable getRunnable() {
-        return runnable;
+    public String getName() {
+        return name;
+    }
+
+    public Runnable getAction() {
+        return action;
+    }
+
+    @Override
+    public String[] toStringList() {
+        return new String[]{Integer.toString(this.getId()), this.getName()};
     }
 }

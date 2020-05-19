@@ -5,37 +5,43 @@ import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.inputProvider.IO;
 import org.codecool.ccms.modules.User;
 import org.codecool.ccms.view.UI;
+import org.codecool.ccms.view.View;
+
+import java.util.stream.Collectors;
+
 
 public class Session {
     private UserDao userDao;
     private User user;
     private UI ui;
     private IO io;
+    private View view;
     private MenuController menuController;
     private Boolean isRunning;
 
     public Session() {
+        this.isActive = true;
         this.userDao = new UserDao();
         this.ui = new UI();
         this.io = new IO();
-        isRunning = true;
-        sessionRun();
+      
+        this.view = new View();
+        setUpLogin();
+        this.menuController = new MenuController(this);
+        this.view.setCommandList(menuController.getActionsMap().values().stream().collect(Collectors.toList()));
+        ui.welcomeMessage();
     }
 
-    private void setUpLogin(){
+    public void nextFrame(){
+        this.view.displayContent();
+        int action = ui.gatherIntInput("Choose action:", 0, menuController.getActionsMap().size());
+        menuController.getActionsMap().get(action).getAction().run();
+
+    }
+  
+      private void setUpLogin(){
         Login login = new Login(this, io, userDao);
         this.menuController = new MenuController(login, this);
-        ui.welcomeMessage();
-        ui.displayMenu(menuController.toStringTable());
-        int userChoice = io.gatherIntInput("");
-        menuController.getActionMap().get(userChoice).getRunnable().run();
-    }
-
-    private void sessionRun(){
-        while (isRunning){
-            setUpLogin();
-        }
-    }
 
     public User getUser() {
         return user;

@@ -41,10 +41,7 @@ public class UI {
         System.out.println("Welcome to Codecool Management System");
     }
 
-//    public void displayLoginOrRegistrationMenu() {
-//        output.println("(1) Login");
-//        output.println("(2) Register");
-//    }
+
 
     public void displayMenu(String[][] data) {
         String[] headers = {"no", "action"};
