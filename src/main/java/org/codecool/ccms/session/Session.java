@@ -12,17 +12,19 @@ public class Session {
     private UI ui;
     private IO io;
     private MenuController menuController;
+    private Boolean isRunning;
 
     public Session() {
         this.userDao = new UserDao();
         this.ui = new UI();
         this.io = new IO();
+        isRunning = true;
         sessionRun();
     }
 
     private void setUpLogin(){
         Login login = new Login(this, io, userDao);
-        this.menuController = new MenuController(login);
+        this.menuController = new MenuController(login, this);
         ui.welcomeMessage();
         ui.displayMenu(menuController.toStringTable());
         int userChoice = io.gatherIntInput("");
@@ -30,7 +32,6 @@ public class Session {
     }
 
     private void sessionRun(){
-        boolean isRunning = true;
         while (isRunning){
             setUpLogin();
         }
@@ -42,5 +43,9 @@ public class Session {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void exit() {
+        isRunning = false;
     }
 }

@@ -10,10 +10,10 @@ import java.util.Map;
 public class MenuController {
     private Map<Integer, MenuOption> actionMap;
 
-    public MenuController(Login login){
+    public MenuController(Login login, Session session){
         actionMap = new HashMap<>();
         actionMap.put(1, new MenuOption("Login", login::loginAttempt));
-        actionMap.put(0, new MenuOption("Exit", this::exit));
+        actionMap.put(0, new MenuOption("Exit", session::exit));
     }
 
     public Map<Integer, MenuOption> getActionMap() {
@@ -36,10 +36,4 @@ public class MenuController {
         }
         return table;
     }
-
-
-    public void exit(){
-//        return true;
-    }
-
 }
