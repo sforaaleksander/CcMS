@@ -23,7 +23,7 @@ public class Session {
         this.ui = new UI();
         this.io = new IO();
         this.view = new View();
-        this.menuController = new MenuController();
+        this.menuController = new MenuController(this);
         this.view.setCommandList(menuController.getActionsMap().values().stream().collect(Collectors.toList()));
         ui.welcomeMessage();
     }

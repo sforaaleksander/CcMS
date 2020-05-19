@@ -1,11 +1,15 @@
 package org.codecool.ccms.controllers;
+import org.codecool.ccms.session.Session;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class MenuController {
     private Map<Integer, MenuOption> actionsMap;
+    private Session session;
 
-    public MenuController(){
+    public MenuController(Session session){
+        this.session = session;
         actionsMap = new HashMap<>();
         actionsMap.put(1, new MenuOption(1, "Login", this::login));
         actionsMap.put(2, new MenuOption(2, "Register", this::register));
@@ -41,6 +45,7 @@ public class MenuController {
     }
 
     public Boolean exit(){
+        this.session.isActive = false;
         return true;
     }
 
