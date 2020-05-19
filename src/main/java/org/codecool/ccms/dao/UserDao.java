@@ -18,13 +18,13 @@ public class UserDao extends Dao{
             ResultSet results = statement.executeQuery(query);
             while (results.next()) {
                 int id = results.getInt("id");
-                String name = results.getString("name");
+                String firstName = results.getString("first_name");
                 String surname = results.getString("surname");
                 String email = results.getString("email");
                 String password = results.getString("password");
                 int roleId = results.getInt("roleId");
 
-                User user = UserFactory.makeUser(id, name, surname, email, password, roleId);
+                User user = UserFactory.makeUser(id, firstName, surname, email, password, roleId);
                 users.add(user);
 
             }
@@ -45,11 +45,11 @@ public class UserDao extends Dao{
         for (int i = 0; i < 5; i++) {
             values[i] = String.format("'%s'", values[i]);
         }
-        insert("Users", columns, values);
+        insert("User", columns, values);
     }
 
     public void updateUser(String id, String column, String newValue) {
         newValue = String.format("'%s'", newValue);
-        update("Users", id, column, newValue);
+        update("User", id, column, newValue);
     }
 }

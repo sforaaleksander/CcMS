@@ -33,6 +33,7 @@ public class Login {
             return false;
         } else {
             session.setUser(users.get(0));
+            System.out.println("Logged in as" + users.get(0).getFirstName());
             return true;
         }
 
@@ -40,6 +41,6 @@ public class Login {
 
     private List<User> getMatchingUser(String userEmail, String userPassword) throws SQLException {
         return userDao.getUsers(
-                "SELECT * FROM Users WHERE email = '" + userEmail + "' AND password = '" + userPassword + "';");
+                "SELECT * FROM User WHERE email = '" + userEmail + "' AND password = '" + userPassword + "';");
     }
 }
