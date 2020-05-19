@@ -10,13 +10,15 @@ import java.util.List;
 public class Login {
     private IO io;
     private UserDao userDao;
+    private Session session;
 
-    public Login(IO io){
+    public Login(Session session, IO io, UserDao userDao){
+        this.session = session;
         this.io = io;
-        this.userDao = new UserDao();
+        this.userDao = userDao;
     }
 
-    public User loginAttempt() {
+    public boolean loginAttempt() {
         String userEmail = io.gatherInput("Provide your email: ");
         String userPassword = io.gatherInput("Provide your password: ");
         userDao.connect();
@@ -26,7 +28,13 @@ public class Login {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return users.isEmpty() ? null : users.get(0);
+        if (users.isEmpty()){
+            // TODO return info that user was not found
+            return false;
+        } else {
+            session.setUser(users.get(0));
+            return true;
+        }
 
     }
 

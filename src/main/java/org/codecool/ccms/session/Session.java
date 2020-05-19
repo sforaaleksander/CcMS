@@ -21,7 +21,7 @@ public class Session {
     }
 
     private void setUpLogin(){
-        Login login = new Login(io);
+        Login login = new Login(this, io, userDao);
         this.menuController = new MenuController(login);
         ui.welcomeMessage();
         ui.displayMenu(menuController.toStringTable());
@@ -36,4 +36,11 @@ public class Session {
         }
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
