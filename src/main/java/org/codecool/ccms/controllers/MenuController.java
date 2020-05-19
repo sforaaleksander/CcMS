@@ -2,6 +2,7 @@ package org.codecool.ccms.controllers;
 
 
 import org.codecool.ccms.modules.User;
+import org.codecool.ccms.session.Login;
 import org.codecool.ccms.session.Session;
 
 import java.util.HashMap;
@@ -11,16 +12,17 @@ import java.util.Map;
 public class MenuController {
     private Map<Integer, String> namesMap;
     private Map<Integer, Runnable> actionsMap;
+    private final SessionController sessionController;
 
-    public MenuController(){
+    public MenuController(SessionController sessionController){
+        this.sessionController = sessionController;
         actionsMap = new HashMap<>();
         namesMap = new HashMap<>();
         namesMap.put(1, "Login");
         namesMap.put(2, "Register");
         namesMap.put(0, "Exit");
 
-        actionsMap.put(1, this::login);
-        actionsMap.put(2, this::register);
+        actionsMap.put(1, sessionController.handleLogin());
         actionsMap.put(0, this::exit);
     }
 
@@ -42,19 +44,8 @@ public class MenuController {
     }
 
 
-    public Boolean login(){
-        System.out.println("LOGIN");
-        return true;
-    }
-
-    public Boolean register(){
-        System.out.println("REGISTER");
-
-        return true;
-    }
-
-    public Boolean exit(){
-        return true;
+    public void exit(){
+//        return true;
     }
 
 }
