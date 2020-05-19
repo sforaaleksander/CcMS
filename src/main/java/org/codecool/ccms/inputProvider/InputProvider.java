@@ -3,10 +3,10 @@ package org.codecool.ccms.inputProvider;
 
 import java.util.Scanner;
 
-public class IO {
+public class InputProvider {
     public Scanner scan;
 
-    public IO() {
+    public InputProvider() {
         scan = new Scanner(System.in);
         scan.useDelimiter(System.lineSeparator());
     }

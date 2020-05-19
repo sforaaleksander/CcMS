@@ -1,26 +1,26 @@
 package org.codecool.ccms.session;
 
 import org.codecool.ccms.dao.*;
-import org.codecool.ccms.inputProvider.IO;
+import org.codecool.ccms.inputProvider.InputProvider;
 import org.codecool.ccms.modules.User;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class Login {
-    private IO io;
+    private InputProvider inputProvider;
     private UserDao userDao;
     private Session session;
 
-    public Login(Session session, IO io, UserDao userDao){
+    public Login(Session session){
         this.session = session;
-        this.io = io;
-        this.userDao = userDao;
+        this.userDao = session.getUserDao();
+        this.inputProvider = session.getInputProvider();
     }
 
     public boolean loginAttempt() {
-        String userEmail = io.gatherInput("Provide your email: ");
-        String userPassword = io.gatherInput("Provide your password: ");
+        String userEmail = inputProvider.gatherInput("Provide your email: ");
+        String userPassword = inputProvider.gatherInput("Provide your password: ");
         userDao.connect();
         List<User> users = null;
         try {

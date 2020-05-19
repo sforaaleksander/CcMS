@@ -1,32 +1,31 @@
 package org.codecool.ccms.view;
 
 import com.jakewharton.fliptables.FlipTable;
-import org.codecool.ccms.inputProvider.IO;
+import org.codecool.ccms.inputProvider.InputProvider;
 
-import java.io.PrintStream;
 import java.sql.ResultSet;
 
 public class UI {
-    private IO io;
+    private InputProvider inputProvider;
 
     public UI() {
-        this.io = new IO();
+        this.inputProvider = new InputProvider();
     }
 
     public void gatherEmptyInput(String message) {
-        io.gatherEmptyInput(message);
+        inputProvider.gatherEmptyInput(message);
     }
 
     public String gatherInput(String message) {
-        return io.gatherInput(message);
+        return inputProvider.gatherInput(message);
     }
 
     public int gatherIntInput(String message, int rangeMin, int rangeMax) {
-        return io.gatherIntInput(message, rangeMin, rangeMax);
+        return inputProvider.gatherIntInput(message, rangeMin, rangeMax);
     }
 
     public int gatherIntInput(String message) {
-        return io.gatherIntInput(message);
+        return inputProvider.gatherIntInput(message);
     }
 
     public void clearScreen() {

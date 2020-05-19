@@ -11,7 +11,7 @@ public class App
 {
     public static void main( String[] args ) {
         Session session = new Session();
-        while (session.isActive){
+        while (session.getIsRunning()){
             session.nextFrame();
         }
     }
