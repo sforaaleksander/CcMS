@@ -7,8 +7,13 @@ public abstract class User {
     private String email;
     private String password;
     private Attendance attendance;
+    private int roleId;
 
-    User(int id, String name, String surname, String email, String password){}
+    User(int id, String name, String surname, String email, String password, int roleId){}
+
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
@@ -28,5 +33,9 @@ public abstract class User {
 
     public Attendance getAttendance() {
         return attendance;
+    }
+
+    public int getRoleId() {
+        return roleId;
     }
 }
