@@ -1,7 +1,14 @@
 package org.codecool.ccms.session;
 
 public class LoginActions {
-    public Boolean handleLogin(Session session) {
+
+    private final Session session;
+
+    public LoginActions(Session session) {
+        this.session = session;
+    }
+
+    public Boolean handleLogin() {
         return new Login(session).loginAttempt();
     }
 }

@@ -1,24 +1,20 @@
 package org.codecool.ccms.controllers;
 
 
-import org.codecool.ccms.modules.User;
-import org.codecool.ccms.session.Login;
-
 import org.codecool.ccms.session.LoginActions;
 import org.codecool.ccms.session.Session;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.codecool.ccms.session.LoginActions.handleLogin;
 
 public class MenuController {
 
     private Map<Integer, MenuOption> actionMap;
 
-    public MenuController(Session session){
+    public MenuController(Session session, LoginActions loginActions){
         actionMap = new HashMap<>();
-        actionMap.put(1, new MenuOption(1, "Login", handleLogin(session)));
+        actionMap.put(1, new MenuOption(1, "Login", loginActions::handleLogin));
         actionMap.put(0, new MenuOption(0, "Exit", session::exit));
     }
 

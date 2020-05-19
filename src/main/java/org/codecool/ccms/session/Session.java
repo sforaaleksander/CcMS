@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 
 
 public class Session {
-    private UserDao userDao;
+    private final UserDao userDao;
     private User user;
-    private UI ui;
-    private InputProvider inputProvider;
-    private View view;
-    private MenuController menuController;
+    private final UI ui;
+    private final InputProvider inputProvider;
+    private final View view;
+    private final MenuController menuController;
     private Boolean isRunning;
 
     public Session() {
@@ -26,8 +26,8 @@ public class Session {
         this.inputProvider = new InputProvider();
       
         this.view = new View();
-        setUpLogin();
-        this.menuController = new MenuController(this);
+        LoginActions loginActions = new LoginActions(this);
+        this.menuController = new MenuController(this, loginActions);
         this.view.setCommandList(menuController.getActionMap().values().stream().collect(Collectors.toList()));
         ui.welcomeMessage();
     }
@@ -36,13 +36,8 @@ public class Session {
         this.view.displayContent();
         int action = ui.gatherIntInput("Choose action:", 0, menuController.getActionMap().size());
         menuController.getActionMap().get(action).getAction().run();
-
     }
-  
-      private void setUpLogin() {
-          Login login = new Login(this);
-          this.menuController = new MenuController(this);
-      }
+
 
     public User getUser() {
         return user;
@@ -52,6 +47,7 @@ public class Session {
         this.user = user;
     }
 
+    //TODO find better place for exit method
     public void exit() {
         isRunning = false;
     }
