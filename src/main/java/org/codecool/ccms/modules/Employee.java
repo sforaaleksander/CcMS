@@ -14,8 +14,9 @@ public class Employee extends User {
 
     @Override
     public String[] toStringList() {
-        String[] stringList = {this.getFirstName(), this.getSurname(),
-                this.getEmail(), this.getRole().toString(), this.getAttendance().toString(), Integer.toString(this.getIncome())};
-        return stringList;
+        String[] stringList = super.toStringList();
+        String[] thisStringList = new String[stringList.length +1];
+        thisStringList[thisStringList.length-1] = Integer.toString(this.getIncome());
+        return thisStringList;
     }
 }

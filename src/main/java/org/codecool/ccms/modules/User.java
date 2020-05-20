@@ -48,7 +48,8 @@ public abstract class User implements Displayable{
     }
 
     public String[] toStringList() {
-        String[] stringList = {this.firstName, this.surname, this.email, this.attendance.toString()};
+        String[] stringList = {this.getFirstName(), this.getSurname(), this.getEmail(),
+                this.getRole().toString(), this.getAttendance().toString()};
         return stringList;
     }
 }
