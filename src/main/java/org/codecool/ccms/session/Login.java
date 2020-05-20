@@ -1,23 +1,26 @@
 package org.codecool.ccms.session;
 
 import org.codecool.ccms.dao.*;
+import org.codecool.ccms.inputProvider.InputProvider;
 import org.codecool.ccms.modules.User;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class Login {
+    private InputProvider inputProvider;
     private UserDao userDao;
+    private Session session;
 
-    public Login(UserDao userDao){
-        this.userDao = userDao;
+    public Login(Session session){
+        this.session = session;
+        this.userDao = session.getUserDao();
+        this.inputProvider = session.getInputProvider();
     }
 
-//    public static void logIn() {
-//         Login login = new Login();
-//    }
-
-    public User loginAttempt(String userEmail, String userPassword) {
+    public boolean loginAttempt() {
+        String userEmail = inputProvider.gatherInput("Provide your email: ");
+        String userPassword = inputProvider.gatherInput("Provide your password: ");
         userDao.connect();
         List<User> users = null;
         try {
@@ -25,12 +28,19 @@ public class Login {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return users.isEmpty() ? null : users.get(0);
+        if (users.isEmpty()){
+            // TODO return info that user was not found
+            return false;
+        } else {
+            session.setUser(users.get(0));
+            System.out.println("Logged in as" + users.get(0).getFirstName());
+            return true;
+        }
 
     }
 
     private List<User> getMatchingUser(String userEmail, String userPassword) throws SQLException {
         return userDao.getUsers(
-                "SELECT * FROM Users WHERE email = '" + userEmail + "' AND password = '" + userPassword + "';");
+                "SELECT * FROM User WHERE email = '" + userEmail + "' AND password = '" + userPassword + "';");
     }
 }

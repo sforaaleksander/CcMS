@@ -2,7 +2,7 @@ package org.codecool.ccms.modules;
 
 public abstract class User {
     private int id;
-    private String name;
+    private String firstName;
     private String surname;
     private String email;
     private String password;
@@ -15,8 +15,8 @@ public abstract class User {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getSurname() {
