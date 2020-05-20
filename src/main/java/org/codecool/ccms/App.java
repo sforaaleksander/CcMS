@@ -1,6 +1,5 @@
 package org.codecool.ccms;
 
-import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.session.Session;
 
 /**
@@ -10,7 +9,7 @@ import org.codecool.ccms.session.Session;
 public class App 
 {
     public static void main( String[] args ) {
-        Session session = new Session();
+        Session session = Session.getSession();
         while (session.getIsRunning()){
             session.nextFrame();
         }

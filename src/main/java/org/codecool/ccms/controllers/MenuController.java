@@ -29,7 +29,6 @@ public class MenuController {
         actionMap.clear();
         Role role = session.getUser().getRole();
         new ActionAssembler(session, role);
-        //TODO
         // TODO populate with new menu methods
     }
 
