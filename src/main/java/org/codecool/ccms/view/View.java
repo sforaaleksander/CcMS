@@ -1,7 +1,6 @@
 package org.codecool.ccms.view;
 import com.jakewharton.fliptables.FlipTable;
 import org.codecool.ccms.modules.Displayable;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,6 @@ public class View {
     private String[] querryHeaders;
     private List<Displayable> querryList;
     private List<Displayable> commandList;
-
 
     public View(){
         this.commandHeaders = new String[]{"Key:", "Action:"};
@@ -25,11 +23,18 @@ public class View {
     public void setQuerryHeaders(String[] querryHeaders) {
         this.querryHeaders = querryHeaders;
     }
-    public void setCommandList(List<Displayable> commandList) {
-        this.commandList = commandList;
+    public void setCommandList(List<Displayable> commandList) { this.commandList = commandList; }
+
+    public void clearScreen() {
+        System.out.print("\033[H\033[2J");
+    }
+
+    public void displayMessage(String message) {
+        System.out.println(message);
     }
 
     public void displayContent() {
+        clearScreen();
         String[] superHeader = {"Actions", "Output"};
         String[][] contentContainers = {{displayContainer(commandHeaders, commandList) ,displayContainer(querryHeaders, querryList)}};
         System.out.println(FlipTable.of(superHeader, contentContainers));

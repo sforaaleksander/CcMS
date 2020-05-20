@@ -1,10 +1,6 @@
 package org.codecool.ccms.dao;
-
-import org.codecool.ccms.view.UI;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -12,8 +8,6 @@ import java.sql.Statement;
 public abstract class Dao {
     protected Connection connection;
     protected Statement statement;
-    protected UI ui = new UI();
-
     public static final String DB_NAME = "src/main/resources/cCMS_JAT.db";
     public static final String CONNECTION_STRING = "jdbc:sqlite:" + DB_NAME;
 
@@ -26,19 +20,6 @@ public abstract class Dao {
             e.getStackTrace();
         } catch (SQLException e) {
             System.out.println("Couldn't connect to database" + e.getMessage());
-        }
-    }
-
-    protected void printFromDB(String query) {
-        connect();
-        try {
-            ResultSet results = statement.executeQuery(query);
-            ui.printTableFromDB(results);
-            results.close();
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
     }
 
