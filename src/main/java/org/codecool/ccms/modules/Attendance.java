@@ -1,21 +1,21 @@
 package org.codecool.ccms.modules;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Attendance implements Displayable{
-    private LocalDateTime date;
+    private LocalDate date;
     private String firstName;
     private String surName;
     private Role role;
 
-    public Attendance(LocalDateTime date, String firstName, String surName, Role role){
+    public Attendance(LocalDate date, String firstName, String surName, Role role){
         this.date = date;
         this.firstName = firstName;
         this.surName = surName;
         this.role = role;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
