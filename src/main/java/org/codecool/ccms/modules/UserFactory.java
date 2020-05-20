@@ -1,8 +1,15 @@
 package org.codecool.ccms.modules;
 
-public class UserFactory {
+import org.codecool.ccms.dao.UserDao;
 
-    public static User makeUser(int id, String name, String surname, String email, String password, int roleId) {
+public class UserFactory {
+    private UserDao userDao;
+
+    public UserFactory(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public User makeUser(int id, String name, String surname, String email, String password, int roleId) {
 
         //TODO make enums with roles
         switch (roleId){
