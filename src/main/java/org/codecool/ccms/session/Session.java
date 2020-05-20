@@ -38,7 +38,6 @@ public class Session {
         menuController.getActionMap().get(action).getAction().run();
     }
 
-
     public User getUser() {
         return user;
     }
@@ -62,5 +61,21 @@ public class Session {
 
     public InputProvider getInputProvider() {
         return inputProvider;
+    }
+
+    public UI getUi() {
+        return ui;
+    }
+
+    public View getView() {
+        return view;
+    }
+
+    public MenuController getMenuController() {
+        return menuController;
+    }
+
+    public Boolean getRunning() {
+        return isRunning;
     }
 }
