@@ -1,15 +1,23 @@
 package org.codecool.ccms.modules;
 
-public abstract class User {
+public abstract class User implements Displayable{
     private int id;
     private String firstName;
     private String surname;
     private String email;
     private String password;
+    private Role role;
     private Attendance attendance;
-    private int roleId;
 
-    User(int id, String name, String surname, String email, String password, int roleId){}
+    public User(int id, String firstName, String surname, String email, String password, Role role, Attendance attendance) {
+        this.id = id;
+        this.firstName = firstName;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.attendance = attendance;
+    }
 
     public int getId() {
         return id;
@@ -35,7 +43,12 @@ public abstract class User {
         return attendance;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
+    }
+
+    public String[] toStringList() {
+        String[] stringList = {this.firstName, this.surname, this.email, this.attendance.toString()};
+        return stringList;
     }
 }

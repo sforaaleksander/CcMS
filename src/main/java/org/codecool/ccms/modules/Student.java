@@ -3,12 +3,19 @@ package org.codecool.ccms.modules;
 public class Student extends User {
     private Module module;
 
-    public Student(int id, String name, String surname, String email, String password, int roleId, Module module){
-        super(id ,name, surname, email, password, roleId);
+    public Student(int id, String name, String surname, String email, String password, Role role, Attendance attendance, Module module){
+        super(id ,name, surname, email, password, role, attendance);
         this.module = module;
     }
 
     public Module getModule() {
         return module;
+    }
+
+    @Override
+    public String[] toStringList() {
+        String[] stringList = {this.getFirstName(), this.getSurname(),
+                this.getEmail(), this.getRole().toString(), this.getAttendance().toString(), this.module.toString()};
+        return stringList;
     }
 }
