@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 
 public class Session {
+    private static Session instance;
     private final UserDao userDao;
     private User user;
     private final UI ui;
@@ -19,7 +20,7 @@ public class Session {
     private final MenuController menuController;
     private Boolean isRunning;
 
-    public Session() {
+    private Session() {
         this.isRunning = true;
         this.userDao = new UserDao();
         this.ui = new UI();
@@ -30,6 +31,13 @@ public class Session {
         this.menuController = new MenuController(this, loginActions);
         this.view.setCommandList(menuController.getActionMap().values().stream().collect(Collectors.toList()));
         ui.welcomeMessage();
+    }
+
+    public static Session getSession(){
+        if (instance == null) {
+            instance = new Session();
+        }
+        return instance;
     }
 
     public void nextFrame(){
