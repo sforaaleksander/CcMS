@@ -1,5 +1,7 @@
 package org.codecool.ccms.dao;
 
+import org.codecool.ccms.modules.Attendance;
+import org.codecool.ccms.modules.Role;
 import org.codecool.ccms.modules.User;
 import org.codecool.ccms.modules.UserFactory;
 
@@ -10,7 +12,7 @@ import java.util.List;
 
 public class UserDao extends Dao{
 
-    public List<User> getUsers(String query) {
+    private List<User> getUsers(String query) {
         List<User> users = new ArrayList<>();
         connect();
 
@@ -22,9 +24,12 @@ public class UserDao extends Dao{
                 String surname = results.getString("surname");
                 String email = results.getString("email");
                 String password = results.getString("password");
-                int roleId = results.getInt("roleId");
+                Role role = Role.valueOf(results.getInt("roleId"));
+                //TODO read attendance from DB
+                Attendance attendance = null;
 
-                User user = new UserFactory(this).makeUser(id, firstName, surname, email, password, roleId);
+                //TODO create user builder(?)
+                User user = new UserFactory(this).makeUser(id, firstName, surname, email, password, role, attendance);
                 users.add(user);
 
             }
@@ -34,8 +39,13 @@ public class UserDao extends Dao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return users;
+    }
+
+
+    public List<User> getUserBy(String columnName, String value) throws SQLException {
+        return getUsers(
+                "SELECT * FROM User WHERE " + columnName + " = '" + value + "';");
     }
 
 
