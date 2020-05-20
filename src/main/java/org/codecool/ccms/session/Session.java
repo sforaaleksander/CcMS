@@ -61,4 +61,20 @@ public class Session {
     public InputProvider getInputProvider() {
         return inputProvider;
     }
+
+    public UI getUi() {
+        return ui;
+    }
+
+    public View getView() {
+        return view;
+    }
+
+    public MenuController getMenuController() {
+        return menuController;
+    }
+
+    public Boolean getRunning() {
+        return isRunning;
+    }
 }
