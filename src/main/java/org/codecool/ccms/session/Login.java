@@ -24,23 +24,21 @@ public class Login {
         userDao.connect();
         List<User> users = null;
         try {
-            users = getMatchingUser(userEmail, userPassword);
+            users = userDao.getUserBy("email", userEmail);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (users.isEmpty()){
+        if (users != null && users.isEmpty()){
             // TODO return info that user was not found
             return false;
-        } else {
-            session.setUser(users.get(0));
-            System.out.println("Logged in as" + users.get(0).getFirstName());
-            return true;
         }
-
-    }
-
-    private List<User> getMatchingUser(String userEmail, String userPassword) throws SQLException {
-        return userDao.getUsers(
-                "SELECT * FROM User WHERE email = '" + userEmail + "' AND password = '" + userPassword + "';");
+        assert users != null;
+        if (!users.get(0).getPassword().equals(userPassword)) {
+            return false;
+        }
+        session.setUser(users.get(0));
+        session.getMenuController().menuMapUpdate();
+        System.out.println("Logged in as" + users.get(0).getFirstName());
+        return true;
     }
 }
