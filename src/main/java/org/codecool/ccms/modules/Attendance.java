@@ -2,7 +2,7 @@ package org.codecool.ccms.modules;
 
 import java.time.LocalDateTime;
 
-public class Attendance {
+public class Attendance implements Displayable{
     private LocalDateTime date;
     private String firstName;
     private String surName;
@@ -29,5 +29,11 @@ public class Attendance {
 
     public Role getRole() {
         return role;
+    }
+
+    @Override
+    public String[] toStringList() {
+        String[] stringList = {this.date.toString(), this.firstName, this.surName, this.role.toString()};
+        return stringList;
     }
 }
