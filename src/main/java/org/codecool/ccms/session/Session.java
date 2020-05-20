@@ -24,7 +24,6 @@ public class Session {
         this.userDao = new UserDao();
         this.ui = new UI();
         this.inputProvider = new InputProvider();
-      
         this.view = new View();
         LoginActions loginActions = new LoginActions(this);
         this.menuController = new MenuController(this, loginActions);
@@ -37,7 +36,6 @@ public class Session {
         int action = ui.gatherIntInput("Choose action:", 0, menuController.getActionMap().size());
         menuController.getActionMap().get(action).getAction().run();
     }
-
 
     public User getUser() {
         return user;

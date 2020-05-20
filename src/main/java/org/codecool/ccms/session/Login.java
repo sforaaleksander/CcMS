@@ -36,7 +36,6 @@ public class Login {
             System.out.println("Logged in as" + users.get(0).getFirstName());
             return true;
         }
-
     }
 
     private List<User> getMatchingUser(String userEmail, String userPassword) throws SQLException {
