@@ -34,6 +34,9 @@ public abstract class Dao {
         try {
             ResultSet results = statement.executeQuery(query);
             ui.printTableFromDB(results);
+            results.close();
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -49,6 +52,8 @@ public abstract class Dao {
         connect();
         try {
             statement.execute(query);
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -60,6 +65,8 @@ public abstract class Dao {
         connect();
         try {
             statement.execute(query);
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -73,6 +80,8 @@ public abstract class Dao {
         connect();
         try {
             statement.execute(query);
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

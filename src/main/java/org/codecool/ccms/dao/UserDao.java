@@ -24,7 +24,7 @@ public class UserDao extends Dao{
                 String password = results.getString("password");
                 int roleId = results.getInt("roleId");
 
-                User user = UserFactory.makeUser(id, firstName, surname, email, password, roleId);
+                User user = new UserFactory(this).makeUser(id, firstName, surname, email, password, roleId);
                 users.add(user);
 
             }

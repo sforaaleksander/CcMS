@@ -1,17 +1,39 @@
 package org.codecool.ccms.modules;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
 
-public class Attendance {
-    private Map<LocalDateTime, Boolean> calendar;
+public class Attendance implements Displayable{
+    private LocalDateTime date;
+    private String firstName;
+    private String surName;
+    private Role role;
 
-    public Attendance(){
-        calendar = new HashMap<>();
+    public Attendance(LocalDateTime date, String firstName, String surName, Role role){
+        this.date = date;
+        this.firstName = firstName;
+        this.surName = surName;
+        this.role = role;
     }
 
-    public Map<LocalDateTime, Boolean> getCalendar() {
-        return calendar;
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getSurName() {
+        return surName;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    @Override
+    public String[] toStringList() {
+        String[] stringList = {this.date.toString(), this.firstName, this.surName, this.role.toString()};
+        return stringList;
     }
 }
