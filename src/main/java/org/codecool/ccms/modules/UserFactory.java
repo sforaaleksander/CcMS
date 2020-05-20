@@ -12,7 +12,6 @@ public class UserFactory {
     public User makeUser(int id, String name, String surname, String email,
                          String password, Role role, Attendance attendance) {
 
-        //TODO make enums with roles
         switch (role.toString()){
             case "STUDENT":
                 Module module = Module.ADVANCED;
