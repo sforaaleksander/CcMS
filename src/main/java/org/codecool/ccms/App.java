@@ -1,6 +1,5 @@
 package org.codecool.ccms;
 
-import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.session.Session;
 
 /**
