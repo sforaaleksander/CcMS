@@ -1,7 +1,10 @@
 package org.codecool.ccms.controllers;
+import org.codecool.ccms.modules.Displayable;
 import org.codecool.ccms.modules.Role;
 import org.codecool.ccms.session.LoginActions;
 import org.codecool.ccms.session.Session;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -26,6 +29,6 @@ public class MenuController {
         actionMap.clear();
         Role role = session.getUser().getRole();
         actionMap = new ActionAssembler(session, role).getMap();
-        this.session.getView().setCommandList(this.getActionMap().values().stream().collect(Collectors.toList()));
+        this.session.getView().setCommandList(new ArrayList<>(this.getActionMap().values()));
     }
 }

@@ -39,7 +39,7 @@ public class InputProvider {
         boolean validInput = false;
         while (!validInput) {
             userInput = scan.next();
-            validInput = isNumberInRange(userInput, rangeMin, rangeMax);
+            validInput = isNumberInRange(userInput, rangeMin, rangeMax-1);
         }
         return Integer.parseInt(userInput);
     }

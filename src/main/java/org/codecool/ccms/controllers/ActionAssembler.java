@@ -3,17 +3,19 @@ package org.codecool.ccms.controllers;
 import org.codecool.ccms.modules.*;
 import org.codecool.ccms.modules.Module;
 import org.codecool.ccms.session.Actions;
+import org.codecool.ccms.session.LoginActions;
 import org.codecool.ccms.session.Session;
 import org.codecool.ccms.session.StudentActions;
 
 import javax.swing.*;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ActionAssembler {
-    private Session session;
-    private Role role;
-    private HashMap actionMap;
+    private final Session session;
+    private final Role role;
+    private final Map<Integer, MenuOption> actionMap;
 
     public ActionAssembler(Session session, Role role) {
         actionMap = new HashMap<>();
@@ -49,8 +51,6 @@ public class ActionAssembler {
         }
     }
 
-    public HashMap getMap(){
-        return this.actionMap;
-    }
+    public Map<Integer, MenuOption> getMap(){ return this.actionMap; }
 
 }
