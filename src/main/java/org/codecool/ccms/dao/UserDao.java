@@ -132,9 +132,11 @@ public class UserDao extends Dao{
 
     public WorkDay getWorkDayIdByDate(String findDate) {
         connect();
+        String query = "SELECT * FROM WorkDay WHERE Date = '"+findDate+"';";
+        System.out.println(query);
         WorkDay workDay = null;
         try {
-            ResultSet results = statement.executeQuery("SELECT * FROM WorkDay WHERE Date = '"+findDate+"';");
+            ResultSet results = statement.executeQuery(query);
             while (results.next()) {
                 int id = results.getInt("id");
                 String stringDate = results.getString("Date");
