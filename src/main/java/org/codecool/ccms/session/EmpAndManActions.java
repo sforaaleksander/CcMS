@@ -70,6 +70,7 @@ public class EmpAndManActions extends Actions {
 
     public void removeStudent() {
         viewAllStudents();
+        this.getSession().getView().displayContent();
         int id = this.getSession().getInputProvider().gatherIntInput("Enter student's ID: ");
         this.getSession().getUserDao().removeUser(id, Role.STUDENT.getRoleId());
         viewAllStudents();
