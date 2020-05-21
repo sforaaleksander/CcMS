@@ -22,7 +22,9 @@ public class StudentActions extends Actions {
         return options;
     }
 
-    public void updateMyAssignement(){ }
+    public void updateMyAssignement(){
+
+    }
 
     public void viewMyGrades(){
         this.getSession().getView().setQuerryList(this.getSession().getUserDao().getGradesByStudentId(this.getSession().getUser().getId()));
