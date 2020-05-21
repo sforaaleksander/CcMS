@@ -28,6 +28,23 @@ public class InputProvider {
         return userInput;
     }
 
+    public String gatherYesNoInput(String title) {
+        System.out.println(title + " [Y/N]");
+        boolean validInput = true;
+        String userInput;
+        do {
+            if (!validInput) {
+                System.out.println("Invalid input. Enter again: ");
+            }
+            validInput = false;
+            userInput = scan.next();
+            if (userInput.toLowerCase().equals("y") || userInput.toLowerCase().equals("n")) {
+                validInput = true;
+            }
+        } while (!validInput);
+        return userInput;
+    }
+
     public void gatherEmptyInput(String message) {
         System.out.println(message);
         scan.next();
