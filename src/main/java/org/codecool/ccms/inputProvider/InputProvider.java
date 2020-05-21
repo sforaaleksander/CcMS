@@ -7,7 +7,8 @@ public class InputProvider {
     public Scanner scan;
 
     public InputProvider(String[] args) {
-        if (args.length == 0){
+
+        if (args.length == 0) {
         scan = new Scanner(System.in);
         scan.useDelimiter(System.lineSeparator());}
     }

@@ -14,9 +14,7 @@ public class Student extends User {
 
     @Override
     public String[] toStringList() {
-        String[] stringList = super.toStringList();
-        String[] thisStringList = new String[stringList.length +1];
-        thisStringList[thisStringList.length-1] = this.module.toString();
-        return thisStringList;
+        String[] stringList = {String.valueOf(this.getId()), this.getFirstName(), this.getSurname(), this.getEmail()};
+        return stringList;
     }
 }
