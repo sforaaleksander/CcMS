@@ -30,8 +30,8 @@ public class InputProvider {
                 midStack.push(scanFile.nextLine());
             }
             scanFile.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        } catch (ArrayIndexOutOfBoundsException | FileNotFoundException e) {
+            e.getMessage();
         }
         while (!midStack.isEmpty()){
             commands.push((String) midStack.pop());
