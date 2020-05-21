@@ -4,9 +4,7 @@ import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.inputProvider.InputProvider;
 import org.codecool.ccms.modules.User;
 import org.codecool.ccms.view.View;
-
 import java.util.stream.Collectors;
-
 
 public class Session {
     private static Session instance;
@@ -25,12 +23,12 @@ public class Session {
         LoginActions loginActions = new LoginActions(this);
         this.menuController = new MenuController(this, loginActions);
         this.view.setCommandList(menuController.getActionMap().values().stream().collect(Collectors.toList()));
-        view.displayMessage("Welcome to Codecool Management System, new session has been created.");
     }
 
     public static Session getSession(){
         if (instance == null) {
             instance = new Session();
+            instance.view.displayMessage("Welcome to Codecool Management System, new session has been created.");
         }
         return instance;
     }
@@ -74,7 +72,5 @@ public class Session {
         return menuController;
     }
 
-    public Boolean getRunning() {
-        return isRunning;
-    }
+
 }

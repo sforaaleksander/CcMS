@@ -1,14 +1,23 @@
 package org.codecool.ccms.session;
 
-public class LoginActions {
+import org.codecool.ccms.controllers.MenuOption;
 
-    private final Session session;
+import java.util.ArrayList;
+import java.util.List;
+
+public class LoginActions extends Actions{
 
     public LoginActions(Session session) {
-        this.session = session;
+        super(session);
     }
 
+    public List<MenuOption> returnActions(){
+        List<MenuOption> options = new ArrayList<>();
+        options.add(new MenuOption(0, "Login", this::handleLogin));
+        return options;
+    };
+
     public Boolean handleLogin() {
-        return new Login(session).loginAttempt();
+        return new Login(this.getSession()).loginAttempt();
     }
 }

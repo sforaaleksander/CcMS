@@ -29,16 +29,16 @@ public class Login {
             e.printStackTrace();
         }
         if (users != null && users.isEmpty()){
-            // TODO return info that user was not found
+            session.getView().displayMessage("No matching user in database.");
             return false;
         }
-        assert users != null;
         if (!users.get(0).getPassword().equals(userPassword)) {
+            session.getView().displayMessage("Wrong password!");
             return false;
         }
         session.setUser(users.get(0));
+        System.out.println("Logged in as " + users.get(0).getFirstName());
         session.getMenuController().menuMapUpdate();
-        System.out.println("Logged in as" + users.get(0).getFirstName());
         return true;
     }
 }
