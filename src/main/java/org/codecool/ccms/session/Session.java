@@ -2,8 +2,11 @@ package org.codecool.ccms.session;
 import org.codecool.ccms.controllers.MenuController;
 import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.inputProvider.InputProvider;
+import org.codecool.ccms.modules.Displayable;
 import org.codecool.ccms.modules.User;
 import org.codecool.ccms.view.View;
+
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class Session {
@@ -22,7 +25,7 @@ public class Session {
         this.view = new View();
         LoginActions loginActions = new LoginActions(this);
         this.menuController = new MenuController(this, loginActions);
-        this.view.setCommandList(menuController.getActionMap().values().stream().collect(Collectors.toList()));
+        this.view.setCommandList(new ArrayList<>(menuController.getActionMap().values()));
     }
 
     public static Session getSession(){
