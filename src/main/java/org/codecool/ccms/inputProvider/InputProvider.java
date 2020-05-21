@@ -37,8 +37,8 @@ public class InputProvider {
                 System.out.println("Invalid input. Enter again: ");
             }
             validInput = false;
-            userInput = scan.next();
-            if (userInput.toLowerCase().equals("y") || userInput.toLowerCase().equals("n")) {
+            userInput = scan.next().toUpperCase();
+            if (userInput.equals("Y") || userInput.equals("N")) {
                 validInput = true;
             }
         } while (!validInput);
