@@ -29,6 +29,7 @@ public class ManagerActions extends Actions {
         viewAllMentors();
         int id = this.getSession().getInputProvider().gatherIntInput("Enter mentor's ID: ");
         this.getSession().getUserDao().removeMentor(id);
+        viewAllMentors();
     }
 
     public void addMentor(){
@@ -38,5 +39,6 @@ public class ManagerActions extends Actions {
         String password = this.getSession().getInputProvider().gatherInput("Enter password: ");
         String roleId = "2";
         this.getSession().getUserDao().AddMentor(name, surname, email, password, roleId);
+        viewAllMentors();
     }
 }
