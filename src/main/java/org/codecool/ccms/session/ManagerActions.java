@@ -14,9 +14,9 @@ public class ManagerActions extends Actions {
     @Override
     public List<MenuOption> returnActions() {
         List<MenuOption> options = new ArrayList<>();
-        options.add(new MenuOption(0,"View all mentors.", this::viewAllMentors));
-        options.add(new MenuOption(0, "Remove mentor", this::removeMentor));
-        options.add(new MenuOption(0, "Add mentor.", this::addMentor));
+        options.add(new MenuOption("View all mentors.", this::viewAllMentors));
+        options.add(new MenuOption( "Remove mentor", this::removeMentor));
+        options.add(new MenuOption( "Add mentor.", this::addMentor));
         return options;
     }
 
