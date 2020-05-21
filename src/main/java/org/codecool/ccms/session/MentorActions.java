@@ -39,8 +39,9 @@ public class MentorActions extends Actions {
             Student student = (Student) displayStudent;
             this.getSession().getView().displayMessage(student.getFirstName() + " " + student.getSurname());
             String isPresent = this.getSession().getInputProvider().gatherYesNoInput("Is the student present?");
-            userDao.addAttendance(student.getId());
-
+            if (isPresent.equals("Y")) {
+                userDao.addAttendance(student.getId(), workDayId);
+            }
         }
     }
 
