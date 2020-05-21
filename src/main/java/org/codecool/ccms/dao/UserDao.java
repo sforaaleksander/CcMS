@@ -88,8 +88,10 @@ public class UserDao extends Dao{
         }
     }
 
-    public void AddMentor(String name, String surname, String email, String password, String roleId){
+    public void AddMentor(String name, String surname, String email, String password, String roleId) {
         insertUser(new String[]{name, surname, email, password, roleId});
+    }
+
     public void addAttendance(int userId, int workDayId){
         String[] columns = {"userId", "workDayID"};
         String[] values = { String.valueOf(userId), String.valueOf(workDayId)};
