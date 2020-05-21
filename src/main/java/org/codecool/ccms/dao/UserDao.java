@@ -155,4 +155,17 @@ public class UserDao extends Dao{
         }
         return workDay;
     }
+
+    public void removeAttendance(int studentID, WorkDay workDay) {
+        connect();
+        String date = workDay.getDate().format(DateTimeFormatter.ofPattern("ddMMyyyy"));
+        try {
+            statement.executeUpdate("DELETE FROM Attendance WHERE userId = '" + studentID + "' AND workDayId = '" + date + "'");
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -5,9 +5,6 @@ import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.modules.Displayable;
 import org.codecool.ccms.modules.Student;
 import org.codecool.ccms.modules.WorkDay;
-import org.sqlite.SQLiteException;
-
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,7 +22,7 @@ public class MentorActions extends Actions {
         options.add(new MenuOption("Add new assignment", this::addAssignment));
         options.add(new MenuOption("Check all students' attendance", this::checkAllStudentsAttendance));
         options.add(new MenuOption("Grade student's assignment", this::gradeAssignment));
-        options.add(new MenuOption("Update student's assignment", this::updateStudentAttendance));
+        options.add(new MenuOption("Update student's attendance", this::updateStudentAttendance));
         return options;
     }
 
@@ -66,6 +63,27 @@ public class MentorActions extends Actions {
     }
 
     public void updateStudentAttendance(){
+        UserDao userDao = this.getSession().getUserDao();
+        LocalDate todayDate = LocalDate.now();
+        String date = todayDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"));
 
+        WorkDay workDay = getPresentDayInstance(userDao, date);
+
+        List<Displayable> students = userDao.getUserBy("roleId", "4");
+        String[] headers = {"Student's ID", "Student's first name", "Student's surname"};
+        this.getSession().getView().setQuerryHeaders(headers);
+        this.getSession().getView().setQuerryList(students);
+        this.getSession().getView().displayContent();
+        int studentID = this.getSession().getInputProvider().gatherIntInput("Provide student's ID to mark as present ");
+        String isPresent = this.getSession().getInputProvider().gatherYesNoInput("Is the student present?");
+
+        if (isPresent.equals("Y")) {
+            userDao.addAttendance(studentID, workDay);
+            this.getSession().getView().displayMessage("Attendance added");
+        } else {
+            userDao.removeAttendance(studentID, workDay);
+            this.getSession().getView().displayMessage("Attendance removed");
+        }
+        }
     }
-}
+
