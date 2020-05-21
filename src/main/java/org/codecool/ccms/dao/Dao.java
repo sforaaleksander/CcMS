@@ -55,8 +55,9 @@ public abstract class Dao {
 
     protected void insert(String table, String[] columns, String[] values) {
         String query = "INSERT INTO " + table
-                + " ( " + String.join("," , columns) + " ) "
-                + " VALUES " + " (" + String.join("," , values) + ");";
+                + " ( " + String.join(", " , columns) + " ) "
+                + " VALUES " + " ( " + String.join(", " , values) + " );";
+        System.out.println(query);
 
         connect();
         try {

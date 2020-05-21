@@ -88,7 +88,11 @@ public class UserDao extends Dao{
 
     public void insertAssignment(String name, String description, int moduleId) {
         String[] columns = {"name", "description", "moduleId"};
-        String[] values = {name, description, String.valueOf(moduleId)};
+        String[] valuesRaw = {name, description, String.valueOf(moduleId)};
+        String[] values = new String[valuesRaw.length];
+        for (int i=0; i<values.length; i++) {
+            values[i] = "'"+valuesRaw[i]+"'";
+        }
         insert("Assignment", columns, values);
     }
 
