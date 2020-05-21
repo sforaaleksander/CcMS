@@ -106,9 +106,9 @@ public class UserDao extends Dao{
         insert("WorkDay", columns, value);
     }
 
-    public void insertAssignment(String name, String description) {
-        String[] columns = {"name", "description", "isPassed"};
-        String[] values = {name, description, "0"};
+    public void insertAssignment(String name, String description, int moduleId) {
+        String[] columns = {"name", "description", "moduleId"};
+        String[] values = {name, description, String.valueOf(moduleId)};
         insert("Assignment", columns, values);
     }
 
