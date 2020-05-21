@@ -4,6 +4,9 @@ import org.codecool.ccms.controllers.MenuOption;
 import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.modules.Displayable;
 import org.codecool.ccms.modules.Student;
+import org.sqlite.SQLiteException;
+
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +43,7 @@ public class MentorActions extends Actions {
         LocalDate todayDate = LocalDate.now();
         String date = todayDate.toString();
         userDao.addWorkDay(date);
-        int workDayId = userDao.getWorkDayIdByDate(date).getDayId();
+        int workDayId = userDao.getWorkDay("date", date).getDayId();
         List<Displayable> students = userDao.getUserBy("roleId", "4");
         for (Displayable displayStudent : students) {
             Student student = (Student) displayStudent;

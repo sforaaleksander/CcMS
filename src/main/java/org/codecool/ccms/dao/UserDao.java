@@ -2,6 +2,8 @@ package org.codecool.ccms.dao;
 
 import org.codecool.ccms.modules.Module;
 import org.codecool.ccms.modules.*;
+import org.sqlite.SQLiteException;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -128,23 +130,22 @@ public class UserDao extends Dao{
         update("User", id, column, newValue);
     }
 
-    public WorkDay getWorkDayIdByDate(String findDate) {
+    public WorkDay getWorkDay(String columnName, String value) {
         connect();
-        String query = "SELECT * FROM WorkDay WHERE Date = '"+findDate+"';";
+        String query = "SELECT * FROM WorkDay WHERE date = '" +value+ "';";
         System.out.println(query);
         WorkDay workDay = null;
         try {
             ResultSet results = statement.executeQuery(query);
-            while (results.next()) {
-                int id = results.getInt("id");
+//            while (results.next()) {
                 String stringDate = results.getString("Date");
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 formatter = formatter.withLocale(Locale.ENGLISH);
                 LocalDate date = LocalDate.parse(stringDate, formatter);
 
-                workDay = new WorkDay(date, id);
-            }
+                workDay = new WorkDay(date);
+//            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
