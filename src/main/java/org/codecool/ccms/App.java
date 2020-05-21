@@ -3,7 +3,8 @@ import org.codecool.ccms.session.Session;
 
 public class App 
 {
-    public static void main( String[] args ) {
+    public static void main( String[] arg ) {
+        String[] args = {"commandsTest.txt"};
         Session session = Session.getSession(args);
         while (session.getIsRunning()){
             session.nextFrame();
