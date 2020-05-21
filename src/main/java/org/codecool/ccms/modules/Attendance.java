@@ -3,10 +3,10 @@ package org.codecool.ccms.modules;
 import java.time.LocalDate;
 
 public class Attendance implements Displayable{
-    private LocalDate date;
-    private String firstName;
-    private String surName;
-    private Role role;
+    private final LocalDate date;
+    private final String firstName;
+    private final String surName;
+    private final Role role;
 
     public Attendance(LocalDate date, String firstName, String surName, Role role){
         this.date = date;

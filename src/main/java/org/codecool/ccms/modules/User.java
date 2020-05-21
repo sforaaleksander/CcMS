@@ -1,13 +1,13 @@
 package org.codecool.ccms.modules;
 
 public abstract class User implements Displayable{
-    private int id;
-    private String firstName;
-    private String surname;
-    private String email;
-    private String password;
-    private Role role;
-    private Attendance attendance;
+    private final int id;
+    private final String firstName;
+    private final String surname;
+    private final String email;
+    private final String password;
+    private final Role role;
+    private final Attendance attendance;
 
     public User(int id, String firstName, String surname, String email, String password, Role role, Attendance attendance) {
         this.id = id;
