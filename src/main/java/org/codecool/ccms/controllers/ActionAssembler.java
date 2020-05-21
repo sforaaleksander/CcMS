@@ -36,7 +36,7 @@ public class ActionAssembler {
                 index = populateMapWithActions(index, actionMap, new MentorActions(session));
                 break;
             case "MANAGER":
-//                index = populateMapWithActions(index, actionMap, new ManagerActions(session));
+                index = populateMapWithActions(index, actionMap, new ManagerActions(session));
                 break;
             case "EMPLOYEE":
 //                index = populateMapWithActions(index, actionMap, new EmployeeActions(session));
