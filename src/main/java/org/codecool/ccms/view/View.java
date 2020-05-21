@@ -40,6 +40,14 @@ public class View {
         System.out.println(FlipTable.of(superHeader, contentContainers));
     }
 
+    public List<Displayable> getQuerryList() {
+        return querryList;
+    }
+
+    public int getQuerryListLenght() {
+        return querryList.size();
+    }
+
     public String displayContainer(String[] headers, List<Displayable> rowList){
         if (rowList.isEmpty()) return "";
         String[][] screen = new String[rowList.size()][headers.length];

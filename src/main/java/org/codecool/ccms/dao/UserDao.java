@@ -40,6 +40,18 @@ public class UserDao extends Dao{
         return users;
     }
 
+    public void updatAssigment(int id, int user, String answer){
+        connect();
+        try {
+            statement.executeUpdate("INSERT INTO UserCrossAssignment (userId, assignmentId, answer) " +
+                                        "VALUES ("+user+", " + id + ", \'" + answer+"\')");
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public List<Displayable> getStudentByName(String Name){
         return getUsers("SELECT * FROM User WHERE surname LIKE \'%" + Name + "%\' AND roleId = 4");
     }
@@ -65,7 +77,7 @@ public class UserDao extends Dao{
             statement.close();
             for (Displayable assigment: assignments) {
                 int id = ((Assignment)assigment).getId();
-                if (statement.executeQuery("SELECT * FROM UserCrossAssignment WHERE userId = " + user + " AND assignmentId = " + id + "").equals(null))
+                if (statement.executeQuery("SELECT * FROM UserCrossAssignment WHERE userId = " + user + " AND assignmentId = " + id).equals(null))
                     ((Assignment) assigment).setPassed(true);
             }
 

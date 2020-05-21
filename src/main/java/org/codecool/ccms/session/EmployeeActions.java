@@ -7,7 +7,6 @@ import java.util.List;
 
 public class EmployeeActions extends Actions {
 
-
     public EmployeeActions(Session session) {
         super(session);
     }

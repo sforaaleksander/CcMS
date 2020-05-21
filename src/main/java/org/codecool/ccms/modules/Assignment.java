@@ -20,6 +20,10 @@ public class Assignment implements Displayable {
         return id;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public void setPassed(Boolean passed) {
         isPassed = passed;
     }
