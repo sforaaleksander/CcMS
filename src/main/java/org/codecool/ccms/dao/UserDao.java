@@ -73,10 +73,10 @@ public class UserDao extends Dao{
         return assignments;
     }
 
-    public void addAttendance(int userId){
+    public void addAttendance(int userId, int workDayId){
         String[] columns = {"userId", "workDayID"};
-//        insert("Attendance");
-
+        String[] values = { String.valueOf(userId), String.valueOf(workDayId)};
+        insert("Attendance", columns, values);
     }
 
     public void addWorkDay(String date){
