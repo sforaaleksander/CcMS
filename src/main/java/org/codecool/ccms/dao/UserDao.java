@@ -6,10 +6,11 @@ import org.codecool.ccms.modules.Module;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class UserDao extends Dao{
 
@@ -131,11 +132,15 @@ public class UserDao extends Dao{
             ResultSet results = statement.executeQuery("SELECT * FROM WorkDay WHERE Date = '"+findDate+"';");
             while (results.next()) {
                 int id = results.getInt("id");
-                String sDate = results.getString("Date");
-                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
+                String stringDate = results.getString("Date");
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+                formatter = formatter.withLocale(Locale.ENGLISH);
+                LocalDate date = LocalDate.parse(stringDate, formatter);
+
                 workDay = new WorkDay(date, id);
             }
-        } catch (SQLException | ParseException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return workDay;

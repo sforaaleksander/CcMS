@@ -1,17 +1,17 @@
 package org.codecool.ccms.modules;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class WorkDay {
-    private Date date;
+    private LocalDate date;
     private int dayId;
 
-    public WorkDay(Date date, int dayId) {
+    public WorkDay(LocalDate date, int dayId) {
         this.date = date;
         this.dayId = dayId;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
