@@ -17,8 +17,8 @@ public class MenuController {
     public MenuController(Session session, LoginActions loginActions){
         this.session = session;
         actionMap = new HashMap<>();
-        actionMap.put(1, new MenuOption(1, "Login", loginActions::handleLogin));
-        actionMap.put(0, new MenuOption(0, "Exit", this.session::exit));
+        actionMap.put(1, new MenuOption("Login", loginActions::handleLogin));
+        actionMap.put(0, new MenuOption("Exit", this.session::exit));
     }
 
     public Map<Integer, MenuOption> getActionMap() {
