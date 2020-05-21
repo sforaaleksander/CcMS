@@ -56,7 +56,13 @@ public class EmpAndManActions extends Actions {
     }
 
     public void addStudent(){
-
+        String name = this.getSession().getInputProvider().gatherInput("Enter name: ");
+        String surname = this.getSession().getInputProvider().gatherInput("Enter surname: ");
+        String email = this.getSession().getInputProvider().gatherInput("Enter email: ");
+        String password = this.getSession().getInputProvider().gatherInput("Enter password: ");
+        String roleId = "4";
+        this.getSession().getUserDao().AddUser(name, surname, email, password, roleId);
+        viewAllStudents();
     }
 
     public void removeStudent(){
