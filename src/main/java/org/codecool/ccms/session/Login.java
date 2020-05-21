@@ -32,6 +32,7 @@ public class Login {
         }
         User user = (User) users.get(0);
         if (!user.getPassword().equals(userPassword)) {
+            System.out.println(user.getPassword());
             session.getView().displayMessage("Wrong password!");
             return false;
         }
