@@ -23,7 +23,7 @@ public enum Module {
     }
 
     public static Module valueOf(int value) {
-        return (Module) map.get(value); }
+        return map.get(value); }
 
     public int getValue() {
         return value;

@@ -2,7 +2,6 @@ package org.codecool.ccms.dao;
 
 import org.codecool.ccms.modules.Module;
 import org.codecool.ccms.modules.*;
-import org.sqlite.SQLiteException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
