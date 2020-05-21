@@ -24,7 +24,7 @@ public enum Module {
 
     public static Module valueOf(int value) { return (Module) map.get(value); }
 
-    public int getRoleId() {
+    public int getValue() {
         return value;
     }
 
