@@ -21,17 +21,20 @@ public class InputProvider {
     }
 
     private void initializeStack(String[] args){
+        Stack midStack = new Stack();
         try {
             File file = new File(args[0]);
             Scanner scanFile = new Scanner(file);
 
             while (scanFile.hasNextLine()) {
-//                String line = scanFile.next()
-                commands.push(scanFile.nextLine());
+                midStack.push(scanFile.nextLine());
             }
             scanFile.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
+        }
+        while (!midStack.isEmpty()){
+            commands.push((String) midStack.pop());
         }
     }
 
@@ -41,8 +44,10 @@ public class InputProvider {
 
     private String tryToGrabStringFromStack(){
         if (commands.isEmpty()){
-            return scan.next();}
-            return  (String) commands.pop();
+            return scan.next();
+        }
+        String command = String.valueOf(commands.pop());
+        return command;
     }
 
     public String gatherInput(String title) {
