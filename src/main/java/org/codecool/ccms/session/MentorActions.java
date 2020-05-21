@@ -13,7 +13,7 @@ import java.util.List;
 
 public class MentorActions extends Actions {
 
-    MentorActions(Session session) {
+    public MentorActions(Session session) {
         super(session);
     }
     @Override
