@@ -66,7 +66,8 @@ public class UserDao extends Dao{
                 boolean isPassed = resultSet.getBoolean("isPassed");
                 assignments.add(new Assignment(id, description, name, module, isPassed));
             }
-
+            statement.close();
+            connection.close();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
@@ -75,13 +76,13 @@ public class UserDao extends Dao{
     }
 
     public List<Displayable> viewAllMentors(){
-        return getUsers("SELECT id, first_name, surname, email FROM User WHERE roleId = 2");
+        return getUsers("SELECT * FROM User WHERE roleId = 2");
     }
 
     public void removeMentor(int id) {
         connect();
         try {
-            statement.executeQuery("DELETE FROM User WHERE id = '" + id + "' AND roleId = 2");
+            statement.executeUpdate("DELETE FROM User WHERE id = '" + id + "' AND roleId = 2");
             statement.close();
             connection.close();
         } catch (SQLException e) {
