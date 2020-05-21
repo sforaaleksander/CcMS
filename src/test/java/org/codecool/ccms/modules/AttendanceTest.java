@@ -17,9 +17,9 @@ public class AttendanceTest {
         formatter = formatter.withLocale(Locale.ENGLISH);
         LocalDate date = LocalDate.parse("22-04-2020", formatter);
 
-        Attendance attendance = new Attendance(date, "Zenon", "Miska", Role.MENEGER);
+        Attendance attendance = new Attendance(date, "Zenon", "Miska", Role.MANAGER);
 
-        assertEquals("2020-04-22, Zenon, Miska, MENEGER", String.join(", ", attendance.toStringList()));
+        assertEquals("2020-04-22, Zenon, Miska, MANAGER", String.join(", ", attendance.toStringList()));
     }
 
 }
