@@ -86,8 +86,12 @@ public class UserDao extends Dao{
         }
     }
 
+    public void AddMentor(String name, String surname, String email, String password, String roleId){
+        insertUser(new String[]{name, surname, email, password, roleId});
+    }
+
     public void insertUser(String[] values) {
-        String[] columns = { "name", "surname", "email", "password", "phone", "Id_role" };
+        String[] columns = { "first_name", "surname", "email", "password", "roleId" };
 
         for (int i = 0; i < 5; i++) {
             values[i] = String.format("'%s'", values[i]);
