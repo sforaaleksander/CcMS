@@ -53,19 +53,22 @@ public class UserDao extends Dao{
         List<Displayable> assignments = new ArrayList<>();
         connect();
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT asg.id, asg.name, asg.description, Module.id as moduleId, uca.isPassed FROM UserCrossAssignment as uca" +
-                                                            " LEFT JOIN Assigment as asg ON asg.id = uca.assignmentId " +
-                                                            " LEFT JOIN Module ON Module.id = asg.moduleId " +
-                                                            " WHERE uca.id = '" + user + "'" );
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Assigment");
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
                 Module module = Module.valueOf(resultSet.getInt("moduleId"));
-                boolean isPassed = resultSet.getBoolean("isPassed");
+                boolean isPassed = false;
                 assignments.add(new Assignment(id, description, name, module, isPassed));
             }
             statement.close();
+            for (Displayable assigment: assignments) {
+                int id = ((Assignment)assigment).getId();
+                if (statement.executeQuery("SELECT * FROM UserCrossAssignment WHERE userId = " + user + " AND assignmentId = " + id + "").equals(null))
+                    ((Assignment) assigment).setPassed(true);
+            }
+
             connection.close();
         } catch (SQLException throwable) {
             throwable.printStackTrace();

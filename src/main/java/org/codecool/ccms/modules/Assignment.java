@@ -16,6 +16,14 @@ public class Assignment implements Displayable {
         this.isPassed = isPassed;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setPassed(Boolean passed) {
+        isPassed = passed;
+    }
+
     @Override
     public String[] toStringList() {
         return new String[]{Integer.toString(this.id), this.name, this.module.toString(), this.isPassed.toString()};
