@@ -66,6 +66,9 @@ public class EmpAndManActions extends Actions {
     }
 
     public void removeStudent(){
-
+        viewAllStudents();
+        int id = this.getSession().getInputProvider().gatherIntInput("Enter student's ID: ");
+        this.getSession().getUserDao().removeUser(id, 4);
+        viewAllStudents();
     }
 }
