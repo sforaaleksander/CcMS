@@ -22,19 +22,19 @@ public class UserFactory {
             case "MANAGER":
                 int managerIncome = 0;
                 //TODO get income
-                User manager = new Manager(id, email, password, name, surname, role, attendance, managerIncome);
+                User manager = new Manager(id, name, surname, email, password, role, attendance, managerIncome);
                 return manager;
 
             case "MENTOR":
                 int mentorIncome = 0;
                 //TODO get income
-                User mentor = new Mentor(id, email, password, name, surname, role, attendance, mentorIncome);
+                User mentor = new Mentor(id, name, surname, email, password, role, attendance, mentorIncome);
                 return mentor;
 
             case "EMPLOYEE":
                 int employeeIncome = 0;
                 //TODO get income
-                User employee = new Mentor(id, email, password, name, surname, role, attendance, employeeIncome);
+                User employee = new Mentor(id, name, surname, email, password, role, attendance, employeeIncome);
                 return employee;
 
             default:
