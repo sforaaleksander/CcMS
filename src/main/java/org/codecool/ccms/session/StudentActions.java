@@ -18,12 +18,8 @@ public class StudentActions extends Actions {
         return options;
     }
 
-    public void updateMyAssignement(){
+    public void updateMyAssignement(){ }
 
-    }
-
-    public void viewMyGrades(){
-
-    }
+    public void viewMyGrades(){ }
 
 }

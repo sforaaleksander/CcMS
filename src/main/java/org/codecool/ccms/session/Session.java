@@ -71,6 +71,4 @@ public class Session {
     public MenuController getMenuController() {
         return menuController;
     }
-
-
 }
