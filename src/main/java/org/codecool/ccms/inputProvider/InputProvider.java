@@ -1,14 +1,53 @@
 package org.codecool.ccms.inputProvider;
 
+
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import java.util.Scanner;
+import java.util.Stack;
+
+
 
 public class InputProvider {
     public Scanner scan;
+    private final Stack<String> commands;
 
     public InputProvider(String[] args) {
-        if (args.length == 0) {
         scan = new Scanner(System.in);
-        scan.useDelimiter(System.lineSeparator());}
+        scan.useDelimiter(System.lineSeparator());
+        commands = new Stack<String>();
+        initializeStack(args);
+    }
+
+    private void initializeStack(String[] args){
+        Stack midStack = new Stack();
+        try {
+            File file = new File(args[0]);
+            Scanner scanFile = new Scanner(file);
+
+            while (scanFile.hasNextLine()) {
+                midStack.push(scanFile.nextLine());
+            }
+            scanFile.close();
+        } catch (ArrayIndexOutOfBoundsException | FileNotFoundException e) {
+            e.getMessage();
+        }
+        while (!midStack.isEmpty()){
+            commands.push((String) midStack.pop());
+        }
+    }
+
+    public Stack<String> getCommands() {
+        return commands;
+    }
+
+    private String tryToGrabStringFromStack(){
+        if (commands.isEmpty()){
+            return scan.next();
+        }
+        String command = String.valueOf(commands.pop());
+        return command;
     }
 
     public String gatherInput(String title) {
@@ -20,7 +59,9 @@ public class InputProvider {
                 System.out.println("Your input must contain at least one character. Enter again: ");
             }
             validInput = false;
-            userInput = scan.next();
+
+            userInput = tryToGrabStringFromStack();
+
             if (!userInput.equals("")) {
                 validInput = true;
             }
@@ -37,7 +78,7 @@ public class InputProvider {
                 System.out.println("Invalid input. Enter again: ");
             }
             validInput = false;
-            userInput = scan.next().toUpperCase();
+            userInput = tryToGrabStringFromStack().toUpperCase();
             if (userInput.equals("Y") || userInput.equals("N")) {
                 validInput = true;
             }
@@ -55,7 +96,7 @@ public class InputProvider {
         String userInput = "";
         boolean validInput = false;
         while (!validInput) {
-            userInput = scan.next();
+            userInput = tryToGrabStringFromStack();
             validInput = isNumberInRange(userInput, rangeMin, rangeMax-1);
         }
         return Integer.parseInt(userInput);
@@ -66,7 +107,7 @@ public class InputProvider {
         String userInput = "";
         boolean validInput = false;
         while (!validInput) {
-            userInput = scan.next();
+            userInput = tryToGrabStringFromStack();
             validInput = isInputInt(userInput);
         }
         return Integer.parseInt(userInput);
