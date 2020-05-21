@@ -27,6 +27,7 @@ public class ManagerActions extends Actions {
 
     public void removeMentor() {
         viewAllMentors();
+        this.getSession().getView().displayContent();
         int id = this.getSession().getInputProvider().gatherIntInput("Enter mentor's ID: ");
         this.getSession().getUserDao().removeUser(id, Role.MENTOR.getRoleId());
         viewAllMentors();

@@ -42,6 +42,10 @@ public class UserDao extends Dao{
         return users;
     }
 
+    public List<Displayable> getStudentByName(String Name){
+        return getUsers("SELECT * FROM User WHERE surname LIKE \'%" + Name + "%\' AND roleId = 4");
+    }
+
     public List<Displayable> getUserBy(String columnName, String value) {
         return getUsers(
                 "SELECT * FROM User WHERE " + columnName + " = '" + value + "';");
@@ -79,6 +83,8 @@ public class UserDao extends Dao{
     public List<Displayable> viewStudentsContact(){
         return getUsers("SELECT * FROM User WHERE roleId = 4");
     }
+
+
 
     public void removeUser(int id, int roleId) {
         connect();
@@ -133,12 +139,17 @@ public class UserDao extends Dao{
 
     public WorkDay getWorkDay(String value) {
         connect();
+<<<<<<< HEAD
         String query = "SELECT * FROM WorkDay WHERE date = '" +value+ "';";
         System.out.println(query);
+=======
+        String query = "SELECT * FROM WorkDay WHERE Date = '"+findDate+"';";
+>>>>>>> f32f2eb0bbac37d5ee7111504b8fe6cfdf16180d
         WorkDay workDay = null;
         try {
             ResultSet results = statement.executeQuery(query);
             while (results.next()) {
+<<<<<<< HEAD
                 String stringDate = results.getString("date");
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
@@ -146,6 +157,14 @@ public class UserDao extends Dao{
                 LocalDate date = LocalDate.parse(stringDate, formatter);
 
                 workDay = new WorkDay(date);
+=======
+                int id = results.getInt("id");
+                String stringDate = results.getString("Date");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+                formatter = formatter.withLocale(Locale.ENGLISH);
+                LocalDate date = LocalDate.parse(stringDate, formatter);
+                workDay = new WorkDay(date, id);
+>>>>>>> f32f2eb0bbac37d5ee7111504b8fe6cfdf16180d
             }
             results.close();
             statement.close();
