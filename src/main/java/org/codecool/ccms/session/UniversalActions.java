@@ -1,6 +1,7 @@
 package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
+import org.codecool.ccms.modules.Role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ public class UniversalActions extends Actions {
         super(session);
     }
 
-    public void updateMyDetails(){
+    private void updateMyDetails(){
         String id = Integer.toString(this.getSession().getUser().getId());
         String name = this.getSession().getInputProvider().gatherInput("Provide new name.");
         this.getSession().getUserDao().updateUser(id, "first_name", name);
@@ -24,12 +25,24 @@ public class UniversalActions extends Actions {
         this.getSession().setRunning(false);
     }
 
+    private void viewAllStudentsDetails(){
+        String [] querryHeaders = {"ID", "NAME", "SURNAME", "EMAIL"};
+        this.getSession().getView().setQuerryHeaders(querryHeaders);
+        this.getSession().getView()
+                .setQuerryList(this.getSession().getUserDao().getUserBy("roleId", Integer.toString(Role.STUDENT.getRoleId())));
+    }
+
     @Override
     public List<MenuOption> returnActions() {
         List<MenuOption> options = new ArrayList<>();
-        if (this.getSession().getUser() != null) options.add(new MenuOption("Update My Details.", this::updateMyDetails));
         options.add(new MenuOption("Exit CCMS", this::exit));
+        if (this.getSession().getUser() == null){
+            return options;
+        }
+        options.add(new MenuOption("Update My Details.", this::updateMyDetails));
+        if ((this.getSession().getUser().getRole().equals(Role.MENTOR)) || (this.getSession().getUser().getRole().equals(Role.MANAGER)))  {
+            options.add(new MenuOption("View all students details", this::viewAllStudentsDetails));
+        }
         return options;
     }
-
 }

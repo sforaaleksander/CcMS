@@ -4,7 +4,7 @@ import org.codecool.ccms.session.Session;
 public class App 
 {
     public static void main( String[] args ) {
-        Session session = Session.getSession();
+        Session session = Session.getSession(args);
         while (session.getIsRunning()){
             session.nextFrame();
         }

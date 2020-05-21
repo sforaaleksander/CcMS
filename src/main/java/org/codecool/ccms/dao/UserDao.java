@@ -110,9 +110,13 @@ public class UserDao extends Dao{
         insert("WorkDay", columns, value);
     }
 
-    public void insertAssignment(String name, String description) {
-        String[] columns = {"name", "description", "isPassed"};
-        String[] values = {name, description, "0"};
+    public void insertAssignment(String name, String description, int moduleId) {
+        String[] columns = {"name", "description", "moduleId"};
+        String[] valuesRaw = {name, description, String.valueOf(moduleId)};
+        String[] values = new String[valuesRaw.length];
+        for (int i=0; i<values.length; i++) {
+            values[i] = "'"+valuesRaw[i]+"'";
+        }
         insert("Assignment", columns, values);
     }
 
@@ -132,9 +136,11 @@ public class UserDao extends Dao{
 
     public WorkDay getWorkDayIdByDate(String findDate) {
         connect();
+        String query = "SELECT * FROM WorkDay WHERE Date = '"+findDate+"';";
+        System.out.println(query);
         WorkDay workDay = null;
         try {
-            ResultSet results = statement.executeQuery("SELECT * FROM WorkDay WHERE Date = '"+findDate+"';");
+            ResultSet results = statement.executeQuery(query);
             while (results.next()) {
                 int id = results.getInt("id");
                 String stringDate = results.getString("Date");
