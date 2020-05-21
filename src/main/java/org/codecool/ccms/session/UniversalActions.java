@@ -35,10 +35,14 @@ public class UniversalActions extends Actions {
     @Override
     public List<MenuOption> returnActions() {
         List<MenuOption> options = new ArrayList<>();
-        if (this.getSession().getUser() != null) options.add(new MenuOption("Update My Details.", this::updateMyDetails));
-        if (this.getSession().getUser().getRole().equals(Role.MENTOR));
         options.add(new MenuOption("Exit CCMS", this::exit));
+        if (this.getSession().getUser() == null){
+            return options;
+        }
+        options.add(new MenuOption("Update My Details.", this::updateMyDetails));
+        if ((this.getSession().getUser().getRole().equals(Role.MENTOR)) || (this.getSession().getUser().getRole().equals(Role.MANAGER)))  {
+            options.add(new MenuOption("View all students details", this::viewAllStudentsDetails));
+        }
         return options;
     }
-
 }
