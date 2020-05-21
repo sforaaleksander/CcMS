@@ -1,11 +1,9 @@
 package org.codecool.ccms.dao;
 
-import org.codecool.ccms.modules.*;
 import org.codecool.ccms.modules.Module;
-
+import org.codecool.ccms.modules.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -17,7 +15,6 @@ public class UserDao extends Dao{
     private List<Displayable> getUsers(String query) {
         List<Displayable> users = new ArrayList<>();
         connect();
-
         try {
             ResultSet results = statement.executeQuery(query);
             while (results.next()) {
@@ -33,7 +30,6 @@ public class UserDao extends Dao{
                 //TODO create user builder(?)
                 User user = new UserFactory(this).makeUser(id, firstName, surname, email, password, role, attendance);
                 users.add(user);
-
             }
             results.close();
             statement.close();
@@ -43,7 +39,6 @@ public class UserDao extends Dao{
         }
         return users;
     }
-
 
     public List<Displayable> getUserBy(String columnName, String value) {
         return getUsers(
@@ -71,7 +66,6 @@ public class UserDao extends Dao{
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
-
         return assignments;
     }
 

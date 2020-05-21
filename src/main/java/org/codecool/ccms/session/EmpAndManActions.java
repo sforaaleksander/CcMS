@@ -2,12 +2,10 @@ package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
 import org.codecool.ccms.modules.Role;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmpAndManActions extends Actions {
-
 
     public EmpAndManActions(Session session) {
         super(session);
@@ -23,7 +21,7 @@ public class EmpAndManActions extends Actions {
         return options;
     }
 
-    public void updateMentorDetails(){
+    public void updateMentorDetails() {
         String id = this.getSession().getInputProvider().gatherInput("Enter mentor's ID you would like to edit: ");
         System.out.println("What you want to update:\n1. Name\n2. Surname\n3. Email\n4. All");
         String choice = this.getSession().getInputProvider().gatherInput("Choice: ");
@@ -51,12 +49,12 @@ public class EmpAndManActions extends Actions {
         }
     }
 
-    public void viewAllStudents(){
+    public void viewAllStudents() {
         this.getSession().getView().setQuerryList(this.getSession().getUserDao().viewStudentsContact());
         this.getSession().getView().setQuerryHeaders(new String[]{"Id", "Name", "Surname", "Email"});
     }
 
-    public void addStudent(){
+    public void addStudent() {
         String name = this.getSession().getInputProvider().gatherInput("Enter name: ");
         String surname = this.getSession().getInputProvider().gatherInput("Enter surname: ");
         String email = this.getSession().getInputProvider().gatherInput("Enter email: ");
@@ -66,7 +64,7 @@ public class EmpAndManActions extends Actions {
         viewAllStudents();
     }
 
-    public void removeStudent(){
+    public void removeStudent() {
         viewAllStudents();
         int id = this.getSession().getInputProvider().gatherIntInput("Enter student's ID: ");
         this.getSession().getUserDao().removeUser(id, Role.STUDENT.getRoleId());

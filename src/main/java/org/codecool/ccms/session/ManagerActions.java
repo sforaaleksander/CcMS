@@ -2,7 +2,6 @@ package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
 import org.codecool.ccms.modules.Role;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,19 +20,19 @@ public class ManagerActions extends Actions {
         return options;
     }
 
-    public void viewAllMentors(){
+    public void viewAllMentors() {
         this.getSession().getView().setQuerryList(this.getSession().getUserDao().viewAllMentors());
         this.getSession().getView().setQuerryHeaders(new String[]{"Id", "Name", "Surname", "Email"});
     }
 
-    public void removeMentor(){
+    public void removeMentor() {
         viewAllMentors();
         int id = this.getSession().getInputProvider().gatherIntInput("Enter mentor's ID: ");
         this.getSession().getUserDao().removeUser(id, Role.MENTOR.getRoleId());
         viewAllMentors();
     }
 
-    public void addMentor(){
+    public void addMentor() {
         String name = this.getSession().getInputProvider().gatherInput("Enter name: ");
         String surname = this.getSession().getInputProvider().gatherInput("Enter surname: ");
         String email = this.getSession().getInputProvider().gatherInput("Enter email: ");

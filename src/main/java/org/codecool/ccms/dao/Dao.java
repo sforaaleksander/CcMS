@@ -29,7 +29,6 @@ public abstract class Dao {
             return;
         }
         String query = "UPDATE " + table + " SET " + column + " = " + newValue + " WHERE Id = " + id + ";";
-
         connect();
         try {
             statement.execute(query);
@@ -42,7 +41,6 @@ public abstract class Dao {
 
     public void remove(String table, String id) {
         String query = "DELETE FROM " + table + " WHERE Id = " + id + ";";
-
         connect();
         try {
             statement.execute(query);
@@ -58,7 +56,6 @@ public abstract class Dao {
                 + " ( " + String.join(", " , columns) + " ) "
                 + " VALUES " + " ( " + String.join(", " , values) + " );";
         System.out.println(query);
-
         connect();
         try {
             statement.execute(query);

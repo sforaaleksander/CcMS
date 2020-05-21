@@ -1,17 +1,15 @@
 package org.codecool.ccms.session;
 
-import org.codecool.ccms.dao.*;
+import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.inputProvider.InputProvider;
 import org.codecool.ccms.modules.Displayable;
 import org.codecool.ccms.modules.User;
-
-import java.sql.SQLException;
 import java.util.List;
 
 public class Login {
-    private InputProvider inputProvider;
-    private UserDao userDao;
-    private Session session;
+    private final InputProvider inputProvider;
+    private final UserDao userDao;
+    private final Session session;
 
     public Login(Session session){
         this.session = session;

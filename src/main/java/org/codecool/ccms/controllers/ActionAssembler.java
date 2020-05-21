@@ -1,13 +1,9 @@
 package org.codecool.ccms.controllers;
 
-import org.codecool.ccms.modules.*;
-import org.codecool.ccms.modules.Module;
+import org.codecool.ccms.modules.Role;
 import org.codecool.ccms.session.*;
-
-import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ActionAssembler {
     private final Session session;
@@ -45,7 +41,6 @@ public class ActionAssembler {
                 break;
         }
         index = populateMapWithActions(index, actionMap, new UniversalActions(session));
-
     }
 
     private int populateMapWithActions(int index, Map<Integer, MenuOption> actionMap, Actions actions){
@@ -57,6 +52,6 @@ public class ActionAssembler {
         return index;
     }
 
-    public Map<Integer, MenuOption> getMap(){ return this.actionMap; }
-
+    public Map<Integer, MenuOption> getMap(){
+        return this.actionMap; }
 }
