@@ -24,7 +24,7 @@ public class Login {
         String userPassword = inputProvider.gatherInput("Provide your password: ");
         userDao.connect();
         List<Displayable> users;
-            users = userDao.getUserBy("email", userEmail);
+        users = userDao.getUserBy("email", userEmail);
 
         if (users != null && users.isEmpty()){
             session.getView().displayMessage("No matching user in database.");

@@ -1,6 +1,5 @@
 package org.codecool.ccms.controllers;
 import org.codecool.ccms.modules.Role;
-import org.codecool.ccms.session.LoginActions;
 import org.codecool.ccms.session.Session;
 import java.util.ArrayList;
 import java.util.HashMap;
