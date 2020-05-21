@@ -66,12 +66,32 @@ public class UserDao extends Dao{
                 boolean isPassed = resultSet.getBoolean("isPassed");
                 assignments.add(new Assignment(id, description, name, module, isPassed));
             }
-
+            statement.close();
+            connection.close();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
 
         return assignments;
+    }
+
+    public List<Displayable> viewAllMentors(){
+        return getUsers("SELECT * FROM User WHERE roleId = 2");
+    }
+
+    public void removeMentor(int id) {
+        connect();
+        try {
+            statement.executeUpdate("DELETE FROM User WHERE id = '" + id + "' AND roleId = 2");
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void AddMentor(String name, String surname, String email, String password, String roleId) {
+        insertUser(new String[]{name, surname, email, password, roleId});
     }
 
     public void addAttendance(int userId, int workDayId){
@@ -86,14 +106,18 @@ public class UserDao extends Dao{
         insert("WorkDay", columns, value);
     }
 
-    public void insertAssignment(String name, String description) {
-        String[] columns = {"name", "description", "isPassed"};
-        String[] values = {name, description, "0"};
+    public void insertAssignment(String name, String description, int moduleId) {
+        String[] columns = {"name", "description", "moduleId"};
+        String[] valuesRaw = {name, description, String.valueOf(moduleId)};
+        String[] values = new String[valuesRaw.length];
+        for (int i=0; i<values.length; i++) {
+            values[i] = "'"+valuesRaw[i]+"'";
+        }
         insert("Assignment", columns, values);
     }
 
     public void insertUser(String[] values) {
-        String[] columns = { "name", "surname", "email", "password", "phone", "Id_role" };
+        String[] columns = { "first_name", "surname", "email", "password", "roleId" };
 
         for (int i = 0; i < 5; i++) {
             values[i] = String.format("'%s'", values[i]);

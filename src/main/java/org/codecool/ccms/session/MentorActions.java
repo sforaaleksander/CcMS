@@ -29,7 +29,8 @@ public class MentorActions extends Actions {
     public void addAssignment(){
         String name = this.getSession().getInputProvider().gatherInput("Assignment name: ");
         String description = this.getSession().getInputProvider().gatherInput("Assignment description: ");
-        this.getSession().getUserDao().insertAssignment(name, description);
+        int moduleId = this.getSession().getInputProvider().gatherIntInput("Module no.: ", 0, 5);
+        this.getSession().getUserDao().insertAssignment(name, description, moduleId);
         this.getSession().getView().displayMessage("Assignment added");
     }
 
