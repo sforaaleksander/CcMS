@@ -76,7 +76,6 @@ public class UserDao extends Dao{
     public void addAttendance(int userId){
         String[] columns = {"userId", "workDayID"};
 //        insert("Attendance");
-
     }
 
     public void addWorkDay(String date){
