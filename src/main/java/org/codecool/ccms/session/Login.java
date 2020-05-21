@@ -23,7 +23,7 @@ public class Login {
         String userEmail = inputProvider.gatherInput("Provide your email: ");
         String userPassword = inputProvider.gatherInput("Provide your password: ");
         userDao.connect();
-        List<Displayable> users = null;
+        List<Displayable> users;
             users = userDao.getUserBy("email", userEmail);
 
         if (users != null && users.isEmpty()){
