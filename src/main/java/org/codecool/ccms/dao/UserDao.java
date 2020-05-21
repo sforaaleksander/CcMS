@@ -5,7 +5,10 @@ import org.codecool.ccms.modules.Module;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserDao extends Dao{
@@ -70,6 +73,18 @@ public class UserDao extends Dao{
         return assignments;
     }
 
+    public void addAttendance(int userId){
+        String[] columns = {"userId", "workDayID"};
+//        insert("Attendance");
+
+    }
+
+    public void addWorkDay(String date){
+        String[] value = {date};
+        String[] columns = {"date"};
+        insert("WorkDay", columns, value);
+    }
+
     public void insertAssignment(String name, String description) {
         String[] columns = {"name", "description", "isPassed"};
         String[] values = {name, description, "0"};
@@ -88,5 +103,22 @@ public class UserDao extends Dao{
     public void updateUser(String id, String column, String newValue) {
         newValue = String.format("'%s'", newValue);
         update("User", id, column, newValue);
+    }
+
+    public WorkDay getWorkDayIdByDate(String findDate) {
+        connect();
+        WorkDay workDay = null;
+        try {
+            ResultSet results = statement.executeQuery("SELECT * FROM WorkDay WHERE Date = '"+findDate+"';");
+            while (results.next()) {
+                int id = results.getInt("id");
+                String sDate = results.getString("Date");
+                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
+                workDay = new WorkDay(date, id);
+            }
+        } catch (SQLException | ParseException e) {
+            e.printStackTrace();
+        }
+        return workDay;
     }
 }
