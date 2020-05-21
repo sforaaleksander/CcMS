@@ -4,10 +4,12 @@ import org.codecool.ccms.controllers.MenuOption;
 import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.modules.Displayable;
 import org.codecool.ccms.modules.Student;
+import org.codecool.ccms.modules.WorkDay;
 import org.sqlite.SQLiteException;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,18 +43,26 @@ public class MentorActions extends Actions {
     public void checkAllStudentsAttendance() {
         UserDao userDao = this.getSession().getUserDao();
         LocalDate todayDate = LocalDate.now();
-        String date = todayDate.toString();
-        userDao.addWorkDay(date);
-        int workDayId = userDao.getWorkDay("date", date).getDayId();
+        String date = todayDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"));
+
+        WorkDay workDay = getPresentDayInstance(userDao, date);
+
         List<Displayable> students = userDao.getUserBy("roleId", "4");
         for (Displayable displayStudent : students) {
             Student student = (Student) displayStudent;
             this.getSession().getView().displayMessage(student.getFirstName() + " " + student.getSurname());
             String isPresent = this.getSession().getInputProvider().gatherYesNoInput("Is the student present?");
             if (isPresent.equals("Y")) {
-                userDao.addAttendance(student.getId(), workDayId);
+                userDao.addAttendance(student.getId(), workDay);
             }
         }
+    }
+
+    private WorkDay getPresentDayInstance(UserDao userDao, String date) {
+        if (userDao.getWorkDay(date) == null){
+            userDao.addWorkDay(date);
+        }
+        return userDao.getWorkDay(date);
     }
 
     public void updateStudentAttendance(){

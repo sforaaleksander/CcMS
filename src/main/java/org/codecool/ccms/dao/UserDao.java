@@ -63,6 +63,7 @@ public class UserDao extends Dao{
                 boolean isPassed = resultSet.getBoolean("isPassed");
                 assignments.add(new Assignment(id, description, name, module, isPassed));
             }
+            resultSet.close();
             statement.close();
             connection.close();
         } catch (SQLException throwable) {
@@ -94,9 +95,9 @@ public class UserDao extends Dao{
         insertUser(new String[]{name, surname, email, password, roleId});
     }
 
-    public void addAttendance(int userId, int workDayId){
+    public void addAttendance(int userId, WorkDay workDay){
         String[] columns = {"userId", "workDayID"};
-        String[] values = { String.valueOf(userId), String.valueOf(workDayId)};
+        String[] values = { String.valueOf(userId), workDay.getDate().toString()};
         insert("Attendance", columns, values);
     }
 
@@ -130,22 +131,25 @@ public class UserDao extends Dao{
         update("User", id, column, newValue);
     }
 
-    public WorkDay getWorkDay(String columnName, String value) {
+    public WorkDay getWorkDay(String value) {
         connect();
         String query = "SELECT * FROM WorkDay WHERE date = '" +value+ "';";
         System.out.println(query);
         WorkDay workDay = null;
         try {
             ResultSet results = statement.executeQuery(query);
-//            while (results.next()) {
-                String stringDate = results.getString("Date");
+            while (results.next()) {
+                String stringDate = results.getString("date");
 
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
                 formatter = formatter.withLocale(Locale.ENGLISH);
                 LocalDate date = LocalDate.parse(stringDate, formatter);
 
                 workDay = new WorkDay(date);
-//            }
+            }
+            results.close();
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
