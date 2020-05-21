@@ -6,6 +6,7 @@ import org.codecool.ccms.modules.Displayable;
 import org.codecool.ccms.modules.Student;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,12 @@ public class MentorActions extends Actions {
     }
     @Override
     public List<MenuOption> returnActions() {
-        return null;
+        List<MenuOption> options = new ArrayList<>();
+        options.add(new MenuOption("Add new assignment", this::addAssignment));
+        options.add(new MenuOption("Check all students' attendance", this::checkAllStudentsAttendance));
+        options.add(new MenuOption("Grade student's assignment", this::gradeAssignment));
+        options.add(new MenuOption("Update student's assignment", this::updateStudentAttendance));
+        return options;
     }
 
     public void addAssignment(){
