@@ -32,6 +32,11 @@ public class ManagerActions extends Actions {
     }
 
     public void addMentor(){
-
+        String name = this.getSession().getInputProvider().gatherInput("Enter name: ");
+        String surname = this.getSession().getInputProvider().gatherInput("Enter surname: ");
+        String email = this.getSession().getInputProvider().gatherInput("Enter email: ");
+        String password = this.getSession().getInputProvider().gatherInput("Enter password: ");
+        String roleId = "2";
+        this.getSession().getUserDao().AddMentor(name, surname, email, password, roleId);
     }
 }
