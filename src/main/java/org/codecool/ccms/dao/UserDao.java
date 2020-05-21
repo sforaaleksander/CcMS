@@ -10,8 +10,8 @@ import java.util.List;
 
 public class UserDao extends Dao{
 
-    private List<User> getUsers(String query) {
-        List<User> users = new ArrayList<>();
+    private List<Displayable> getUsers(String query) {
+        List<Displayable> users = new ArrayList<>();
         connect();
 
         try {
@@ -41,7 +41,7 @@ public class UserDao extends Dao{
     }
 
 
-    public List<User> getUserBy(String columnName, String value) throws SQLException {
+    public List<Displayable> getUserBy(String columnName, String value) {
         return getUsers(
                 "SELECT * FROM User WHERE " + columnName + " = '" + value + "';");
     }
@@ -53,7 +53,7 @@ public class UserDao extends Dao{
             ResultSet resultSet = statement.executeQuery("SELECT asg.id, asg.name, asg.description, Module.id as moduleId, uca.isPassed FROM UserCrossAssignment as uca" +
                                                             " LEFT JOIN Assigment as asg ON asg.id = uca.assignmentId " +
                                                             " LEFT JOIN Module ON Module.id = asg.moduleId " +
-                                                            " WHERE uca.id = \'" + user + "\'" );
+                                                            " WHERE uca.id = '" + user + "'" );
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -63,11 +63,17 @@ public class UserDao extends Dao{
                 assignments.add(new Assignment(id, description, name, module, isPassed));
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
 
         return assignments;
+    }
+
+    public void insertAssignment(String name, String description) {
+        String[] columns = {"name", "description", "isPassed"};
+        String[] values = {name, description, "0"};
+        insert("Assignment", columns, values);
     }
 
     public void insertUser(String[] values) {
