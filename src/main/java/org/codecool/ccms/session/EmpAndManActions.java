@@ -1,6 +1,7 @@
 package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
+import org.codecool.ccms.modules.Role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,7 @@ public class EmpAndManActions extends Actions {
         String surname = this.getSession().getInputProvider().gatherInput("Enter surname: ");
         String email = this.getSession().getInputProvider().gatherInput("Enter email: ");
         String password = this.getSession().getInputProvider().gatherInput("Enter password: ");
-        String roleId = "4";
+        String roleId = String.valueOf(Role.STUDENT.getRoleId());
         this.getSession().getUserDao().AddUser(name, surname, email, password, roleId);
         viewAllStudents();
     }
@@ -68,7 +69,7 @@ public class EmpAndManActions extends Actions {
     public void removeStudent(){
         viewAllStudents();
         int id = this.getSession().getInputProvider().gatherIntInput("Enter student's ID: ");
-        this.getSession().getUserDao().removeUser(id, 4);
+        this.getSession().getUserDao().removeUser(id, Role.STUDENT.getRoleId());
         viewAllStudents();
     }
 }
