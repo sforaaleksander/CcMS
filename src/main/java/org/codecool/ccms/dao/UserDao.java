@@ -10,8 +10,8 @@ import java.util.List;
 
 public class UserDao extends Dao{
 
-    private List<User> getUsers(String query) {
-        List<User> users = new ArrayList<>();
+    private List<Displayable> getUsers(String query) {
+        List<Displayable> users = new ArrayList<>();
         connect();
 
         try {
@@ -41,7 +41,7 @@ public class UserDao extends Dao{
     }
 
 
-    public List<User> getUserBy(String columnName, String value) throws SQLException {
+    public List<Displayable> getUserBy(String columnName, String value) throws SQLException {
         return getUsers(
                 "SELECT * FROM User WHERE " + columnName + " = '" + value + "';");
     }
@@ -53,7 +53,7 @@ public class UserDao extends Dao{
             ResultSet resultSet = statement.executeQuery("SELECT asg.id, asg.name, asg.description, Module.id as moduleId, uca.isPassed FROM UserCrossAssignment as uca" +
                                                             " LEFT JOIN Assigment as asg ON asg.id = uca.assignmentId " +
                                                             " LEFT JOIN Module ON Module.id = asg.moduleId " +
-                                                            " WHERE uca.id = \'" + user + "\'" );
+                                                            " WHERE uca.id = '" + user + "'");
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -62,12 +62,28 @@ public class UserDao extends Dao{
                 boolean isPassed = resultSet.getBoolean("isPassed");
                 assignments.add(new Assignment(id, description, name, module, isPassed));
             }
-
+            statement.close();
+            connection.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
         return assignments;
+    }
+
+    public List<Displayable> viewAllMentors(){
+        return getUsers("SELECT id, first_name, surname, email FROM User WHERE roleId = 2");
+    }
+
+    public void removeMentor(int id) {
+        connect();
+        try {
+            statement.executeQuery("DELETE FROM User WHERE id = '" + id + "' AND roleId = 2");
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void insertUser(String[] values) {
