@@ -6,6 +6,7 @@ import org.codecool.ccms.modules.Displayable;
 import org.codecool.ccms.modules.Student;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +38,8 @@ public class MentorActions extends Actions {
 
     public void checkAllStudentsAttendance() {
         UserDao userDao = this.getSession().getUserDao();
-        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        LocalDate todayDate = LocalDate.now();
+        String date = todayDate.toString();
         userDao.addWorkDay(date);
         int workDayId = userDao.getWorkDayIdByDate(date).getDayId();
         List<Displayable> students = userDao.getUserBy("roleId", "4");
