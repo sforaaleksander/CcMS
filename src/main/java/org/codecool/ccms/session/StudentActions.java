@@ -17,8 +17,8 @@ public class StudentActions extends Actions {
     @Override
     public List<MenuOption> returnActions() {
         List<MenuOption> options = new ArrayList<>();
-        options.add(new MenuOption(0,"Update My Assignement.", this::updateMyAssignement));
-        options.add(new MenuOption(0, "View my grades.", this::viewMyGrades));
+        options.add(new MenuOption("Update My Assignement.", this::updateMyAssignement));
+        options.add(new MenuOption("View my grades.", this::viewMyGrades));
         return options;
     }
 

@@ -27,8 +27,8 @@ public class UniversalActions extends Actions {
     @Override
     public List<MenuOption> returnActions() {
         List<MenuOption> options = new ArrayList<>();
-        if (this.getSession().getUser() != null) options.add(new MenuOption(0,"Update My Details.", this::updateMyDetails));
-        options.add(new MenuOption(0, "Exit CCMS", this::exit));
+        if (this.getSession().getUser() != null) options.add(new MenuOption("Update My Details.", this::updateMyDetails));
+        options.add(new MenuOption("Exit CCMS", this::exit));
         return options;
     }
 

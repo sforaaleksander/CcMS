@@ -5,13 +5,16 @@ import org.codecool.ccms.modules.Module;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserDao extends Dao{
 
-    private List<User> getUsers(String query) {
-        List<User> users = new ArrayList<>();
+    private List<Displayable> getUsers(String query) {
+        List<Displayable> users = new ArrayList<>();
         connect();
 
         try {
@@ -41,7 +44,7 @@ public class UserDao extends Dao{
     }
 
 
-    public List<User> getUserBy(String columnName, String value) throws SQLException {
+    public List<Displayable> getUserBy(String columnName, String value) {
         return getUsers(
                 "SELECT * FROM User WHERE " + columnName + " = '" + value + "';");
     }
@@ -53,7 +56,7 @@ public class UserDao extends Dao{
             ResultSet resultSet = statement.executeQuery("SELECT asg.id, asg.name, asg.description, Module.id as moduleId, uca.isPassed FROM UserCrossAssignment as uca" +
                                                             " LEFT JOIN Assigment as asg ON asg.id = uca.assignmentId " +
                                                             " LEFT JOIN Module ON Module.id = asg.moduleId " +
-                                                            " WHERE uca.id = \'" + user + "\'" );
+                                                            " WHERE uca.id = '" + user + "'" );
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
@@ -63,11 +66,29 @@ public class UserDao extends Dao{
                 assignments.add(new Assignment(id, description, name, module, isPassed));
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
 
         return assignments;
+    }
+
+    public void addAttendance(int userId){
+        String[] columns = {"userId", "workDayID"};
+//        insert("Attendance");
+
+    }
+
+    public void addWorkDay(String date){
+        String[] value = {date};
+        String[] columns = {"date"};
+        insert("WorkDay", columns, value);
+    }
+
+    public void insertAssignment(String name, String description) {
+        String[] columns = {"name", "description", "isPassed"};
+        String[] values = {name, description, "0"};
+        insert("Assignment", columns, values);
     }
 
     public void insertUser(String[] values) {
@@ -82,5 +103,22 @@ public class UserDao extends Dao{
     public void updateUser(String id, String column, String newValue) {
         newValue = String.format("'%s'", newValue);
         update("User", id, column, newValue);
+    }
+
+    public WorkDay getWorkDayIdByDate(String findDate) {
+        connect();
+        WorkDay workDay = null;
+        try {
+            ResultSet results = statement.executeQuery("SELECT * FROM WorkDay WHERE Date = '"+findDate+"';");
+            while (results.next()) {
+                int id = results.getInt("id");
+                String sDate = results.getString("Date");
+                Date date = new SimpleDateFormat("yyyy-MM-dd").parse(sDate);
+                workDay = new WorkDay(date, id);
+            }
+        } catch (SQLException | ParseException e) {
+            e.printStackTrace();
+        }
+        return workDay;
     }
 }

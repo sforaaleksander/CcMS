@@ -2,6 +2,7 @@ package org.codecool.ccms.session;
 
 import org.codecool.ccms.dao.*;
 import org.codecool.ccms.inputProvider.InputProvider;
+import org.codecool.ccms.modules.Displayable;
 import org.codecool.ccms.modules.User;
 
 import java.sql.SQLException;
@@ -22,22 +23,20 @@ public class Login {
         String userEmail = inputProvider.gatherInput("Provide your email: ");
         String userPassword = inputProvider.gatherInput("Provide your password: ");
         userDao.connect();
-        List<User> users = null;
-        try {
+        List<Displayable> users = null;
             users = userDao.getUserBy("email", userEmail);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
         if (users != null && users.isEmpty()){
             session.getView().displayMessage("No matching user in database.");
             return false;
         }
-        if (!users.get(0).getPassword().equals(userPassword)) {
+        User user = (User) users.get(0);
+        if (!user.getPassword().equals(userPassword)) {
             session.getView().displayMessage("Wrong password!");
             return false;
         }
-        session.setUser(users.get(0));
-        System.out.println("Logged in as " + users.get(0).getFirstName());
+        session.setUser(user);
+        System.out.println("Logged in as " + user.getFirstName());
         session.getMenuController().menuMapUpdate();
         return true;
     }

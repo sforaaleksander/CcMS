@@ -13,7 +13,7 @@ public class LoginActions extends Actions{
 
     public List<MenuOption> returnActions(){
         List<MenuOption> options = new ArrayList<>();
-        options.add(new MenuOption(0, "Login", this::handleLogin));
+        options.add(new MenuOption("Login", this::handleLogin));
         return options;
     };
 

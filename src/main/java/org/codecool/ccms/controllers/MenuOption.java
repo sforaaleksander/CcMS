@@ -8,8 +8,7 @@ public class MenuOption implements Displayable {
     private String name;
     private Runnable action;
 
-    public MenuOption(int id, String name, Runnable action){
-        this.id = id;
+    public MenuOption(String name, Runnable action){
         this.name = name;
         this.action = action;
     }
