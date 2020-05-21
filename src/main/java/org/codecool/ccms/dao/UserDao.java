@@ -2,6 +2,7 @@ package org.codecool.ccms.dao;
 
 import org.codecool.ccms.modules.Module;
 import org.codecool.ccms.modules.*;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -74,6 +75,7 @@ public class UserDao extends Dao{
                 boolean isPassed = false;
                 assignments.add(new Assignment(id, description, name, module, isPassed));
             }
+            resultSet.close();
             statement.close();
             for (Displayable assigment: assignments) {
                 int id = ((Assignment)assigment).getId();
@@ -113,9 +115,9 @@ public class UserDao extends Dao{
         insertUser(new String[]{name, surname, email, password, roleId});
     }
 
-    public void addAttendance(int userId, int workDayId){
+    public void addAttendance(int userId, WorkDay workDay){
         String[] columns = {"userId", "workDayID"};
-        String[] values = { String.valueOf(userId), String.valueOf(workDayId)};
+        String[] values = { String.valueOf(userId), workDay.getDate().toString()};
         insert("Attendance", columns, values);
     }
 
@@ -149,23 +151,43 @@ public class UserDao extends Dao{
         update("User", id, column, newValue);
     }
 
-    public WorkDay getWorkDayIdByDate(String findDate) {
+    public WorkDay getWorkDay(String value) {
         connect();
-        String query = "SELECT * FROM WorkDay WHERE Date = '"+findDate+"';";
+        String query = "SELECT * FROM WorkDay WHERE date = '" +value+ "';";
+        System.out.println(query);
+
         WorkDay workDay = null;
         try {
             ResultSet results = statement.executeQuery(query);
             while (results.next()) {
-                int id = results.getInt("id");
-                String stringDate = results.getString("Date");
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd");
+                String stringDate = results.getString("date");
+
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
                 formatter = formatter.withLocale(Locale.ENGLISH);
                 LocalDate date = LocalDate.parse(stringDate, formatter);
-                workDay = new WorkDay(date, id);
+
+                workDay = new WorkDay(date);
+
             }
+            results.close();
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return workDay;
     }
+
+    public void removeAttendance(int studentID, WorkDay workDay) {
+        connect();
+        String date = workDay.getDate().format(DateTimeFormatter.ofPattern("ddMMyyyy"));
+        try {
+            statement.executeUpdate("DELETE FROM Attendance WHERE userId = '" + studentID + "' AND workDayId = '" + date + "'");
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

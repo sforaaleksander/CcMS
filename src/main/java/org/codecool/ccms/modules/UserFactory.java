@@ -3,7 +3,7 @@ package org.codecool.ccms.modules;
 import org.codecool.ccms.dao.UserDao;
 
 public class UserFactory {
-    private UserDao userDao;
+    private final UserDao userDao;
 
     public UserFactory(UserDao userDao) {
         this.userDao = userDao;

@@ -4,7 +4,9 @@ import org.codecool.ccms.controllers.MenuOption;
 import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.modules.Displayable;
 import org.codecool.ccms.modules.Student;
+import org.codecool.ccms.modules.WorkDay;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,7 @@ public class MentorActions extends Actions {
         options.add(new MenuOption("Add new assignment", this::addAssignment));
         options.add(new MenuOption("Check all students' attendance", this::checkAllStudentsAttendance));
         options.add(new MenuOption("Grade student's assignment", this::gradeAssignment));
-        options.add(new MenuOption("Update student's assignment", this::updateStudentAttendance));
+        options.add(new MenuOption("Update student's attendance", this::updateStudentAttendance));
         return options;
     }
 
@@ -39,21 +41,50 @@ public class MentorActions extends Actions {
     public void checkAllStudentsAttendance() {
         UserDao userDao = this.getSession().getUserDao();
         LocalDate todayDate = LocalDate.now();
-        String date = todayDate.toString();
-        userDao.addWorkDay(date);
-        int workDayId = userDao.getWorkDayIdByDate(date).getDayId();
+        String date = todayDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"));
+
+        WorkDay workDay = getPresentDayInstance(userDao, date);
+
         List<Displayable> students = userDao.getUserBy("roleId", "4");
         for (Displayable displayStudent : students) {
             Student student = (Student) displayStudent;
             this.getSession().getView().displayMessage(student.getFirstName() + " " + student.getSurname());
             String isPresent = this.getSession().getInputProvider().gatherYesNoInput("Is the student present?");
             if (isPresent.equals("Y")) {
-                userDao.addAttendance(student.getId(), workDayId);
+                userDao.addAttendance(student.getId(), workDay);
             }
         }
     }
 
-    public void updateStudentAttendance(){
-
+    private WorkDay getPresentDayInstance(UserDao userDao, String date) {
+        if (userDao.getWorkDay(date) == null){
+            userDao.addWorkDay(date);
+        }
+        return userDao.getWorkDay(date);
     }
-}
+
+    public void updateStudentAttendance(){
+        UserDao userDao = this.getSession().getUserDao();
+        LocalDate todayDate = LocalDate.now();
+        String date = todayDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"));
+
+        WorkDay workDay = getPresentDayInstance(userDao, date);
+
+        List<Displayable> students = userDao.getUserBy("roleId", "4");
+        String[] headers = {"Student's ID", "Student's first name", "Student's surname"};
+        this.getSession().getView().setQuerryHeaders(headers);
+        this.getSession().getView().setQuerryList(students);
+        this.getSession().getView().displayContent();
+        int studentID = this.getSession().getInputProvider().gatherIntInput("Provide student's ID to mark as present ");
+        String isPresent = this.getSession().getInputProvider().gatherYesNoInput("Is the student present?");
+
+        if (isPresent.equals("Y")) {
+            userDao.addAttendance(studentID, workDay);
+            this.getSession().getView().displayMessage("Attendance added");
+        } else {
+            userDao.removeAttendance(studentID, workDay);
+            this.getSession().getView().displayMessage("Attendance removed");
+        }
+        }
+    }
+

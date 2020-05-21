@@ -22,6 +22,9 @@ public class EmpAndManActions extends Actions {
     }
 
     public void updateMentorDetails() {
+        ManagerActions ma = new ManagerActions(this.getSession());
+        ma.viewAllMentors();
+        this.getSession().getView().displayContent();
         String id = this.getSession().getInputProvider().gatherInput("Enter mentor's ID you would like to edit: ");
         System.out.println("What you want to update:\n1. Name\n2. Surname\n3. Email\n4. All");
         String choice = this.getSession().getInputProvider().gatherInput("Choice: ");
@@ -47,6 +50,7 @@ public class EmpAndManActions extends Actions {
                 this.getSession().getUserDao().updateUser(id, "email", email1);
                 break;
         }
+        ma.viewAllMentors();
     }
 
     public void viewAllStudents() {
@@ -66,6 +70,7 @@ public class EmpAndManActions extends Actions {
 
     public void removeStudent() {
         viewAllStudents();
+        this.getSession().getView().displayContent();
         int id = this.getSession().getInputProvider().gatherIntInput("Enter student's ID: ");
         this.getSession().getUserDao().removeUser(id, Role.STUDENT.getRoleId());
         viewAllStudents();

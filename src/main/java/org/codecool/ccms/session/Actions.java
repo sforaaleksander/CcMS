@@ -1,7 +1,6 @@
 package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
-import org.codecool.ccms.dao.UserDao;
 
 import java.util.List;
 
