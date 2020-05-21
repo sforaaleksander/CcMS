@@ -23,5 +23,6 @@ public enum Role {
         return (Role) map.get(roleId);
     }
 
-    public int getRoleId() { return roleId; }
+    public int getRoleId() {
+        return roleId; }
 }

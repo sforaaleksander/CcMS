@@ -3,14 +3,11 @@ package org.codecool.ccms.inputProvider;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
+
 import java.util.Scanner;
 import java.util.Stack;
 
 
-//scan = new Scanner(System.in);
-//scan.useDelimiter(System.lineSeparator());}
 
 public class InputProvider {
     public Scanner scan;

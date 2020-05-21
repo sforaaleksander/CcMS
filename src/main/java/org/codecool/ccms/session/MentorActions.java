@@ -4,11 +4,8 @@ import org.codecool.ccms.controllers.MenuOption;
 import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.modules.Displayable;
 import org.codecool.ccms.modules.Student;
-
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class MentorActions extends Actions {
@@ -16,6 +13,7 @@ public class MentorActions extends Actions {
     public MentorActions(Session session) {
         super(session);
     }
+
     @Override
     public List<MenuOption> returnActions() {
         List<MenuOption> options = new ArrayList<>();
@@ -26,7 +24,7 @@ public class MentorActions extends Actions {
         return options;
     }
 
-    public void addAssignment(){
+    public void addAssignment() {
         String name = this.getSession().getInputProvider().gatherInput("Assignment name: ");
         String description = this.getSession().getInputProvider().gatherInput("Assignment description: ");
         int moduleId = this.getSession().getInputProvider().gatherIntInput("Module no.: ", 0, 5);
