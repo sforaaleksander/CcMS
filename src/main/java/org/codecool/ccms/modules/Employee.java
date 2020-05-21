@@ -14,7 +14,6 @@ public class Employee extends User {
 
     @Override
     public String[] toStringList() {
-        String[] stringList = {String.valueOf(this.getId()), this.getFirstName(), this.getSurname(), this.getEmail()};
-        return stringList;
+        return new String[]{String.valueOf(this.getId()), this.getFirstName(), this.getSurname(), this.getEmail()};
     }
 }

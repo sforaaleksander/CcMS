@@ -79,10 +79,14 @@ public class UserDao extends Dao{
         return getUsers("SELECT * FROM User WHERE roleId = 2");
     }
 
-    public void removeMentor(int id) {
+    public List<Displayable> viewStudentsContact(){
+        return getUsers("SELECT * FROM User WHERE roleId = 4");
+    }
+
+    public void removeUser(int id, int roleId) {
         connect();
         try {
-            statement.executeUpdate("DELETE FROM User WHERE id = '" + id + "' AND roleId = 2");
+            statement.executeUpdate("DELETE FROM User WHERE id = '" + id + "' AND roleId = '" + roleId + "'");
             statement.close();
             connection.close();
         } catch (SQLException e) {
@@ -90,7 +94,7 @@ public class UserDao extends Dao{
         }
     }
 
-    public void AddMentor(String name, String surname, String email, String password, String roleId) {
+    public void AddUser(String name, String surname, String email, String password, String roleId) {
         insertUser(new String[]{name, surname, email, password, roleId});
     }
 
