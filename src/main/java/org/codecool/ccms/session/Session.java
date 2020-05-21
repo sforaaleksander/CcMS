@@ -15,18 +15,18 @@ public class Session {
     private final MenuController menuController;
     private Boolean isRunning;
 
-    private Session() {
+    private Session(String[] args) {
         this.isRunning = true;
         this.userDao = new UserDao();
-        this.inputProvider = new InputProvider();
+        this.inputProvider = new InputProvider(args);
         this.view = new View();
         this.menuController = new MenuController(this);
         this.view.setCommandList(new ArrayList<>(menuController.getActionMap().values()));
     }
 
-    public static Session getSession(){
+    public static Session getSession(String[] args){
         if (instance == null) {
-            instance = new Session();
+            instance = new Session(args);
             instance.view.displayMessage("Welcome to Codecool Management System, new session has been created.");
         }
         return instance;

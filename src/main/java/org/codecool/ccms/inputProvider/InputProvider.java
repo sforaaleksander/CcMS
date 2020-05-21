@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class InputProvider {
     public Scanner scan;
 
-    public InputProvider() {
+    public InputProvider(String[] args) {
         scan = new Scanner(System.in);
         scan.useDelimiter(System.lineSeparator());
     }
