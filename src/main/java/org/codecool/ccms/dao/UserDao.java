@@ -1,9 +1,7 @@
 package org.codecool.ccms.dao;
 
-import org.codecool.ccms.modules.Attendance;
-import org.codecool.ccms.modules.Role;
-import org.codecool.ccms.modules.User;
-import org.codecool.ccms.modules.UserFactory;
+import org.codecool.ccms.modules.*;
+import org.codecool.ccms.modules.Module;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,6 +46,29 @@ public class UserDao extends Dao{
                 "SELECT * FROM User WHERE " + columnName + " = '" + value + "';");
     }
 
+    public List<Displayable> getGradesByStudentId(int user){
+        List<Displayable> assignments = new ArrayList<>();
+        connect();
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT asg.id, asg.name, asg.description, Module.id as moduleId, uca.isPassed FROM UserCrossAssignment as uca" +
+                                                            " LEFT JOIN Assigment as asg ON asg.id = uca.assignmentId " +
+                                                            " LEFT JOIN Module ON Module.id = asg.moduleId " +
+                                                            " WHERE uca.id = \'" + user + "\'" );
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                Module module = Module.valueOf(resultSet.getInt("moduleId"));
+                boolean isPassed = resultSet.getBoolean("isPassed");
+                assignments.add(new Assignment(id, description, name, module, isPassed));
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return assignments;
+    }
 
     public void insertUser(String[] values) {
         String[] columns = { "name", "surname", "email", "password", "phone", "Id_role" };
