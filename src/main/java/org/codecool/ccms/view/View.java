@@ -24,15 +24,12 @@ public class View {
         this.querryHeaders = querryHeaders;
     }
     public void setCommandList(List<Displayable> commandList) { this.commandList = commandList; }
-
     public void clearScreen() {
         System.out.print("\033[H\033[2J");
     }
-
     public void displayMessage(String message) {
         System.out.println(message);
     }
-
     public void displayContent() {
         clearScreen();
         String[] superHeader = {"Actions", "Output"};

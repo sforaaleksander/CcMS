@@ -33,6 +33,6 @@ public class StudentActions extends Actions {
 
     public void viewMyGrades(){
         this.getSession().getView().setQuerryList(this.getSession().getUserDao().getGradesByStudentId(this.getSession().getUser().getId()));
-        this.getSession().getView().setQuerryHeaders(new String[]{"Id", "Name", "Module Id", "Is Passed"});
+        this.getSession().getView().setQuerryHeaders(new String[]{"Id", "Name", "Description", "Module"});
     }
 }

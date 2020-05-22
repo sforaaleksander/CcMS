@@ -3,7 +3,7 @@ package org.codecool.ccms.modules;
 public class Assignment implements Displayable {
 
     private final String content;
-    private final Boolean isPassed;
+    private Boolean isPassed;
     private final String name;
     private final Module module;
     private final int id;
@@ -14,6 +14,10 @@ public class Assignment implements Displayable {
         this.name = name;
         this.module = module;
         this.isPassed = isPassed;
+    }
+
+    public Boolean getPassed() {
+        return isPassed;
     }
 
     public int getId() {
@@ -30,6 +34,6 @@ public class Assignment implements Displayable {
 
     @Override
     public String[] toStringList() {
-        return new String[]{Integer.toString(this.id), this.name, this.module.toString(), this.isPassed.toString()};
+        return new String[]{Integer.toString(this.id), this.name, this.content, this.module.toString(), this.getPassed().toString()};
     }
 }

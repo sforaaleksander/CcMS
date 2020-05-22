@@ -2,6 +2,7 @@ package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
 import org.codecool.ccms.dao.UserDao;
+import org.codecool.ccms.modules.Assignment;
 import org.codecool.ccms.modules.Displayable;
 import org.codecool.ccms.modules.Student;
 import org.codecool.ccms.modules.WorkDay;
@@ -35,7 +36,15 @@ public class MentorActions extends Actions {
     }
 
     public void gradeAssignment() {
-
+        String[] headers = new String[]{"Id", "Name", "Students Answer", "Module", "Is Passed"};
+        List<Displayable> assignments = new ArrayList<>();
+        this.getSession().getView().setQuerryHeaders(headers);
+        this.getSession().getUserDao().getAssigments().stream().filter(e -> !((Assignment) e).getPassed()).forEach(assignments::add);
+        this.getSession().getView().setQuerryList(assignments);
+        this.getSession().getView().displayContent();
+        int action = this.getSession().getInputProvider().gatherIntInput("Enter coresponding id of project you" +
+                                                    " want mark as passed:", 1, assignments.size()+1);
+        this.getSession().getUserDao().passAssigment(action);
     }
 
     public void checkAllStudentsAttendance() {
@@ -85,6 +94,6 @@ public class MentorActions extends Actions {
             userDao.removeAttendance(studentID, workDay);
             this.getSession().getView().displayMessage("Attendance removed");
         }
-        }
     }
+}
 

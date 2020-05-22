@@ -41,6 +41,17 @@ public class UserDao extends Dao{
         return users;
     }
 
+    public void passAssigment(int id){
+            connect();
+            try {
+                statement.executeUpdate("UPDATE UserCrossAssignment SET isPassed = 1 WHERE id = " + id);
+                statement.close();
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+    }
+
     public void updatAssigment(int id, int user, String answer){
         connect();
         try {
@@ -51,6 +62,30 @@ public class UserDao extends Dao{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Displayable> getAssigments(){
+        List<Displayable> assignments = new ArrayList<>();
+        connect();
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT uca.id, name, answer, isPassed, moduleId " +
+                                                            "FROM UserCrossAssignment as uca LEFT JOIN Assigment" +
+                                                            " ON uca.assignmentId = Assigment.id; ");
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String answer = resultSet.getString("answer");
+                boolean isPassed = resultSet.getBoolean("isPassed");
+                String name = resultSet.getString("name");
+                Module module = Module.valueOf(resultSet.getInt("moduleId"));
+                assignments.add(new Assignment(id, name, answer, module, isPassed));
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return assignments;
     }
 
     public List<Displayable> getStudentByName(String Name){
@@ -82,7 +117,6 @@ public class UserDao extends Dao{
                 if (statement.executeQuery("SELECT * FROM UserCrossAssignment WHERE userId = " + user + " AND assignmentId = " + id).equals(null))
                     ((Assignment) assigment).setPassed(true);
             }
-
             connection.close();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
@@ -134,7 +168,7 @@ public class UserDao extends Dao{
         for (int i=0; i<values.length; i++) {
             values[i] = "'"+valuesRaw[i]+"'";
         }
-        insert("Assignment", columns, values);
+        insert("Assigment", columns, values);
     }
 
     public void insertUser(String[] values) {
