@@ -28,6 +28,7 @@ public class Login {
             session.getView().displayMessage("No matching user in database.");
             return false;
         }
+        assert users != null;
         User user = (User) users.get(0);
         if (!user.getPassword().equals(userPassword)) {
             System.out.println(user.getPassword());

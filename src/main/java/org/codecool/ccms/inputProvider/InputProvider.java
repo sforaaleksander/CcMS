@@ -80,7 +80,7 @@ public class InputProvider {
         } while (!validInput);
         return userInput;
     }
-    
+
 
     public int gatherIntInput(String message, int rangeMin, int rangeMax) {
         System.out.println(message);
