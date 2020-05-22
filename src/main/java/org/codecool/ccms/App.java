@@ -5,7 +5,7 @@ public class App
 {
     public static void main( String[] args ) {
         String[] arg = {"commandsTest.txt"};
-        Session session = Session.getSession(arg);
+        Session session = Session.getSession(args);
         while (session.getIsRunning()){
             session.nextFrame();
         }

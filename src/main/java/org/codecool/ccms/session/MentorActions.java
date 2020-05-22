@@ -36,7 +36,7 @@ public class MentorActions extends Actions {
     }
 
     public void gradeAssignment() {
-        String[] headers = new String[]{"Id", "Name", "Students Answer", "Module", "Is Passed"};
+        String[] headers = new String[]{"Id", "Students Answer", "Name"};
         List<Displayable> assignments = new ArrayList<>();
         this.getSession().getView().setQuerryHeaders(headers);
         this.getSession().getUserDao().getAssignments().stream().filter(e -> !((Assignment) e).getPassed()).forEach(assignments::add);
