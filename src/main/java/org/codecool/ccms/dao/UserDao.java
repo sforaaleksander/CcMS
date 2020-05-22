@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class UserDao extends Dao{
 
@@ -64,13 +65,11 @@ public class UserDao extends Dao{
         }
     }
 
-    public List<Displayable> getAssignments(){
+    private List<Displayable> getAssignments(String query){
         List<Displayable> assignments = new ArrayList<>();
         connect();
         try {
-            ResultSet resultSet = statement.executeQuery("SELECT uca.id, name, answer, isPassed, moduleId " +
-                                                            "FROM UserCrossAssignment as uca LEFT JOIN Assigment" +
-                                                            " ON uca.assignmentId = Assigment.id; ");
+            ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String answer = resultSet.getString("answer");
@@ -88,7 +87,21 @@ public class UserDao extends Dao{
         return assignments;
     }
 
-    public List<Displayable> getStudentByName(String Name){
+    public List<Displayable> getAllAssignments(){
+        return getAssignments("SELECT uca.id, name, answer, isPassed, moduleId " +
+                "FROM UserCrossAssignment as uca LEFT JOIN Assigment" +
+                " ON uca.assignmentId = Assigment.id; ");
+    }
+
+    public List<Displayable> getPassedAssignmentsByStudentID(int studentId){
+        return getAssignments("SELECT uca.id, name, answer, isPassed, moduleId " +
+                "FROM UserCrossAssignment as uca LEFT JOIN Assigment" +
+                " ON uca.assignmentId = Assigment.id WHERE uca.userId = " + studentId  +
+                " AND uca.isPassed = 1;");
+    }
+
+
+        public List<Displayable> getStudentByName(String Name){
         return getUsers("SELECT * FROM User WHERE surname LIKE '%" + Name + "%' AND roleId = 4");
     }
 
@@ -205,6 +218,34 @@ public class UserDao extends Dao{
         }
         return workDay;
     }
+
+    public Module getStudentModuleBasedOnPassedAssignments(int studentId) {
+        List<Displayable> assignmentsAsDisplayable = getAllAssignments();
+
+        List<Assignment> assignments = assignmentsAsDisplayable
+                            .stream()
+                            .map(obj -> (Assignment) obj).collect(Collectors.toList());
+
+        int basicAssgn = (int) assignments.stream().filter(assignment -> assignment.getModule().toString().equals(Module.PROGBASIC.toString())).count();
+        int javaAssgn = (int) assignments.stream().filter(assignment -> assignment.getModule().toString().equals(Module.JAVA.toString())).count();
+        int webAssgn = (int) assignments.stream().filter(assignment -> assignment.getModule().toString().equals(Module.WEB.toString())).count();
+
+        int passedAssgn = getPassedAssignmentsByStudentID(studentId).size();
+
+        if (passedAssgn > basicAssgn + javaAssgn + webAssgn) {
+            return Module.ADVANCED;
+        }
+        if (passedAssgn > basicAssgn + javaAssgn) {
+            return Module.WEB;
+        }
+        if (passedAssgn > basicAssgn) {
+            return Module.JAVA;
+        } else{
+            return Module.PROGBASIC;
+        }
+        }
+
+
 
     public void removeAttendance(int studentID, WorkDay workDay) {
         connect();

@@ -14,8 +14,7 @@ public class UserFactory {
 
         switch (role.toString()){
             case "STUDENT":
-                Module module = Module.ADVANCED;
-                //TODO get student module
+                Module module = userDao.getStudentModuleBasedOnPassedAssignments(id);
                 Student student = new Student(id, name, surname, email, password, role, attendance, module);
                 return student;
 
