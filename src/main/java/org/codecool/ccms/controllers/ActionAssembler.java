@@ -19,7 +19,6 @@ public class ActionAssembler {
 
     private void mapBuilder(){
         int index = 0;
-        Actions actions;
 
         switch (role.toString()){
             case "GUEST":
@@ -40,7 +39,7 @@ public class ActionAssembler {
                 index = populateMapWithActions(index, actionMap, new EmpAndManActions(session));
                 break;
         }
-        index = populateMapWithActions(index, actionMap, new UniversalActions(session));
+        populateMapWithActions(index, actionMap, new UniversalActions(session));
     }
 
     private int populateMapWithActions(int index, Map<Integer, MenuOption> actionMap, Actions actions){
