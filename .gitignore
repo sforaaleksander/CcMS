@@ -4,3 +4,5 @@
 target/
 cCMS_JAT.db
 *.db
+*.db.sqbpro
+*.db-journal
