@@ -21,7 +21,7 @@ public class ManagerActions extends Actions {
     }
 
     public void viewAllMentors() {
-        this.getSession().getView().setQuerryList(this.getSession().getUserDao().viewAllMentors());
+        this.getSession().getView().setQuerryList(this.getSession().getUserDao().viewUsersByRoleId(Role.MENTOR.getRoleId()));
         this.getSession().getView().setQuerryHeaders(new String[]{"Id", "Name", "Surname", "Email"});
     }
 
