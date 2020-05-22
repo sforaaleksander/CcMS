@@ -188,7 +188,6 @@ public class UserDao extends Dao{
     public WorkDay getWorkDay(String value) {
         connect();
         String query = "SELECT * FROM WorkDay WHERE date = '" +value+ "';";
-        System.out.println(query);
 
         WorkDay workDay = null;
         try {
