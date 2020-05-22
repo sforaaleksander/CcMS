@@ -16,12 +16,12 @@ public class InputProvider {
     public InputProvider(String[] args) {
         scan = new Scanner(System.in);
         scan.useDelimiter(System.lineSeparator());
-        commands = new Stack<String>();
+        commands = new Stack<>();
         initializeStack(args);
     }
 
     private void initializeStack(String[] args){
-        Stack midStack = new Stack();
+        Stack<String> midStack = new Stack<>();
         try {
             File file = new File(args[0]);
             Scanner scanFile = new Scanner(file);
@@ -34,20 +34,15 @@ public class InputProvider {
             e.getMessage();
         }
         while (!midStack.isEmpty()){
-            commands.push((String) midStack.pop());
+            commands.push(midStack.pop());
         }
-    }
-
-    public Stack<String> getCommands() {
-        return commands;
     }
 
     private String tryToGrabStringFromStack(){
         if (commands.isEmpty()){
             return scan.next();
         }
-        String command = String.valueOf(commands.pop());
-        return command;
+        return String.valueOf(commands.pop());
     }
 
     public String gatherInput(String title) {
@@ -85,11 +80,7 @@ public class InputProvider {
         } while (!validInput);
         return userInput;
     }
-
-    public void gatherEmptyInput(String message) {
-        System.out.println(message);
-        scan.next();
-    }
+    
 
     public int gatherIntInput(String message, int rangeMin, int rangeMax) {
         System.out.println(message);
