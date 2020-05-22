@@ -28,7 +28,7 @@ public class StudentActions extends Actions {
         Assignment assignment = (Assignment)this.getSession().getView().getQuerryList().get(assi);
         this.getSession().getView().displayMessage(assignment.getContent());
         String answer = this.getSession().getInputProvider().gatherInput("Enter your answer:");
-        this.getSession().getUserDao().updatAssigment(assi, this.getSession().getUser().getId(), answer);
+        this.getSession().getUserDao().updateAssignment(assi, this.getSession().getUser().getId(), answer);
     }
 
     public void viewMyGrades(){

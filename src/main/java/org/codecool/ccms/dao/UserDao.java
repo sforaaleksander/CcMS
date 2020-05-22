@@ -41,7 +41,7 @@ public class UserDao extends Dao{
         return users;
     }
 
-    public void passAssigment(int id){
+    public void passAssignment(int id){
             connect();
             try {
                 statement.executeUpdate("UPDATE UserCrossAssignment SET isPassed = 1 WHERE id = " + id);
@@ -52,11 +52,11 @@ public class UserDao extends Dao{
             }
     }
 
-    public void updatAssigment(int id, int user, String answer){
+    public void updateAssignment(int id, int user, String answer){
         connect();
         try {
             statement.executeUpdate("INSERT INTO UserCrossAssignment (userId, assignmentId, answer) " +
-                                        "VALUES ("+user+", " + id + ", \'" + answer+"\')");
+                                        "VALUES ("+user+", " + id + ", '" + answer+"')");
             statement.close();
             connection.close();
         } catch (SQLException e) {
@@ -64,7 +64,7 @@ public class UserDao extends Dao{
         }
     }
 
-    public List<Displayable> getAssigments(){
+    public List<Displayable> getAssignments(){
         List<Displayable> assignments = new ArrayList<>();
         connect();
         try {
@@ -89,7 +89,7 @@ public class UserDao extends Dao{
     }
 
     public List<Displayable> getStudentByName(String Name){
-        return getUsers("SELECT * FROM User WHERE surname LIKE \'%" + Name + "%\' AND roleId = 4");
+        return getUsers("SELECT * FROM User WHERE surname LIKE '%" + Name + "%' AND roleId = 4");
     }
 
     public List<Displayable> getUserBy(String columnName, String value) {
@@ -112,10 +112,10 @@ public class UserDao extends Dao{
             }
             resultSet.close();
             statement.close();
-            for (Displayable assigment: assignments) {
-                int id = ((Assignment)assigment).getId();
+            for (Displayable assignment: assignments) {
+                int id = ((Assignment)assignment).getId();
                 if (statement.executeQuery("SELECT * FROM UserCrossAssignment WHERE userId = " + user + " AND assignmentId = " + id).equals(null))
-                    ((Assignment) assigment).setPassed(true);
+                    ((Assignment) assignment).setPassed(true);
             }
             connection.close();
         } catch (SQLException throwable) {
