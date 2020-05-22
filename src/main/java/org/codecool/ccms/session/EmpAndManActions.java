@@ -54,7 +54,7 @@ public class EmpAndManActions extends Actions {
     }
 
     public void viewAllStudents() {
-        this.getSession().getView().setQuerryList(this.getSession().getUserDao().viewStudentsContact());
+        this.getSession().getView().setQuerryList(this.getSession().getUserDao().viewUsersByRoleId(Role.STUDENT.getRoleId()));
         this.getSession().getView().setQuerryHeaders(new String[]{"Id", "Name", "Surname", "Email"});
     }
 

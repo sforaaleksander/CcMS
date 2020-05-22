@@ -124,14 +124,9 @@ public class UserDao extends Dao{
         return assignments;
     }
 
-    public List<Displayable> viewAllMentors(){
-        return getUsers("SELECT * FROM User WHERE roleId = 2");
+    public List<Displayable> viewUsersByRoleId(int roleId){
+        return getUsers("SELECT * FROM User WHERE roleId = '" + roleId + "'");
     }
-
-    public List<Displayable> viewStudentsContact(){
-        return getUsers("SELECT * FROM User WHERE roleId = 4");
-    }
-
 
 
     public void removeUser(int id, int roleId) {
