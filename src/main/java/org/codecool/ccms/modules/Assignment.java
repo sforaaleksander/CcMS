@@ -32,6 +32,14 @@ public class Assignment implements Displayable {
         isPassed = passed;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public Module getModule() {
+        return module;
+    }
+
     @Override
     public String[] toStringList() {
         return new String[]{Integer.toString(this.id), this.name, this.content, this.module.toString(), this.getPassed().toString()};
