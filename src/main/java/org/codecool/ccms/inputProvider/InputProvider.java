@@ -52,6 +52,8 @@ public class InputProvider {
     private String validateAgainstSQLinjection(String input){
         input.replaceAll("'", "");
         input.replaceAll("\"", "");
+        input.replaceAll("%", "");
+        input.replaceAll("\\?", "");
         return input;
     }
 
