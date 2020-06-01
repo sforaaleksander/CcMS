@@ -6,9 +6,9 @@ public interface IDao {
     String CONNECTION_STRING = "jdbc:sqlite:" + DB_NAME;
 
 
-    void update(String table, String id, String column, String newValue);
+    void update(String id, String... values);
 
-    void remove(String table, String id);
+    void remove(String id);
 
-    void insert(String table, String[] columns, String[] values);
+    void insert(String... values);
 }
