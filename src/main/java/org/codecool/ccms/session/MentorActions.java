@@ -39,7 +39,7 @@ public class MentorActions extends Actions {
         String[] headers = new String[]{"Id", "Students Answer", "Name"};
         List<Displayable> assignments = new ArrayList<>();
         this.getSession().getView().setQuerryHeaders(headers);
-        this.getSession().getUserDao().getAllAssignments().stream().filter(e -> !((Assignment) e).getPassed()).forEach(assignments::add);
+        this.getSession().getUserCrossAssignmentDao().getAllAssignments().stream().filter(e -> !((Assignment) e).getPassed()).forEach(assignments::add);
         this.getSession().getView().setQuerryList(assignments);
         this.getSession().getView().displayContent();
         int action = this.getSession().getInputProvider().gatherIntInput("Enter coresponding id of project you" +

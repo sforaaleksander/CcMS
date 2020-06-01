@@ -1,5 +1,6 @@
 package org.codecool.ccms.session;
 import org.codecool.ccms.controllers.MenuController;
+import org.codecool.ccms.dao.UserCrossAssignmentDao;
 import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.inputProvider.InputProvider;
 import org.codecool.ccms.models.User;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 public class Session {
     private static Session instance;
     private final UserDao userDao;
+    private final UserCrossAssignmentDao userCrossAssignmentDao;
     private User user;
     private final InputProvider inputProvider;
     private final View view;
@@ -18,6 +20,7 @@ public class Session {
     private Session(String[] args) {
         this.isRunning = true;
         this.userDao = new UserDao();
+        this.userCrossAssignmentDao = new UserCrossAssignmentDao();
         this.inputProvider = new InputProvider(args);
         this.view = new View();
         this.menuController = new MenuController(this);
@@ -54,6 +57,10 @@ public class Session {
 
     public UserDao getUserDao() {
         return userDao;
+    }
+
+    public UserCrossAssignmentDao getUserCrossAssignmentDao() {
+        return userCrossAssignmentDao;
     }
 
     public InputProvider getInputProvider() {
