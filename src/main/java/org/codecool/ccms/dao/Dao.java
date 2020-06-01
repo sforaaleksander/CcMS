@@ -9,7 +9,7 @@ public abstract class Dao implements IDao {
     protected Connection connection;
     protected Statement statement;
 
-    private void connect() {
+    public void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(CONNECTION_STRING);
@@ -33,7 +33,7 @@ public abstract class Dao implements IDao {
     }
 
 
-    public void update(String table, String id, String column, String newValue) {
+    protected void executeUpdate(String table, String id, String column, String newValue) {
         if (column.toLowerCase().equals("id")) {
             System.out.println("You can't change id");
             return;
@@ -42,12 +42,12 @@ public abstract class Dao implements IDao {
         executeQuery(query);
     }
 
-    public void remove(String table, String id) {
+    protected void executeRemove(String table, String id) {
         String query = "DELETE FROM " + table + " WHERE Id = " + id + ";";
         executeQuery(query);
     }
 
-    public void insert(String table, String[] columns, String[] values){
+    protected void executeInsert(String table, String[] columns, String[] values){
         String query = "INSERT INTO " + table
                 + " ( " + String.join(", " , columns) + " ) "
                 + " VALUES " + " ( " + String.join(", " , values) + " );";

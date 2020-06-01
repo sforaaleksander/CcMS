@@ -1,4 +1,4 @@
-package org.codecool.ccms.modules;
+package org.codecool.ccms.models;
 
 public class Assignment implements Displayable {
 

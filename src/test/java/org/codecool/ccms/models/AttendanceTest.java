@@ -1,4 +1,4 @@
-package org.codecool.ccms.modules;
+package org.codecool.ccms.models;
 
 import org.junit.Test;
 
@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import static junit.framework.TestCase.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class AttendanceTest {
 

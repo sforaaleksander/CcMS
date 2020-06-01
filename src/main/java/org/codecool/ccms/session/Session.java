@@ -2,7 +2,7 @@ package org.codecool.ccms.session;
 import org.codecool.ccms.controllers.MenuController;
 import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.inputProvider.InputProvider;
-import org.codecool.ccms.modules.User;
+import org.codecool.ccms.models.User;
 import org.codecool.ccms.view.View;
 import java.util.ArrayList;
 

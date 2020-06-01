@@ -1,6 +1,6 @@
 package org.codecool.ccms.view;
 import com.jakewharton.fliptables.FlipTable;
-import org.codecool.ccms.modules.Displayable;
+import org.codecool.ccms.models.Displayable;
 import java.util.ArrayList;
 import java.util.List;
 

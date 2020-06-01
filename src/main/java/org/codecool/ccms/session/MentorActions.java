@@ -2,10 +2,10 @@ package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
 import org.codecool.ccms.dao.UserDao;
-import org.codecool.ccms.modules.Assignment;
-import org.codecool.ccms.modules.Displayable;
-import org.codecool.ccms.modules.Student;
-import org.codecool.ccms.modules.WorkDay;
+import org.codecool.ccms.models.Assignment;
+import org.codecool.ccms.models.Displayable;
+import org.codecool.ccms.models.Student;
+import org.codecool.ccms.models.WorkDay;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;

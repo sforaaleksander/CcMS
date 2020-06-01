@@ -1,6 +1,6 @@
 package org.codecool.ccms.controllers;
 
-import org.codecool.ccms.modules.Displayable;
+import org.codecool.ccms.models.Displayable;
 
 public class MenuOption implements Displayable {
 

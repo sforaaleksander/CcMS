@@ -2,8 +2,8 @@ package org.codecool.ccms.session;
 
 import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.inputProvider.InputProvider;
-import org.codecool.ccms.modules.Displayable;
-import org.codecool.ccms.modules.User;
+import org.codecool.ccms.models.Displayable;
+import org.codecool.ccms.models.User;
 import java.util.List;
 
 public class Login {

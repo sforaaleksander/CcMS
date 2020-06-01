@@ -1,7 +1,7 @@
 package org.codecool.ccms.dao;
 
-import org.codecool.ccms.modules.Module;
-import org.codecool.ccms.modules.*;
+import org.codecool.ccms.models.Module;
+import org.codecool.ccms.models.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class UserDao extends Dao{
+public class UserDao extends Dao implements IDao{
 
     private List<Displayable> getUsers(String query) {
         List<Displayable> users = new ArrayList<>();
@@ -160,13 +160,13 @@ public class UserDao extends Dao{
     public void addAttendance(int userId, WorkDay workDay){
         String[] columns = {"userId", "workDayID"};
         String[] values = { String.valueOf(userId), workDay.getDate().toString()};
-        insert("Attendance", columns, values);
+        executeInsert("Attendance", columns, values);
     }
 
     public void addWorkDay(String date){
         String[] value = {date};
         String[] columns = {"date"};
-        insert("WorkDay", columns, value);
+        executeInsert("WorkDay", columns, value);
     }
 
     public void insertAssignment(String name, String description, int moduleId) {
@@ -176,7 +176,7 @@ public class UserDao extends Dao{
         for (int i=0; i<values.length; i++) {
             values[i] = "'"+valuesRaw[i]+"'";
         }
-        insert("Assigment", columns, values);
+        executeInsert("Assigment", columns, values);
     }
 
     public void insertUser(String[] values) {
@@ -185,12 +185,12 @@ public class UserDao extends Dao{
         for (int i = 0; i < 5; i++) {
             values[i] = String.format("'%s'", values[i]);
         }
-        insert("User", columns, values);
+        executeInsert("User", columns, values);
     }
 
     public void updateUser(String id, String column, String newValue) {
         newValue = String.format("'%s'", newValue);
-        update("User", id, column, newValue);
+        executeUpdate("User", id, column, newValue);
     }
 
     public WorkDay getWorkDay(String value) {
@@ -259,4 +259,23 @@ public class UserDao extends Dao{
         }
     }
 
+    @Override
+    public void update(String id, String... values) {
+
+    }
+
+    @Override
+    public void remove(String id) {
+
+    }
+
+    @Override
+    public void insert(String... values) {
+
+    }
+
+    @Override
+    public List<Displayable> getObjects(String columnName, String columnValue) {
+        return null;
+    }
 }

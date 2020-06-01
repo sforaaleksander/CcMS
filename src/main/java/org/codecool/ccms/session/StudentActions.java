@@ -1,7 +1,7 @@
 package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
-import org.codecool.ccms.modules.Assignment;
+import org.codecool.ccms.models.Assignment;
 
 import java.util.ArrayList;
 import java.util.List;

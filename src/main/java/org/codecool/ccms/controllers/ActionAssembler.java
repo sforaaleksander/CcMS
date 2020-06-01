@@ -1,6 +1,6 @@
 package org.codecool.ccms.controllers;
 
-import org.codecool.ccms.modules.Role;
+import org.codecool.ccms.models.Role;
 import org.codecool.ccms.session.*;
 import java.util.HashMap;
 import java.util.Map;
