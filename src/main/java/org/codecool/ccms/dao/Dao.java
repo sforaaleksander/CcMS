@@ -5,13 +5,11 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class Dao {
+public abstract class Dao implements IDao {
     protected Connection connection;
     protected Statement statement;
-    public static final String DB_NAME = "src/main/resources/cCMS_JAT.db";
-    public static final String CONNECTION_STRING = "jdbc:sqlite:" + DB_NAME;
 
-    public void connect() {
+    private void connect() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(CONNECTION_STRING);
@@ -35,7 +33,7 @@ public abstract class Dao {
     }
 
 
-    protected void update(String table, String id, String column, String newValue) {
+    public void update(String table, String id, String column, String newValue) {
         if (column.toLowerCase().equals("id")) {
             System.out.println("You can't change id");
             return;
@@ -49,7 +47,7 @@ public abstract class Dao {
         executeQuery(query);
     }
 
-    protected void insert(String table, String[] columns, String[] values){
+    public void insert(String table, String[] columns, String[] values){
         String query = "INSERT INTO " + table
                 + " ( " + String.join(", " , columns) + " ) "
                 + " VALUES " + " ( " + String.join(", " , values) + " );";
