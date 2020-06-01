@@ -50,7 +50,8 @@ public class InputProvider {
     }
 
     private String validateAgainstSQLinjection(String input){
-        // TODO: validate
+        input.replaceAll("'", "");
+        input.replaceAll("\"", "");
         return input;
     }
 
@@ -105,5 +106,4 @@ public class InputProvider {
         }
         return Integer.parseInt(userInput);
     }
-
 }
