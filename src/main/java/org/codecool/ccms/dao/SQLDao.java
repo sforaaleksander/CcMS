@@ -57,10 +57,8 @@ public abstract class SQLDao implements IDao {
 
     protected void executeInsert(String table, String[] columns, String[] values) throws SQLException {
         String columnsString = " ( " + String.join(", " , columns) + " ) ";
-        String query = "INSERT INTO  ? " + columnsString + " VALUES ( ? ";
-        for (int i=1; i<columns.length; i++){
-             query +=  ", ?";
-        }
+        String query = "INSERT INTO " + table + columnsString + " VALUES ( ? ";
+        for (int i=1; i<columns.length; i++){ query +=  ", ?"; }
         query += ")";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         for (int i = 1; i<= values.length; i++){
