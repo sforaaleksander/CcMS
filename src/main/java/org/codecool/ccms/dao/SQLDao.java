@@ -24,9 +24,9 @@ public abstract class SQLDao implements IDao {
         }
     }
 
-    private void executeQuery(Runnable query) throws SQLException {
+    private void executeQuery(PreparedStatement preparedStatement) throws SQLException {
         connect();
-        query.run();
+        preparedStatement.executeQuery();
         this.connection.close();
     }
 
@@ -44,29 +44,15 @@ public abstract class SQLDao implements IDao {
         for (int i=1; i<=newValues.length; i++) {
             preparedStatement.setString(i, newValues[i]);
         }
-
-        executeQuery(() -> {
-            try {
-                preparedStatement.executeUpdate();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        });
+        executeQuery(preparedStatement);
     }
-
 
     protected void executeRemove(String table, String id) throws SQLException {
         String query = "DELETE FROM ?  WHERE Id =  ? ";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, table);
         preparedStatement.setString(2, id);
-        executeQuery(() -> {
-            try {
-                preparedStatement.executeUpdate();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        });
+        executeQuery(preparedStatement);
     }
 
     protected void executeInsert(String table, String[] columns, String[] values) throws SQLException {
@@ -80,12 +66,6 @@ public abstract class SQLDao implements IDao {
         for (int i = 1; i<= values.length; i++){
             preparedStatement.setString(i, values[i]);
         }
-        executeQuery(() -> {
-            try {
-                preparedStatement.executeUpdate();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        });
+        executeQuery(preparedStatement);
     }
 }
