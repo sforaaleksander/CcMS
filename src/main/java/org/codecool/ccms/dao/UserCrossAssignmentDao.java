@@ -14,8 +14,8 @@ public class UserCrossAssignmentDao extends SQLDao {
     private final String[] columns = {"id", "userId", "assignmentId", "isPassed", "answer"};
 
     @Override
-    public void update(String ... values) {
-        executeUpdate("UserCrossAssignment", id, column, newValue);
+    public void update(String ... values) throws SQLException {
+        executeUpdate("UserCrossAssignment", columns, values);
     }
 
 
