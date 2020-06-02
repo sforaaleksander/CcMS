@@ -1,12 +1,10 @@
 package org.codecool.ccms.models;
 
-import org.codecool.ccms.dao.UserDao;
+import org.codecool.ccms.dao.UserCrossAssignmentDao;
 
 public class UserFactory {
-    private final UserDao userDao;
 
-    public UserFactory(UserDao userDao) {
-        this.userDao = userDao;
+    public UserFactory(){
     }
 
     public User makeUser(int id, String name, String surname, String email,
@@ -14,7 +12,7 @@ public class UserFactory {
 
         switch (role.toString()){
             case "STUDENT":
-                Module module = userDao.getStudentModuleBasedOnPassedAssignments(id);
+                Module module = new UserCrossAssignmentDao().getStudentModuleBasedOnPassedAssignments(id);
                 Student student = new Student(id, name, surname, email, password, role, attendance, module);
                 return student;
 

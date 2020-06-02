@@ -2,12 +2,15 @@ package org.codecool.ccms.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class Dao implements IDao {
+public abstract class SQLDao implements IDao {
     protected Connection connection;
     protected Statement statement;
+    protected final String DB_NAME = "src/main/resources/cCMS_JAT.db";
+    protected final String CONNECTION_STRING = "jdbc:sqlite:" + DB_NAME;
 
     public void connect() {
         try {
@@ -33,13 +36,21 @@ public abstract class Dao implements IDao {
     }
 
 
-    protected void executeUpdate(String table, String id, String column, String newValue) {
-        if (column.toLowerCase().equals("id")) {
-            System.out.println("You can't change id");
-            return;
+    protected void executeUpdate(String table, String[] columns, String[] newValues) throws SQLException {
+        String id = newValues[0];
+        StringBuilder query = new StringBuilder("UPDATE " + table + " SET ");
+
+        for (String column : columns) {
+            query.append(column).append(" = ?");
         }
-        String query = "UPDATE " + table + " SET " + column + " = " + newValue + " WHERE Id = " + id + ";";
-        executeQuery(query);
+        query.append(" WHERE Id = ").append(id).append(";");
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
+
+        for (int i=0; i<newValues.length; i++) {
+            preparedStatement.setString(i, newValues[i]);
+        }
+        preparedStatement.executeUpdate();
     }
 
     protected void executeRemove(String table, String id) {

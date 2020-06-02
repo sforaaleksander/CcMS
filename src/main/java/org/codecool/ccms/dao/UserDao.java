@@ -5,14 +5,11 @@ import org.codecool.ccms.models.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
-public class UserDao extends Dao implements IDao{
+public class UserDao extends SQLDao implements IDao{
 
     private List<Displayable> getUsers(String query) {
         List<Displayable> users = new ArrayList<>();
@@ -158,31 +155,6 @@ public class UserDao extends Dao implements IDao{
         executeUpdate("User", id, column, newValue);
     }
 
-    public WorkDay getWorkDay(String value) {
-        connect();
-        String query = "SELECT * FROM WorkDay WHERE date = '" +value+ "';";
-
-        WorkDay workDay = null;
-        try {
-            ResultSet results = statement.executeQuery(query);
-            while (results.next()) {
-                String stringDate = results.getString("date");
-
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
-                formatter = formatter.withLocale(Locale.ENGLISH);
-                LocalDate date = LocalDate.parse(stringDate, formatter);
-
-                workDay = new WorkDay(date);
-
-            }
-            results.close();
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return workDay;
-    }
 
     public void removeAttendance(int studentID, WorkDay workDay) {
         connect();

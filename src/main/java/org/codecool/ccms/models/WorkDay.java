@@ -2,7 +2,7 @@ package org.codecool.ccms.models;
 
 import java.time.LocalDate;
 
-public class WorkDay {
+public class WorkDay implements Displayable {
     private final LocalDate date;
 
     public WorkDay(LocalDate date) {
@@ -11,5 +11,10 @@ public class WorkDay {
 
     public LocalDate getDate() {
         return date;
+    }
+
+    @Override
+    public String[] toStringList() {
+        return new String[]{date.toString()};
     }
 }

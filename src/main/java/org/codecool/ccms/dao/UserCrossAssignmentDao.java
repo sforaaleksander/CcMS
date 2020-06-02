@@ -10,10 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserCrossAssignmentDao extends Dao {
+public class UserCrossAssignmentDao extends SQLDao {
+    private final String[] columns = {"id", "userId", "assignmentId", "isPassed", "answer"};
 
     @Override
-    public void update(String id, String column, String newValue) {
+    public void update(String ... values) {
         executeUpdate("UserCrossAssignment", id, column, newValue);
     }
 
