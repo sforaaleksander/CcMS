@@ -59,14 +59,14 @@ public class UserCrossAssignmentDao extends SQLDao {
 
     public List<Displayable> getAllAssignments(){
         return getAssignments("SELECT uca.id, name, answer, isPassed, moduleId " +
-                "FROM UserCrossAssignment as uca LEFT JOIN Assigment" +
-                " ON uca.assignmentId = Assigment.id; ");
+                "FROM UserCrossAssignment as uca LEFT JOIN Assignment" +
+                " ON uca.assignmentId = Assignment.id; ");
     }
 
     public List<Displayable> getPassedAssignmentsByStudentID(int studentId){
         return getAssignments("SELECT uca.id, name, answer, isPassed, moduleId " +
-                "FROM UserCrossAssignment as uca LEFT JOIN Assigment" +
-                " ON uca.assignmentId = Assigment.id WHERE uca.userId = " + studentId  +
+                "FROM UserCrossAssignment as uca LEFT JOIN Assignment" +
+                " ON uca.assignmentId = Assignment.id WHERE uca.userId = " + studentId  +
                 " AND uca.isPassed = 1;");
     }
 
