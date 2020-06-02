@@ -35,11 +35,15 @@ public class UserCrossAssignmentDao extends SQLDao {
         return null;
     }
 
-    private List<Displayable> getAssignments(String query){
+    private List<Displayable> getAssignments(String id) throws SQLException {
+        String sqlStatement = "SELECT uca.id, name, answer, isPassed, moduleId " +
+                "FROM UserCrossAssignment as uca LEFT JOIN Assignment" +
+                " ON uca.assignmentId = Assignment.id WHERE uca.userId LIKE ?" +
+                " AND uca.isPassed = 1;";
+
         List<Displayable> assignments = new ArrayList<>();
         connect();
-        try {
-            ResultSet resultSet = statement.executeQuery(query);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String answer = resultSet.getString("answer");
@@ -51,9 +55,7 @@ public class UserCrossAssignmentDao extends SQLDao {
             resultSet.close();
             statement.close();
             connection.close();
-        } catch (SQLException throwable) {
-            throwable.printStackTrace();
-        }
+
         return assignments;
     }
 

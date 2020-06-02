@@ -24,19 +24,13 @@ public abstract class SQLDao implements IDao {
         }
     }
 
-    private void executeQuery(String  query){
+    private void executeQuery(Runnable query) throws SQLException {
         connect();
-        try {
-            statement.execute(query);
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        query.run();
+        this.connection.close();
     }
 
-
-    protected void executeUpdate(String table, String[] columns, String[] newValues) throws SQLException {
+    protected void updateRecord(String table, String[] columns, String[] newValues) throws SQLException {
         String id = newValues[0];
         StringBuilder query = new StringBuilder("UPDATE " + table + " SET ");
 
@@ -47,21 +41,51 @@ public abstract class SQLDao implements IDao {
 
         PreparedStatement preparedStatement = connection.prepareStatement(query.toString());
 
-        for (int i=0; i<newValues.length; i++) {
+        for (int i=1; i<=newValues.length; i++) {
             preparedStatement.setString(i, newValues[i]);
         }
-        preparedStatement.executeUpdate();
+
+        executeQuery(() -> {
+            try {
+                preparedStatement.executeUpdate();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
     }
 
-    protected void executeRemove(String table, String id) {
-        String query = "DELETE FROM " + table + " WHERE Id = " + id + ";";
-        executeQuery(query);
+
+    protected void executeRemove(String table, String id) throws SQLException {
+        String query = "DELETE FROM ?  WHERE Id =  ? ";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, table);
+        preparedStatement.setString(2, id);
+        executeQuery(() -> {
+            try {
+                preparedStatement.executeUpdate();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
     }
 
-    protected void executeInsert(String table, String[] columns, String[] values){
-        String query = "INSERT INTO " + table
-                + " ( " + String.join(", " , columns) + " ) "
-                + " VALUES " + " ( " + String.join(", " , values) + " );";
-        executeQuery(query);
+    protected void executeInsert(String table, String[] columns, String[] values) throws SQLException {
+        String columnsString = " ( " + String.join(", " , columns) + " ) ";
+        String query = "INSERT INTO  ? " + columnsString + " VALUES ( ? ";
+        for (int i=1; i<columns.length; i++){
+             query +=  ", ?";
+        }
+        query += ")";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        for (int i = 1; i<= values.length; i++){
+            preparedStatement.setString(i, values[i]);
+        }
+        executeQuery(() -> {
+            try {
+                preparedStatement.executeUpdate();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
     }
 }
