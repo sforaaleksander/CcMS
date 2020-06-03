@@ -10,7 +10,7 @@ public interface IDao<T> {
 
     void update(T object) throws SQLException;
 
-    void remove(T object);
+    void remove(T object) throws SQLException;
 
     void insert(T object);
 

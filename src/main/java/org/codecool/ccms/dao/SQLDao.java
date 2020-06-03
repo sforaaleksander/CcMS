@@ -11,6 +11,9 @@ public abstract class SQLDao {
     protected Statement statement;
     protected final String DB_NAME = "src/main/resources/cCMS_JAT.db";
     protected final String CONNECTION_STRING = "jdbc:sqlite:" + DB_NAME;
+    protected String[] columns;
+    protected String table;
+
 
     public void connect() {
         try {
@@ -30,7 +33,7 @@ public abstract class SQLDao {
         this.connection.close();
     }
 
-    protected void updateRecord(String table, String[] columns, String[] newValues) throws SQLException {
+    protected void updateRecord(String[] newValues) throws SQLException {
         String id = newValues[0];
         StringBuilder query = new StringBuilder("UPDATE " + table + " SET ");
 
@@ -47,7 +50,7 @@ public abstract class SQLDao {
         executeQuery(preparedStatement);
     }
 
-    protected void executeRemove(String table, String id) throws SQLException {
+    protected void executeRemove(String id) throws SQLException {
         String query = "DELETE FROM ?  WHERE Id =  ? ";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, table);
@@ -55,7 +58,7 @@ public abstract class SQLDao {
         executeQuery(preparedStatement);
     }
 
-    protected void executeInsert(String table, String[] columns, String[] values) throws SQLException {
+    protected void executeInsert(String[] values) throws SQLException {
         String columnsString = " ( " + String.join(", " , columns) + " ) ";
         String query = "INSERT INTO " + table + columnsString + " VALUES ( ? ";
         for (int i=1; i<columns.length; i++){ query +=  ", ?"; }

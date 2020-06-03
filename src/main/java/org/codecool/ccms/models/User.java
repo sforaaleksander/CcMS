@@ -8,8 +8,9 @@ public abstract class User implements Displayable{
     private final String password;
     private final Role role;
     private final Attendance attendance;
+    private final byte[] salt;
 
-    public User(int id, String firstName, String surname, String email, String password, Role role, Attendance attendance) {
+    public User(int id, String firstName, String surname, String email, String password, Role role, Attendance attendance, byte[] salt) {
         this.id = id;
         this.firstName = firstName;
         this.surname = surname;
@@ -17,6 +18,7 @@ public abstract class User implements Displayable{
         this.password = password;
         this.role = role;
         this.attendance = attendance;
+        this.salt = salt;
     }
 
     public int getId() {
@@ -46,6 +48,8 @@ public abstract class User implements Displayable{
     public Role getRole() {
         return role;
     }
+
+    public byte[] getSalt() {return this.salt;}
 
     public String[] toStringList() {
         String[] stringList = {this.getFirstName(), this.getSurname(), this.getEmail(),
