@@ -6,13 +6,13 @@ import org.codecool.ccms.models.Displayable;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface IDao {
+public interface IDao<T> {
 
-    void update(String ... values) throws SQLException;
+    void update(T object) throws SQLException;
 
-    void remove(String id);
+    void remove(T object);
 
-    void insert(String... values);
+    void insert(T object);
 
     List<Displayable> getObjects(String columnName, String columnValue);
 }

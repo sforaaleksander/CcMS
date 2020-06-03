@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class SQLDao implements IDao {
+public abstract class SQLDao {
     protected Connection connection;
     protected Statement statement;
     protected final String DB_NAME = "src/main/resources/cCMS_JAT.db";
