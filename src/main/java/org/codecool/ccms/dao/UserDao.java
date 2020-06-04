@@ -13,7 +13,7 @@ public class UserDao extends SQLDao implements IDao{
 
     private List<Displayable> getUsers(String query) {
         List<Displayable> users = new ArrayList<>();
-        connect();
+        createStatement();
         try {
             ResultSet results = statement.executeQuery(query);
             while (results.next()) {
@@ -40,7 +40,7 @@ public class UserDao extends SQLDao implements IDao{
     }
 
     public void passAssignment(int id){
-            connect();
+            createStatement();
             try {
                 statement.executeUpdate("UPDATE UserCrossAssignment SET isPassed = 1 WHERE id = " + id);
                 statement.close();
@@ -74,7 +74,7 @@ public class UserDao extends SQLDao implements IDao{
 
     public List<Displayable> getGradesByStudentId(int user){
         List<Displayable> assignments = new ArrayList<>();
-        connect();
+        createStatement();
         try {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM Assigment");
             while (resultSet.next()) {
@@ -105,7 +105,7 @@ public class UserDao extends SQLDao implements IDao{
 
 
     public void removeUser(int id, int roleId) {
-        connect();
+        createStatement();
         try {
             statement.executeUpdate("DELETE FROM User WHERE id = '" + id + "' AND roleId = '" + roleId + "'");
             statement.close();
@@ -122,13 +122,13 @@ public class UserDao extends SQLDao implements IDao{
     public void addAttendance(int userId, WorkDay workDay){
         String[] columns = {"userId", "workDayID"};
         String[] values = { String.valueOf(userId), workDay.getDate().toString()};
-        executeInsert("Attendance", columns, values);
+        insertRecord("Attendance", columns, values);
     }
 
     public void addWorkDay(String date){
         String[] value = {date};
         String[] columns = {"date"};
-        executeInsert("WorkDay", columns, value);
+        insertRecord("WorkDay", columns, value);
     }
 
     public void insertAssignment(String name, String description, int moduleId) {
@@ -138,7 +138,7 @@ public class UserDao extends SQLDao implements IDao{
         for (int i=0; i<values.length; i++) {
             values[i] = "'"+valuesRaw[i]+"'";
         }
-        executeInsert("Assigment", columns, values);
+        insertRecord("Assigment", columns, values);
     }
 
     public void insertUser(String[] values) {
@@ -147,7 +147,7 @@ public class UserDao extends SQLDao implements IDao{
         for (int i = 0; i < 5; i++) {
             values[i] = String.format("'%s'", values[i]);
         }
-        executeInsert("User", columns, values);
+        insertRecord("User", columns, values);
     }
 
     public void updateUser(String id, String column, String newValue) {
@@ -157,7 +157,7 @@ public class UserDao extends SQLDao implements IDao{
 
 
     public void removeAttendance(int studentID, WorkDay workDay) {
-        connect();
+        createStatement();
         String date = workDay.getDate().format(DateTimeFormatter.ofPattern("ddMMyyyy"));
         try {
             statement.executeUpdate("DELETE FROM Attendance WHERE userId = '" + studentID + "' AND workDayId = '" + date + "'");

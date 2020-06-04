@@ -20,7 +20,7 @@ public class Login {
     public boolean loginAttempt() {
         String userEmail = inputProvider.gatherInput("Provide your email: ");
         String userPassword = inputProvider.gatherInput("Provide your password: ");
-        userDao.connect();
+        userDao.createStatement();
         List<Displayable> users;
         users = userDao.getUserBy("email", userEmail);
 

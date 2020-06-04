@@ -34,7 +34,7 @@ public class WorkDayDao extends SQLDao {
 
     public WorkDay getWorkDay(String value) {
         List<Displayable> workDays = new ArrayList<>();
-        connect();
+        createStatement();
         String query = "SELECT * FROM WorkDay WHERE date = '" +value+ "';";
 
         WorkDay workDay = null;

@@ -21,13 +21,13 @@ public class UserCrossAssignmentDao extends SQLDao {
 
     @Override
     public void remove(String id) {
-        executeRemove("UserCrossAssignment", id);
+        removeRecord("UserCrossAssignment", id);
     }
 
     @Override
     public void insert(String... values) {
         String[] columns = {"userId", "assignmentId", "answer"};
-        executeInsert("UserCrossAssignment", columns, values);
+        insertRecord("UserCrossAssignment", columns, values);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class UserCrossAssignmentDao extends SQLDao {
                 " AND uca.isPassed = 1;";
 
         List<Displayable> assignments = new ArrayList<>();
-        connect();
+        createStatement();
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
