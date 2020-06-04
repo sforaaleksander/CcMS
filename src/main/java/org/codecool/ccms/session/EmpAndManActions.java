@@ -85,16 +85,17 @@ public class EmpAndManActions extends Actions {
         String password = this.getSession().getInputProvider().gatherInput("Enter password: ");
         Role role = Role.STUDENT;
         Module module = Module.PROGBASIC;
-        Student student = new Student(0, name, surname, email, password, role, module);
-        this.getSession().getUserDao().AddUser(student);
+        Student student = new Student(0, name, surname, email, password, role, new byte[]{}, module);
+        this.getSession().getUserDao().insert(student);
         viewAllStudents();
     }
 
     public void removeStudent() {
         viewAllStudents();
         this.getSession().getView().displayContent();
-        int id = this.getSession().getInputProvider().gatherIntInput("Enter student's ID: ");
-        this.getSession().getUserDao().removeUser(id, Role.STUDENT.getRoleId());
+        String id = this.getSession().getInputProvider().gatherInput("Enter student's ID: ");
+        Student student = (Student) this.getSession().getUserDao().getUserById(id);
+        this.getSession().getUserDao().remove(student);
         viewAllStudents();
     }
 }
