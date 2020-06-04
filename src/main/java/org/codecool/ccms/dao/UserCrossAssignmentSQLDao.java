@@ -49,6 +49,47 @@ public class UserCrossAssignmentSQLDao extends SQLDao<Assignment> implements IDa
         return getAssignments(columnValue);
     }
 
+    // TODO pass assigment
+//    public void passAssignment(int id){
+//        createStatement();
+//        try {
+//            statement.executeUpdate("UPDATE UserCrossAssignment SET isPassed = 1 WHERE id = " + id);
+//            statement.close();
+//            connection.close();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+    // TODO get grades by student
+//    public List<Assignment> getGradesByStudentId(int user){
+//        List<Displayable> assignments = new ArrayList<>();
+//        createStatement();
+//        try {
+//            ResultSet resultSet = statement.executeQuery("SELECT * FROM Assigment");
+//            while (resultSet.next()) {
+//                int id = resultSet.getInt("id");
+//                String name = resultSet.getString("name");
+//                String description = resultSet.getString("description");
+//                Module module = Module.valueOf(resultSet.getInt("moduleId"));
+//                boolean isPassed = false;
+//                assignments.add(new Assignment(id, description, name, module, isPassed));
+//            }
+//            resultSet.close();
+//            statement.close();
+//            for (Displayable assignment: assignments) {
+//                int id = ((Assignment)assignment).getId();
+//                if (statement.executeQuery("SELECT * FROM UserCrossAssignment WHERE userId = " + user + " AND assignmentId = " + id).equals(null))
+//                    ((Assignment) assignment).setPassed(true);
+//            }
+//            connection.close();
+//        } catch (SQLException throwable) {
+//            throwable.printStackTrace();
+//        }
+//        return assignments;
+//    }
+
     private List<Assignment> getAssignments(String userId) {
         List<Assignment> assignments = new ArrayList<>();
         String query = "SELECT uca.id, name, answer, isPassed, moduleId " +
