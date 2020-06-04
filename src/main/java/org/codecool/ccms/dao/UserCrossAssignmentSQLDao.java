@@ -1,7 +1,6 @@
 package org.codecool.ccms.dao;
 
-import org.codecool.ccms.models.Assignment;
-import org.codecool.ccms.models.Displayable;
+import org.codecool.ccms.models.*;
 import org.codecool.ccms.models.Module;
 
 import java.sql.ResultSet;
@@ -15,7 +14,6 @@ public class UserCrossAssignmentSQLDao extends SQLDao<Assignment> implements IDa
         this.table = "UserCrossAssignment";
         this.columns = new String[]{"id", "userId", "assignmentId", "isPassed", "answer"};
     }
-
 
     @Override
     protected String[] objectToArray(Assignment assignment) {
@@ -31,7 +29,6 @@ public class UserCrossAssignmentSQLDao extends SQLDao<Assignment> implements IDa
     public void update(Assignment assignment) {
         updateRecord(objectToArray(assignment));
     }
-
 
     @Override
     public void remove(Assignment assignment) {
@@ -49,53 +46,11 @@ public class UserCrossAssignmentSQLDao extends SQLDao<Assignment> implements IDa
         return getAssignments(columnValue);
     }
 
-    // TODO pass assigment
-//    public void passAssignment(int id){
-//        createStatement();
-//        try {
-//            statement.executeUpdate("UPDATE UserCrossAssignment SET isPassed = 1 WHERE id = " + id);
-//            statement.close();
-//            connection.close();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
-    // TODO get grades by student
-//    public List<Assignment> getGradesByStudentId(int user){
-//        List<Displayable> assignments = new ArrayList<>();
-//        createStatement();
-//        try {
-//            ResultSet resultSet = statement.executeQuery("SELECT * FROM Assigment");
-//            while (resultSet.next()) {
-//                int id = resultSet.getInt("id");
-//                String name = resultSet.getString("name");
-//                String description = resultSet.getString("description");
-//                Module module = Module.valueOf(resultSet.getInt("moduleId"));
-//                boolean isPassed = false;
-//                assignments.add(new Assignment(id, description, name, module, isPassed));
-//            }
-//            resultSet.close();
-//            statement.close();
-//            for (Displayable assignment: assignments) {
-//                int id = ((Assignment)assignment).getId();
-//                if (statement.executeQuery("SELECT * FROM UserCrossAssignment WHERE userId = " + user + " AND assignmentId = " + id).equals(null))
-//                    ((Assignment) assignment).setPassed(true);
-//            }
-//            connection.close();
-//        } catch (SQLException throwable) {
-//            throwable.printStackTrace();
-//        }
-//        return assignments;
-//    }
-
     private List<Assignment> getAssignments(String userId) {
         List<Assignment> assignments = new ArrayList<>();
         String query = "SELECT uca.id, name, answer, isPassed, moduleId " +
                 "FROM UserCrossAssignment as uca LEFT JOIN Assignment" +
-                " ON uca.assignmentId = Assignment.id WHERE uca.userId LIKE ?" +
-                " AND uca.isPassed = 1;";
+                " ON uca.assignmentId = Assignment.id WHERE uca.userId LIKE ?";
         try {
             ResultSet resultSet = executeQuery(query, new String[]{userId});
             while (resultSet.next()) {
@@ -116,21 +71,38 @@ public class UserCrossAssignmentSQLDao extends SQLDao<Assignment> implements IDa
         return getAssignments("%");
     }
 
-    public List<Assignment> getPassedAssignmentsByStudentID(int studentId){
-        return getAssignments(Integer.toString(studentId));
+    public List<Assignment> getGradesByStudent(Student student){
+        String studentId = Integer.toString(student.getId());
+        List<Assignment> assignments = new ArrayList<>();
+        ResultSet resultSet = getRecords("id", studentId);
+        try {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                String description = resultSet.getString("description");
+                Module module = Module.valueOf(resultSet.getInt("moduleId"));
+                boolean isPassed = false;
+                assignments.add(new Assignment(id, description, name, module, isPassed));
+            }
+            for (Assignment assignment: assignments) {
+                String assignmentId = Integer.toString(assignment.getId());
+                if (executeQuery("SELECT * FROM UserCrossAssignment WHERE userId = ? AND assignmentId = ?", new String[]{studentId, assignmentId} ).equals(null))
+                    assignment.setPassed(true);
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return assignments;
     }
 
     public Module getStudentModuleBasedOnPassedAssignments(int studentId) {
         List<Assignment> assignments = getAllAssignments()
                 .stream()
                 .collect(Collectors.toList());
-
         int basicAssgn = (int) assignments.stream().filter(assignment -> assignment.getModule().toString().equals(Module.PROGBASIC.toString())).count();
         int javaAssgn = (int) assignments.stream().filter(assignment -> assignment.getModule().toString().equals(Module.JAVA.toString())).count();
         int webAssgn = (int) assignments.stream().filter(assignment -> assignment.getModule().toString().equals(Module.WEB.toString())).count();
-
-        int passedAssgn = getPassedAssignmentsByStudentID(studentId).size();
-
+        int passedAssgn = (int) getAssignments(Integer.toString(studentId)).stream().filter(ass -> ass.getPassed()).count();
         if (passedAssgn > basicAssgn + javaAssgn + webAssgn) {
             return Module.ADVANCED;
         }
