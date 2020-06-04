@@ -6,6 +6,11 @@ import java.util.List;
 
 public class AttendanceSQLDao extends SQLDao<Attendance> implements IDao<Attendance>  {
 
+    public AttendanceSQLDao() {
+        this.table = "attendance";
+        this.columns = new String[]{"id", "userId", "workDayId"};
+    }
+
     @Override
     public void update(Attendance attendance) {
         String[] values = objectToArray(attendance);

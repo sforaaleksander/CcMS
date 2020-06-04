@@ -34,7 +34,6 @@ public class WorkDaySQLDao extends SQLDao<WorkDay> implements IDao<WorkDay> {
         removeRecord(id);
     }
 
-
     @Override
     public void insert(WorkDay workDay) {
         String[] values = objectToArray(workDay);
@@ -46,26 +45,20 @@ public class WorkDaySQLDao extends SQLDao<WorkDay> implements IDao<WorkDay> {
 
         List<WorkDay> workDays = new ArrayList<>();
         ResultSet resultSet = getRecords(columnName, columnValue);
-
-        WorkDay workDay = null;
-            try {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
+        formatter = formatter.withLocale(Locale.ENGLISH);
+        WorkDay workDay;
+        try {
             while (resultSet.next()) {
                 String stringDate = resultSet.getString("date");
-
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
-                formatter = formatter.withLocale(Locale.ENGLISH);
                 LocalDate date = LocalDate.parse(stringDate, formatter);
-
                 workDays.add(new WorkDay(date));
-
             }
             resultSet.close();
-            statement.close();
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-            return workDays;
+        return workDays;
     }
 
     public List<WorkDay> getWorkDay(String value) {
