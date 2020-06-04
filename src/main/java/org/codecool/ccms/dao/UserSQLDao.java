@@ -25,12 +25,12 @@ public class UserSQLDao extends SQLDao<User> implements IDao<User> {
     }
 
     @Override
-    public void update(User user) throws SQLException {
+    public void update(User user) {
         updateRecord(objectToArray(user));
     }
 
     @Override
-    public void remove(User user) throws SQLException {
+    public void remove(User user) {
         removeRecord(Integer.toString(user.getId()));
     }
 
@@ -40,7 +40,7 @@ public class UserSQLDao extends SQLDao<User> implements IDao<User> {
     }
 
     @Override
-    public List<Displayable> getObjects(String columnName, String columnValue) {
+    public List<User> getObjects(String columnName, String columnValue) {
         // TODO: select using sqldao
         return null;
     }

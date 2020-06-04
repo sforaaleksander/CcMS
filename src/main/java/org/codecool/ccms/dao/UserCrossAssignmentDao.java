@@ -46,7 +46,7 @@ public class UserCrossAssignmentDao extends SQLDao<Assignment> implements IDao<A
     }
 
     @Override
-    public List<Displayable> getObjects(String columnName, String columnValue) {
+    public List<Assignment> getObjects(String columnName, String columnValue) {
         return null;
     }
 

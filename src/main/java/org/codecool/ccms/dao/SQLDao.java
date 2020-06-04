@@ -1,9 +1,7 @@
 package org.codecool.ccms.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.List;
 
 public abstract class SQLDao<T> {
     protected Connection connection;
@@ -13,11 +11,13 @@ public abstract class SQLDao<T> {
     protected String[] columns;
     protected String table;
 
-    private void executeQuery(String query, String[] parameters) {
+    private ResultSet executeQuery(String query, String[] parameters) {
+        ResultSet resultSet = null;
         try {
             createStatement(query);
             updateParameters(parameters);
             this.statement.execute();
+            resultSet = this.statement.getResultSet();
             this.connection.close();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -26,9 +26,10 @@ public abstract class SQLDao<T> {
             e.printStackTrace();
             System.out.println("Couldn't connect to database, check it's availability or call support");
         }
+        return resultSet;
     }
 
-    public void createStatement(String query) throws ClassNotFoundException, SQLException {
+    private void createStatement(String query) throws ClassNotFoundException, SQLException {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(CONNECTION_STRING);
             statement = connection.prepareStatement(query);
@@ -59,6 +60,12 @@ public abstract class SQLDao<T> {
         for (int i=1; i<columns.length; i++){ query +=  ", ?"; }
         query += ")";
         executeQuery(query, values);
+    }
+
+    protected  ResultSet getRecords(String column, String value){
+        String query = "SELECT * FROM ? WHERE ? LIKE ?";
+        String[] parameters = {this.table, column, value};
+        return executeQuery(query, parameters);
     }
 
     protected abstract String[] objectToArray(T t);
