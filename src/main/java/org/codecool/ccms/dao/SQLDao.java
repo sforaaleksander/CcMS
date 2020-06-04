@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class SQLDao {
+public abstract class SQLDao<T> {
     protected Connection connection;
     protected Statement statement;
     protected final String DB_NAME = "src/main/resources/cCMS_JAT.db";
@@ -69,4 +69,6 @@ public abstract class SQLDao {
         }
         executeQuery(preparedStatement);
     }
+
+    protected abstract String[] objectToArray(T t);
 }

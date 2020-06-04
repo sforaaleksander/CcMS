@@ -6,14 +6,14 @@ import org.codecool.ccms.models.User;
 import java.sql.SQLException;
 import java.util.List;
 
-public class UserSQLDao extends SQLDao implements IDao<User> {
+public class UserSQLDao extends SQLDao<User> implements IDao<User> {
 
     UserSQLDao() {
         this.table = "User";
         this.columns = new String[]{"id", "first_name", "surname", "email", "passwordHash", "passwordSalt", "roleId"};
     }
 
-    private String[] userToArray(User user){
+    protected String[] objectToArray(User user){
         String id = Integer.toString(user.getId());
         String firstName = user.getFirstName();
         String surname = user.getSurname();
@@ -26,7 +26,7 @@ public class UserSQLDao extends SQLDao implements IDao<User> {
 
     @Override
     public void update(User user) throws SQLException {
-        updateRecord(userToArray(user));
+        updateRecord(objectToArray(user));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class UserSQLDao extends SQLDao implements IDao<User> {
 
     @Override
     public void insert(User user) {
-        updateRecord(userToArray(user));
+        updateRecord(objectToArray(user));
     }
 
     @Override
