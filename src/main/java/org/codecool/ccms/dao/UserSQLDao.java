@@ -54,9 +54,9 @@ public class UserSQLDao extends SQLDao<User> implements IDao<User> {
                 Role role = Role.valueOf(resultSet.getInt("roleId"));
                 //TODO read attendance from DB
                 Attendance attendance = null;
-
+                // TODO create salt
                 //TODO create user builder(?)
-                User user = new UserFactory().makeUser(id, firstName, surname, email, password, role, attendance);
+                User user = new UserFactory().makeUser(id, firstName, surname, email, password, role, new byte[]{});
                 users.add(user);
             }
         } catch (SQLException throwables) {

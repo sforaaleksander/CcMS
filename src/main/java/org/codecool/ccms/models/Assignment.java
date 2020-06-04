@@ -2,7 +2,7 @@ package org.codecool.ccms.models;
 
 public class Assignment implements Displayable {
 
-    private final String content;
+    private String content;
     private Boolean isPassed;
     private final String name;
     private final Module module;
@@ -14,6 +14,10 @@ public class Assignment implements Displayable {
         this.name = name;
         this.module = module;
         this.isPassed = isPassed;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Boolean getPassed() {

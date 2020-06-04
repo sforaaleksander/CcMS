@@ -13,7 +13,7 @@ public class AssignmentSQLDao extends SQLDao<Assignment> implements IDao<Assignm
 
     public AssignmentSQLDao() {
         this.table = "Assignment";
-        this.columns = new String[]{"id", "name", "description", "moduleId"};
+        this.columns = new String[]{"name", "description", "moduleId"};
     }
 
     @Override

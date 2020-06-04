@@ -2,6 +2,8 @@ package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
 import org.codecool.ccms.models.Assignment;
+import org.codecool.ccms.models.Displayable;
+import org.codecool.ccms.models.Student;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +30,14 @@ public class StudentActions extends Actions {
         Assignment assignment = (Assignment)this.getSession().getView().getQuerryList().get(assi);
         this.getSession().getView().displayMessage(assignment.getContent());
         String answer = this.getSession().getInputProvider().gatherInput("Enter your answer:");
-        this.getSession().getUserDao().updateAssignment(assi, this.getSession().getUser().getId(), answer);
+        assignment.setContent(answer);
+        this.getSession().getUserCrossAssignmentSQLDao().update(assignment);
     }
 
     public void viewMyGrades(){
-        this.getSession().getView().setQuerryList(this.getSession().getUserDao().getGradesByStudentId(this.getSession().getUser().getId()));
+        List<Displayable> querryList = new ArrayList<>();
+        this.getSession().getUserCrossAssignmentSQLDao().getGradesByStudent((Student)this.getSession().getUser()).stream().forEach(assi -> querryList.add(assi));
+        this.getSession().getView().setQuerryList(querryList);
         this.getSession().getView().setQuerryHeaders(new String[]{"Id", "Name", "Description", "Module"});
     }
 }

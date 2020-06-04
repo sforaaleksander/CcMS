@@ -1,6 +1,7 @@
 package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
+import org.codecool.ccms.models.Displayable;
 import org.codecool.ccms.models.Role;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +12,13 @@ public class UniversalActions extends Actions {
     }
 
     private void updateMyDetails(){
-        String id = Integer.toString(this.getSession().getUser().getId());
         String name = this.getSession().getInputProvider().gatherInput("Provide new name.");
-        this.getSession().getUserDao().updateUser(id, "first_name", name);
+        this.getSession().getUser().setFirstName(name);
         String surname = this.getSession().getInputProvider().gatherInput("Provide new surname.");
-        this.getSession().getUserDao().updateUser(id, "surname", surname);
+        this.getSession().getUser().setSurname(surname);
         String email = this.getSession().getInputProvider().gatherInput("Provide new email.");
-        this.getSession().getUserDao().updateUser(id, "email", email);
+        this.getSession().getUser().setEmail(email);
+        this.getSession().getUserDao().update(this.getSession().getUser());
     }
 
     public void exit() {
@@ -27,8 +28,10 @@ public class UniversalActions extends Actions {
     private void viewAllStudentsDetails(){
         String [] querryHeaders = {"ID", "NAME", "SURNAME", "EMAIL"};
         this.getSession().getView().setQuerryHeaders(querryHeaders);
-        this.getSession().getView()
-                .setQuerryList(this.getSession().getUserDao().getUserBy("roleId", Integer.toString(Role.STUDENT.getRoleId())));
+        List<Displayable> querryList = new ArrayList<>();
+        this.getSession().getUserDao().getObjects("roleId", Integer.toString(Role.STUDENT.getRoleId())).stream().forEach(student -> querryList.add(student));
+        this.getSession().getView().setQuerryList(querryList);
+
     }
 
     @Override

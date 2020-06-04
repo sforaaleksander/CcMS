@@ -13,7 +13,7 @@ public class EmployeeActions extends Actions {
 
     private void viewAnyStudentContact(){
         String surname = this.getSession().getInputProvider().gatherInput("Please provide students surname.");
-        this.getSession().getView().setQuerryList(this.getSession().getUserDao().getStudentByName(surname));
+        this.getSession().getView().setQuerryList(this.getSession().getUserDao().getObjects("surname", surname));
         this.getSession().getView().setQuerryHeaders(new String[]{"Id", "Name", "Surname", "Email"});
     }
 
