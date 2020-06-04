@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserCrossAssignmentDao extends SQLDao<Assignment> implements IDao<Assignment>{
-    UserCrossAssignmentDao() {
+public class UserCrossAssignmentSQLDao extends SQLDao<Assignment> implements IDao<Assignment>{
+    UserCrossAssignmentSQLDao() {
         this.table = "UserCrossAssignment";
         this.columns = new String[]{"id", "userId", "assignmentId", "isPassed", "answer"};
     }
@@ -28,9 +28,8 @@ public class UserCrossAssignmentDao extends SQLDao<Assignment> implements IDao<A
     }
 
     @Override
-    public void update(Assignment assignment) throws SQLException {
-        String[] values = objectToArray(assignment);
-        updateRecord(values);
+    public void update(Assignment assignment) {
+        updateRecord(objectToArray(assignment));
     }
 
 
@@ -47,18 +46,17 @@ public class UserCrossAssignmentDao extends SQLDao<Assignment> implements IDao<A
 
     @Override
     public List<Assignment> getObjects(String columnName, String columnValue) {
-        return null;
+        return getAssignments(columnValue);
     }
 
-    private List<Displayable> getAssignments(String id) throws SQLException {
-        String sqlStatement = "SELECT uca.id, name, answer, isPassed, moduleId " +
+    private List<Assignment> getAssignments(String userId) {
+        List<Assignment> assignments = new ArrayList<>();
+        String query = "SELECT uca.id, name, answer, isPassed, moduleId " +
                 "FROM UserCrossAssignment as uca LEFT JOIN Assignment" +
                 " ON uca.assignmentId = Assignment.id WHERE uca.userId LIKE ?" +
                 " AND uca.isPassed = 1;";
-
-        List<Displayable> assignments = new ArrayList<>();
-        connect();
-            ResultSet resultSet = statement.executeQuery();
+        try {
+            ResultSet resultSet = executeQuery(query, new String[]{userId});
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String answer = resultSet.getString("answer");
@@ -67,32 +65,24 @@ public class UserCrossAssignmentDao extends SQLDao<Assignment> implements IDao<A
                 Module module = Module.valueOf(resultSet.getInt("moduleId"));
                 assignments.add(new Assignment(id, name, answer, module, isPassed));
             }
-            resultSet.close();
-            statement.close();
-            connection.close();
-
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         return assignments;
     }
 
-    public List<Displayable> getAllAssignments(){
-        return getAssignments("SELECT uca.id, name, answer, isPassed, moduleId " +
-                "FROM UserCrossAssignment as uca LEFT JOIN Assignment" +
-                " ON uca.assignmentId = Assignment.id; ");
+    public List<Assignment> getAllAssignments(){
+        return getAssignments("%");
     }
 
-    public List<Displayable> getPassedAssignmentsByStudentID(int studentId){
-        return getAssignments("SELECT uca.id, name, answer, isPassed, moduleId " +
-                "FROM UserCrossAssignment as uca LEFT JOIN Assignment" +
-                " ON uca.assignmentId = Assignment.id WHERE uca.userId = " + studentId  +
-                " AND uca.isPassed = 1;");
+    public List<Assignment> getPassedAssignmentsByStudentID(int studentId){
+        return getAssignments(Integer.toString(studentId));
     }
 
     public Module getStudentModuleBasedOnPassedAssignments(int studentId) {
-        List<Displayable> assignmentsAsDisplayable = getAllAssignments();
-
-        List<Assignment> assignments = assignmentsAsDisplayable
+        List<Assignment> assignments = getAllAssignments()
                 .stream()
-                .map(obj -> (Assignment) obj).collect(Collectors.toList());
+                .collect(Collectors.toList());
 
         int basicAssgn = (int) assignments.stream().filter(assignment -> assignment.getModule().toString().equals(Module.PROGBASIC.toString())).count();
         int javaAssgn = (int) assignments.stream().filter(assignment -> assignment.getModule().toString().equals(Module.JAVA.toString())).count();

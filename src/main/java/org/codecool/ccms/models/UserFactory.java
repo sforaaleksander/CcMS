@@ -1,6 +1,6 @@
 package org.codecool.ccms.models;
 
-import org.codecool.ccms.dao.UserCrossAssignmentDao;
+import org.codecool.ccms.dao.UserCrossAssignmentSQLDao;
 
 public class UserFactory {
 
@@ -12,7 +12,7 @@ public class UserFactory {
 
         switch (role.toString()){
             case "STUDENT":
-                Module module = new UserCrossAssignmentDao().getStudentModuleBasedOnPassedAssignments(id);
+                Module module = new UserCrossAssignmentSQLDao().getStudentModuleBasedOnPassedAssignments(id);
                 Student student = new Student(id, name, surname, email, password, role, attendance, module);
                 return student;
 
