@@ -14,5 +14,5 @@ public interface IDao<T> {
 
     void insert(T object);
 
-    List<Displayable> getObjects(String columnName, String columnValue);
+    List<T> getObjects(String columnName, String columnValue);
 }
