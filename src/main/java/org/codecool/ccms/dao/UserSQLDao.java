@@ -1,9 +1,10 @@
 package org.codecool.ccms.dao;
 
-import org.codecool.ccms.models.Displayable;
-import org.codecool.ccms.models.User;
+import org.codecool.ccms.models.*;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserSQLDao extends SQLDao<User> implements IDao<User> {
@@ -41,8 +42,27 @@ public class UserSQLDao extends SQLDao<User> implements IDao<User> {
 
     @Override
     public List<User> getObjects(String columnName, String columnValue) {
-        // TODO: select using sqldao
-        return null;
+        List<User> users = new ArrayList<>();
+        ResultSet resultSet = getRecords(columnName, columnValue);
+        try {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String firstName = resultSet.getString("first_name");
+                String surname = resultSet.getString("surname");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                Role role = Role.valueOf(resultSet.getInt("roleId"));
+                //TODO read attendance from DB
+                Attendance attendance = null;
+
+                //TODO create user builder(?)
+                User user = new UserFactory().makeUser(id, firstName, surname, email, password, role, attendance);
+                users.add(user);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return users;
     }
 }
 
