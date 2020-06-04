@@ -68,6 +68,10 @@ public class UserSQLDao extends SQLDao<User> implements IDao<User> {
     public User getUserById(String userId) {
         return getObjects("id", userId).get(0);
     }
+
+    public List<User> getUsersByRoleId(String roleId) {
+        return getObjects("roleId", roleId);
+    }
 }
 
 
