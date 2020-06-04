@@ -1,10 +1,12 @@
 package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
-import org.codecool.ccms.models.Assignment;
-import org.codecool.ccms.models.Displayable;
-import org.codecool.ccms.models.Student;
-import org.codecool.ccms.models.WorkDay;
+import org.codecool.ccms.dao.AttendanceSQLDao;
+import org.codecool.ccms.dao.UserSQLDao;
+import org.codecool.ccms.dao.WorkDaySQLDao;
+import org.codecool.ccms.models.*;
+import org.codecool.ccms.models.Module;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,7 +32,8 @@ public class MentorActions extends Actions {
         String name = this.getSession().getInputProvider().gatherInput("Assignment name: ");
         String description = this.getSession().getInputProvider().gatherInput("Assignment description: ");
         int moduleId = this.getSession().getInputProvider().gatherIntInput("Module no.: ", 0, 5);
-        this.getSession().getUserDao().insertAssignment(name, description, moduleId);
+        Assignment assignment = new Assignment(0, name, description, Module.valueOf(moduleId), false);
+        this.getSession().getAssignmentSQLDao().insert(assignment);
         this.getSession().getView().displayMessage("Assignment added");
     }
 
@@ -38,47 +41,50 @@ public class MentorActions extends Actions {
         String[] headers = new String[]{"Id", "Students Answer", "Name"};
         List<Displayable> assignments = new ArrayList<>();
         this.getSession().getView().setQuerryHeaders(headers);
-        this.getSession().getUserCrossAssignmentSQLDao().getAllAssignments().stream().filter(e -> !((Assignment) e).getPassed()).forEach(assignments::add);
+        this.getSession().getUserCrossAssignmentSQLDao().getAllAssignments().stream().filter(e -> !e.getPassed()).forEach(assignments::add);
         this.getSession().getView().setQuerryList(assignments);
         this.getSession().getView().displayContent();
         int action = this.getSession().getInputProvider().gatherIntInput("Enter coresponding id of project you" +
                                                     " want mark as passed:", 1, assignments.size()+1);
-        this.getSession().getUserDao().passAssignment(action);
+        Assignment assignment = (Assignment)this.getSession().getView().getQuerryList().get(action);
+        assignment.setPassed(true);
+        this.getSession().getAssignmentSQLDao().update(assignment);
     }
 
     public void checkAllStudentsAttendance() {
-        UserDao userDao = this.getSession().getUserDao();
+        WorkDaySQLDao workDaySQLDao = this.getSession().getWorkDaySQLDao();
         LocalDate todayDate = LocalDate.now();
         String date = todayDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"));
 
-        WorkDay workDay = getPresentDayInstance(userDao, date);
+        WorkDay workDay = getPresentDayInstance(workDaySQLDao, todayDate);
 
-        List<Displayable> students = userDao.getUserBy("roleId", "4");
+        List<Displayable> students = new ArrayList<>();
+        students.addAll(this.getSession().getUserDao().getObjects("roleId", "4"));
         for (Displayable displayStudent : students) {
             Student student = (Student) displayStudent;
             this.getSession().getView().displayMessage(student.getFirstName() + " " + student.getSurname());
             String isPresent = this.getSession().getInputProvider().gatherYesNoInput("Is the student present?");
             if (isPresent.equals("Y")) {
-                userDao.addAttendance(student.getId(), workDay);
+                // TODO: ADD ATTENDANCE
+                // this.getSession().getAttendanceSQLDao().update(new Attendance());
             }
         }
     }
 
-    private WorkDay getPresentDayInstance(UserDao userDao, String date) {
-        if (userDao.getWorkDay(date) == null){
-            userDao.addWorkDay(date);
+    private WorkDay getPresentDayInstance(WorkDaySQLDao workDaySQLDao, LocalDate date) {
+        if (workDaySQLDao.getWorkDay(date.toString()) == null){
+            workDaySQLDao.insert(new WorkDay(date));
         }
-        return userDao.getWorkDay(date);
+        return workDaySQLDao.getWorkDay(date.toString()).get(0);
     }
 
     public void updateStudentAttendance(){
-        UserDao userDao = this.getSession().getUserDao();
+        UserSQLDao userDao = this.getSession().getUserDao();
         LocalDate todayDate = LocalDate.now();
         String date = todayDate.format(DateTimeFormatter.ofPattern("ddMMyyyy"));
-
-        WorkDay workDay = getPresentDayInstance(userDao, date);
-
-        List<Displayable> students = userDao.getUserBy("roleId", "4");
+        WorkDay workDay = getPresentDayInstance(this.getSession().getWorkDaySQLDao(), todayDate);
+        List<Displayable> students = new ArrayList<>();
+        students.addAll(userDao.getObjects("roleId", "4"));
         String[] headers = {"Student's ID", "Student's first name", "Student's surname"};
         this.getSession().getView().setQuerryHeaders(headers);
         this.getSession().getView().setQuerryList(students);
@@ -87,10 +93,12 @@ public class MentorActions extends Actions {
         String isPresent = this.getSession().getInputProvider().gatherYesNoInput("Is the student present?");
 
         if (isPresent.equals("Y")) {
-            userDao.addAttendance(studentID, workDay);
+            // TODO: ADD ATTENDANCE
+            // this.getSession().getAttendanceSQLDao().update(new Attendance());
             this.getSession().getView().displayMessage("Attendance added");
         } else {
-            userDao.removeAttendance(studentID, workDay);
+            // TODO: ReMOve ATTENDANCE
+            // this.getSession().getAttendanceSQLDao().update(new Attendance());
             this.getSession().getView().displayMessage("Attendance removed");
         }
     }
