@@ -69,6 +69,22 @@ public class Session {
         return userSQLDao;
     }
 
+    public AssignmentSQLDao getAssignmentSQLDao() {
+        return assignmentSQLDao;
+    }
+
+    public AttendanceSQLDao getAttendanceSQLDao() {
+        return attendanceSQLDao;
+    }
+
+    public UserSQLDao getUserSQLDao() {
+        return userSQLDao;
+    }
+
+    public WorkDaySQLDao getWorkDaySQLDao() {
+        return workDaySQLDao;
+    }
+
     public UserCrossAssignmentSQLDao getUserCrossAssignmentSQLDao() {
         return userCrossAssignmentSQLDao;
     }
