@@ -1,7 +1,11 @@
 package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
+import org.codecool.ccms.models.Displayable;
 import org.codecool.ccms.models.Role;
+import org.codecool.ccms.models.User;
+import org.codecool.ccms.models.UserFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,30 +35,31 @@ public class EmpAndManActions extends Actions {
         switch (choice) {
             case "1":
                 String name = this.getSession().getInputProvider().gatherInput("Provide new name.");
-                this.getSession().getUserDao().updateUser(id, "first_name", name);
+                this.getSession().getUser().setFirstName(name);
                 break;
             case "2":
                 String surname = this.getSession().getInputProvider().gatherInput("Provide new surname.");
-                this.getSession().getUserDao().updateUser(id, "surname", surname);
+                this.getSession().getUser().setSurname(surname);
                 break;
             case "3":
                 String email = this.getSession().getInputProvider().gatherInput("Provide new email.");
-                this.getSession().getUserDao().updateUser(id, "email", email);
+                this.getSession().getUser().setEmail(email);
                 break;
             case "4":
                 String name1 = this.getSession().getInputProvider().gatherInput("Provide new name.");
-                this.getSession().getUserDao().updateUser(id, "first_name", name1);
+                this.getSession().getUser().setFirstName(name1);
                 String surname1 = this.getSession().getInputProvider().gatherInput("Provide new surname.");
-                this.getSession().getUserDao().updateUser(id, "surname", surname1);
+                this.getSession().getUser().setSurname(surname1);
                 String email1 = this.getSession().getInputProvider().gatherInput("Provide new email.");
-                this.getSession().getUserDao().updateUser(id, "email", email1);
+                this.getSession().getUser().setEmail(email1);
                 break;
         }
         ma.viewAllMentors();
     }
 
     public void viewAllStudents() {
-        this.getSession().getView().setQuerryList(this.getSession().getUserDao().viewUsersByRoleId(Role.STUDENT.getRoleId()));
+        List<Displayable> querryList = new ArrayList<>(this.getSession().getUserDao().getObjects("roleId", Integer.toString(Role.STUDENT.getRoleId())));
+        this.getSession().getView().setQuerryList(querryList);
         this.getSession().getView().setQuerryHeaders(new String[]{"Id", "Name", "Surname", "Email"});
     }
 
@@ -63,8 +68,7 @@ public class EmpAndManActions extends Actions {
         String surname = this.getSession().getInputProvider().gatherInput("Enter surname: ");
         String email = this.getSession().getInputProvider().gatherInput("Enter email: ");
         String password = this.getSession().getInputProvider().gatherInput("Enter password: ");
-        String roleId = String.valueOf(Role.STUDENT.getRoleId());
-        this.getSession().getUserDao().AddUser(name, surname, email, password, roleId);
+        this.getSession().getUserDao().insert(new UserFactory().makeUser(0, name, surname, email, password, Role.STUDENT, new byte[]{}));
         viewAllStudents();
     }
 
@@ -72,7 +76,9 @@ public class EmpAndManActions extends Actions {
         viewAllStudents();
         this.getSession().getView().displayContent();
         int id = this.getSession().getInputProvider().gatherIntInput("Enter student's ID: ");
-        this.getSession().getUserDao().removeUser(id, Role.STUDENT.getRoleId());
+        User student = this.getSession().getUserDao().getUserById("id");
+        if (id == student.getId() && student.getRole() == Role.STUDENT)
+        this.getSession().getUserDao().remove(student);
         viewAllStudents();
     }
 }
