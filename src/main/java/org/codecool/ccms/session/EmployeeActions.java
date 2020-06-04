@@ -1,6 +1,7 @@
 package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
+import org.codecool.ccms.models.Displayable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,9 @@ public class EmployeeActions extends Actions {
 
     private void viewAnyStudentContact(){
         String surname = this.getSession().getInputProvider().gatherInput("Please provide students surname.");
-        this.getSession().getView().setQuerryList(this.getSession().getUserDao().getObjects("surname", surname));
+        List<Displayable> students = new ArrayList<>();
+        students.addAll(this.getSession().getUserDao().getObjects("surname", surname));
+        this.getSession().getView().setQuerryList(students);
         this.getSession().getView().setQuerryHeaders(new String[]{"Id", "Name", "Surname", "Email"});
     }
 
