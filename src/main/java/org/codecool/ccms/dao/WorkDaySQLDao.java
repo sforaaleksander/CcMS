@@ -23,15 +23,15 @@ public class WorkDaySQLDao extends SQLDao<WorkDay> implements IDao<WorkDay> {
     }
 
     @Override
-    public void update(WorkDay workDay) throws SQLException {
+    public void update(WorkDay workDay){
         String[] values = objectToArray(workDay);
         updateRecord(values);
     }
 
     @Override
-    public void remove(WorkDay workDay) throws SQLException {
-        String[] values = objectToArray(workDay);
-        removeRecord(values);
+    public void remove(WorkDay workDay){
+        String id = workDay.toString();
+        removeRecord(id);
     }
 
     @Override
@@ -44,14 +44,12 @@ public class WorkDaySQLDao extends SQLDao<WorkDay> implements IDao<WorkDay> {
     public List<WorkDay> getObjects(String columnName, String columnValue) {
 
         List<WorkDay> workDays = new ArrayList<>();
-        connect();
-        String query = "SELECT * FROM WorkDay WHERE date = '" +columnValue+ "';";
+        ResultSet resultSet = getRecords(columnName, columnValue);
 
         WorkDay workDay = null;
             try {
-            ResultSet results = statement.executeQuery(query);
-            while (results.next()) {
-                String stringDate = results.getString("date");
+            while (resultSet.next()) {
+                String stringDate = resultSet.getString("date");
 
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy");
                 formatter = formatter.withLocale(Locale.ENGLISH);
@@ -60,7 +58,7 @@ public class WorkDaySQLDao extends SQLDao<WorkDay> implements IDao<WorkDay> {
                 workDays.add(new WorkDay(date));
 
             }
-            results.close();
+            resultSet.close();
             statement.close();
             connection.close();
         } catch (SQLException e) {
@@ -71,7 +69,6 @@ public class WorkDaySQLDao extends SQLDao<WorkDay> implements IDao<WorkDay> {
 
     public List<WorkDay> getWorkDay(String value) {
         String columnName = "date";
-        getObjects(columnName, value);
-
+        return getObjects(columnName, value);
     }
 }
