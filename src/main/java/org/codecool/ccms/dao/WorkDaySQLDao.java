@@ -11,8 +11,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class WorkDaySQLDao extends SQLDao<WorkDay> implements IDao<WorkDay> {
-    private final String table = "Workday";
-    private final String[] columns = {"date"};
+    WorkDaySQLDao() {
+        this.table = "Workday";
+        this.columns = new String[]{"date"};
+    }
 
     @Override
     protected String[] objectToArray(WorkDay workDay) {

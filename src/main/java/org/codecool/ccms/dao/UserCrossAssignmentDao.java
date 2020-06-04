@@ -11,8 +11,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserCrossAssignmentDao extends SQLDao<Assignment> implements IDao<Assignment>{
-    private final String[] columns = {"id", "userId", "assignmentId", "isPassed", "answer"};
-    private final String table = "UserCrossAssignment";
+    UserCrossAssignmentDao() {
+        this.table = "UserCrossAssignment";
+        this.columns = new String[]{"id", "userId", "assignmentId", "isPassed", "answer"};
+    }
+
 
     @Override
     protected String[] objectToArray(Assignment assignment) {
