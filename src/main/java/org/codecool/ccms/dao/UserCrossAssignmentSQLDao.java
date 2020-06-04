@@ -81,13 +81,8 @@ public class UserCrossAssignmentSQLDao extends SQLDao<Assignment> implements IDa
                 String name = resultSet.getString("name");
                 String description = resultSet.getString("description");
                 Module module = Module.valueOf(resultSet.getInt("moduleId"));
-                boolean isPassed = false;
+                boolean isPassed = resultSet.getBoolean("isPassed");
                 assignments.add(new Assignment(id, description, name, module, isPassed));
-            }
-            for (Assignment assignment: assignments) {
-                String assignmentId = Integer.toString(assignment.getId());
-                if (executeQuery("SELECT * FROM UserCrossAssignment WHERE userId = ? AND assignmentId = ?", new String[]{studentId, assignmentId} ).equals(null))
-                    assignment.setPassed(true);
             }
         } catch (SQLException throwable) {
             throwable.printStackTrace();
