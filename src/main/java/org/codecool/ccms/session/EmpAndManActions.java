@@ -3,6 +3,7 @@ package org.codecool.ccms.session;
 import org.codecool.ccms.controllers.MenuOption;
 import org.codecool.ccms.models.Displayable;
 import org.codecool.ccms.models.Role;
+import org.codecool.ccms.models.User;
 import org.codecool.ccms.models.UserFactory;
 
 import java.util.ArrayList;
@@ -75,7 +76,9 @@ public class EmpAndManActions extends Actions {
         viewAllStudents();
         this.getSession().getView().displayContent();
         int id = this.getSession().getInputProvider().gatherIntInput("Enter student's ID: ");
-        this.getSession().getUserDao().removeUser(id, Role.STUDENT.getRoleId());
+        User student = this.getSession().getUserDao().getUserById("id");
+        if (id == student.getId() && student.getRole() == Role.STUDENT)
+        this.getSession().getUserDao().remove(student);
         viewAllStudents();
     }
 }
