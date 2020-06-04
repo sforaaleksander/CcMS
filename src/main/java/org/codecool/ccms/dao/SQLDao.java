@@ -11,7 +11,7 @@ public abstract class SQLDao<T> {
     protected String[] columns;
     protected String table;
 
-    private ResultSet executeQuery(String query, String[] parameters) {
+    protected ResultSet executeQuery(String query, String[] parameters) {
         ResultSet resultSet = null;
         try {
             createStatement(query);
@@ -56,10 +56,10 @@ public abstract class SQLDao<T> {
 
     protected void insertRecord(String[] values) {
         String columnsString = " ( " + String.join(", " , columns) + " ) ";
-        String query = "INSERT INTO " + table + columnsString + " VALUES ( ? ";
-        for (int i=1; i<columns.length; i++){ query +=  ", ?"; }
-        query += ")";
-        executeQuery(query, values);
+        StringBuilder query = new StringBuilder("INSERT INTO " + table + columnsString + " VALUES ( ? ");
+        for (int i=1; i<columns.length; i++){ query.append(", ?"); }
+        query.append(")");
+        executeQuery(query.toString(), values);
     }
 
     protected  ResultSet getRecords(String column, String value){
