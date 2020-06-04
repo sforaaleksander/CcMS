@@ -25,12 +25,12 @@ public class UserSQLDao extends SQLDao<User> implements IDao<User> {
     }
 
     @Override
-    public void update(User user) {
+    public void update(User user) throws SQLException {
         updateRecord(objectToArray(user));
     }
 
     @Override
-    public void remove(User user) {
+    public void remove(User user) throws SQLException {
         removeRecord(Integer.toString(user.getId()));
     }
 

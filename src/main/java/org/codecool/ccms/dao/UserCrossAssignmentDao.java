@@ -10,24 +10,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserCrossAssignmentDao extends SQLDao {
-    private final String[] columns = {"id", "userId", "assignmentId", "isPassed", "answer"};
-
-    @Override
-    public void update(String ... values) throws SQLException {
-        executeUpdate("UserCrossAssignment", columns, values);
+public class UserCrossAssignmentDao extends SQLDao<Assignment> implements IDao<Assignment>{
+    UserCrossAssignmentDao() {
+        this.table = "UserCrossAssignment";
+        this.columns = new String[]{"id", "userId", "assignmentId", "isPassed", "answer"};
     }
 
 
     @Override
-    public void remove(String id) {
-        removeRecord("UserCrossAssignment", id);
+    protected String[] objectToArray(Assignment assignment) {
+        String id = String.valueOf(assignment.getId());
+        String name = assignment.getName();
+        String module = assignment.getModule().toString();
+        String content = assignment.getContent();
+        String isPassed = assignment.getPassed().toString();
+        return new String[]{id, name, module, content, isPassed};
     }
 
     @Override
-    public void insert(String... values) {
-        String[] columns = {"userId", "assignmentId", "answer"};
-        insertRecord("UserCrossAssignment", columns, values);
+    public void update(Assignment assignment) throws SQLException {
+        String[] values = objectToArray(assignment);
+        updateRecord(values);
+    }
+
+
+    @Override
+    public void remove(Assignment assignment) {
+        removeRecord(Integer.toString(assignment.getId()));
+    }
+
+    @Override
+    public void insert(Assignment assignment) {
+        String[] values = objectToArray(assignment);
+        insertRecord(values);
     }
 
     @Override
@@ -42,7 +57,7 @@ public class UserCrossAssignmentDao extends SQLDao {
                 " AND uca.isPassed = 1;";
 
         List<Displayable> assignments = new ArrayList<>();
-        createStatement();
+        connect();
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
