@@ -34,6 +34,7 @@ public class WorkDaySQLDao extends SQLDao<WorkDay> implements IDao<WorkDay> {
         removeRecord(id);
     }
 
+
     @Override
     public void insert(WorkDay workDay) {
         String[] values = objectToArray(workDay);
