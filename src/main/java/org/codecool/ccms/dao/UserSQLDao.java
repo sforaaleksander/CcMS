@@ -11,7 +11,7 @@ public class UserSQLDao extends SQLDao<User> implements IDao<User> {
 
     public UserSQLDao() {
         this.table = "User";
-        this.columns = new String[]{"id", "first_name", "surname", "email", "passwordHash", "passwordSalt", "roleId"};
+        this.columns = new String[]{"first_name", "surname", "email", "passwordHash", "passwordSalt", "roleId"};
     }
 
     protected String[] objectToArray(User user){
@@ -22,7 +22,7 @@ public class UserSQLDao extends SQLDao<User> implements IDao<User> {
         String passwordHash = user.getPassword();  // change password into hash
         String passwordSalt = user.getSalt().toString();
         String role = user.getRole().toString();
-        return new String[]{id, firstName, surname, email, passwordHash, passwordSalt, role};
+        return new String[]{firstName, surname, email, passwordHash, passwordSalt, role};
     }
 
     @Override
@@ -54,9 +54,9 @@ public class UserSQLDao extends SQLDao<User> implements IDao<User> {
                 Role role = Role.valueOf(resultSet.getInt("roleId"));
                 //TODO read attendance from DB
                 Attendance attendance = null;
-
+                // TODO create salt
                 //TODO create user builder(?)
-                User user = new UserFactory().makeUser(id, firstName, surname, email, password, role, attendance);
+                User user = new UserFactory().makeUser(id, firstName, surname, email, password, role, attendance, new byte[]{});
                 users.add(user);
             }
         } catch (SQLException throwables) {

@@ -3,8 +3,8 @@ package org.codecool.ccms.models;
 public class Student extends User {
     private final Module module;
 
-    public Student(int id, String name, String surname, String email, String password, Role role, Attendance attendance, byte[] salt, Module module){
-        super(id ,name, surname, email, password, role, attendance, salt);
+    public Student(int id, String name, String surname, String email, String password, Role role, byte[] salt, Module module){
+        super(id ,name, surname, email, password, role, salt);
         this.module = module;
     }
 

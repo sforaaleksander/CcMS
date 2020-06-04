@@ -7,17 +7,15 @@ public abstract class User implements Displayable{
     private String email;
     private String password;
     private final Role role;
-    private final Attendance attendance;
     private final byte[] salt;
 
-    public User(int id, String firstName, String surname, String email, String password, Role role, Attendance attendance, byte[] salt) {
+    public User(int id, String firstName, String surname, String email, String password, Role role, byte[] salt) {
         this.id = id;
         this.firstName = firstName;
         this.surname = surname;
         this.email = email;
         this.password = password;
         this.role = role;
-        this.attendance = attendance;
         this.salt = salt;
     }
 
@@ -57,9 +55,6 @@ public abstract class User implements Displayable{
         return password;
     }
 
-    public Attendance getAttendance() {
-        return attendance;
-    }
 
     public Role getRole() {
         return role;
@@ -69,7 +64,7 @@ public abstract class User implements Displayable{
 
     public String[] toStringList() {
         String[] stringList = {this.getFirstName(), this.getSurname(), this.getEmail(),
-                this.getRole().toString(), this.getAttendance().toString()};
+                this.getRole().toString()};
         return stringList;
     }
 
