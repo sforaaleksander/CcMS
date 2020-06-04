@@ -1,7 +1,10 @@
 package org.codecool.ccms.session;
 import org.codecool.ccms.controllers.MenuController;
+import org.codecool.ccms.dao.AssignmentSQLDao;
+import org.codecool.ccms.dao.AttendanceSQLDao;
 import org.codecool.ccms.dao.UserCrossAssignmentSQLDao;
 import org.codecool.ccms.dao.UserSQLDao;
+import org.codecool.ccms.dao.WorkDaySQLDao;
 import org.codecool.ccms.inputProvider.InputProvider;
 import org.codecool.ccms.models.User;
 import org.codecool.ccms.view.View;
@@ -9,8 +12,12 @@ import java.util.ArrayList;
 
 public class Session {
     private static Session instance;
+
+    private final AssignmentSQLDao assignmentSQLDao;
+    private final AttendanceSQLDao attendanceSQLDao;
     private final UserSQLDao userSQLDao;
     private final UserCrossAssignmentSQLDao userCrossAssignmentSQLDao;
+    private final WorkDaySQLDao workDaySQLDao;
     private User user;
     private final InputProvider inputProvider;
     private final View view;
@@ -19,8 +26,11 @@ public class Session {
 
     private Session(String[] args) {
         this.isRunning = true;
-        this.userSQLDao = new UserSQLDao();
+        this.assignmentSQLDao = new AssignmentSQLDao();
+        this.attendanceSQLDao = new AttendanceSQLDao();
         this.userCrossAssignmentSQLDao = new UserCrossAssignmentSQLDao();
+        this.userSQLDao = new UserSQLDao();
+        this.workDaySQLDao = new WorkDaySQLDao();
         this.inputProvider = new InputProvider(args);
         this.view = new View();
         this.menuController = new MenuController(this);

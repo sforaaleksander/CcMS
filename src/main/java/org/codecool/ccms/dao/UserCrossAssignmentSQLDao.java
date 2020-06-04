@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class UserCrossAssignmentSQLDao extends SQLDao<Assignment> implements IDao<Assignment>{
-    UserCrossAssignmentSQLDao() {
+    public UserCrossAssignmentSQLDao() {
         this.table = "UserCrossAssignment";
         this.columns = new String[]{"id", "userId", "assignmentId", "isPassed", "answer"};
     }

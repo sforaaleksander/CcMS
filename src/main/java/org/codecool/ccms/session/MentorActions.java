@@ -1,7 +1,6 @@
 package org.codecool.ccms.session;
 
 import org.codecool.ccms.controllers.MenuOption;
-import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.models.Assignment;
 import org.codecool.ccms.models.Displayable;
 import org.codecool.ccms.models.Student;
