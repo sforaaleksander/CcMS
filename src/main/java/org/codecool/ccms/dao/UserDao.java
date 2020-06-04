@@ -29,11 +29,6 @@ public class UserDao extends SQLDao implements IDao{
         insertRecord("Attendance", columns, values);
     }
 
-    public void addWorkDay(String date){
-        String[] value = {date};
-        String[] columns = {"date"};
-        insertRecord("WorkDay", columns, value);
-    }
 
     public void insertAssignment(String name, String description, int moduleId) {
         String[] columns = {"name", "description", "moduleId"};
