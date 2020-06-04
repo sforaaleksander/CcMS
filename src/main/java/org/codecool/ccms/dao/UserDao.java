@@ -23,17 +23,6 @@ public class UserDao extends SQLDao implements IDao{
 //        }
 //    }
 
-    public void addAttendance(int userId, WorkDay workDay){
-        String[] columns = {"userId", "workDayID"};
-        String[] values = { String.valueOf(userId), workDay.getDate().toString()};
-        insertRecord("Attendance", columns, values);
-    }
-
-    public void addWorkDay(String date){
-        String[] value = {date};
-        String[] columns = {"date"};
-        insertRecord("WorkDay", columns, value);
-    }
 
     public void insertAssignment(String name, String description, int moduleId) {
         String[] columns = {"name", "description", "moduleId"};
@@ -44,17 +33,4 @@ public class UserDao extends SQLDao implements IDao{
         }
         insertRecord("Assigment", columns, values);
     }
-
-    public void removeAttendance(int studentID, WorkDay workDay) {
-        createStatement();
-        String date = workDay.getDate().format(DateTimeFormatter.ofPattern("ddMMyyyy"));
-        try {
-            statement.executeUpdate("DELETE FROM Attendance WHERE userId = '" + studentID + "' AND workDayId = '" + date + "'");
-            statement.close();
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
