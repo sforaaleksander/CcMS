@@ -3,6 +3,8 @@ package org.codecool.ccms.session;
 import org.codecool.ccms.controllers.MenuOption;
 import org.codecool.ccms.models.Displayable;
 import org.codecool.ccms.models.Role;
+import org.codecool.ccms.models.UserFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,8 +67,7 @@ public class EmpAndManActions extends Actions {
         String surname = this.getSession().getInputProvider().gatherInput("Enter surname: ");
         String email = this.getSession().getInputProvider().gatherInput("Enter email: ");
         String password = this.getSession().getInputProvider().gatherInput("Enter password: ");
-        String roleId = String.valueOf(Role.STUDENT.getRoleId());
-        this.getSession().getUserDao().AddUser(name, surname, email, password, roleId);
+        this.getSession().getUserDao().insert(new UserFactory().makeUser(0, name, surname, email, password, Role.STUDENT, new byte[]{}));
         viewAllStudents();
     }
 
