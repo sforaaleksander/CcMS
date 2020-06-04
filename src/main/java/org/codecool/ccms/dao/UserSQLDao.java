@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UserSQLDao extends SQLDao<User> implements IDao<User> {
 
-    UserSQLDao() {
+    public UserSQLDao() {
         this.table = "User";
         this.columns = new String[]{"id", "first_name", "surname", "email", "passwordHash", "passwordSalt", "roleId"};
     }
