@@ -1,9 +1,7 @@
 package org.codecool.ccms.session;
 
-import org.codecool.ccms.dao.UserDao;
 import org.codecool.ccms.dao.UserSQLDao;
 import org.codecool.ccms.inputProvider.InputProvider;
-import org.codecool.ccms.models.Displayable;
 import org.codecool.ccms.models.User;
 import java.util.List;
 
