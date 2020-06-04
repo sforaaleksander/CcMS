@@ -50,7 +50,7 @@ public abstract class SQLDao<T> {
         executeQuery(preparedStatement);
     }
 
-    protected void executeRemove(String id) throws SQLException {
+    protected void removeRecord(String id) throws SQLException {
         String query = "DELETE FROM ?  WHERE Id =  ? ";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, table);
@@ -58,7 +58,7 @@ public abstract class SQLDao<T> {
         executeQuery(preparedStatement);
     }
 
-    protected void executeInsert(String[] values) throws SQLException {
+    protected void insertRecord(String[] values) throws SQLException {
         String columnsString = " ( " + String.join(", " , columns) + " ) ";
         String query = "INSERT INTO " + table + columnsString + " VALUES ( ? ";
         for (int i=1; i<columns.length; i++){ query +=  ", ?"; }

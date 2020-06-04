@@ -122,13 +122,13 @@ public class UserDao extends SQLDao implements IDao{
     public void addAttendance(int userId, WorkDay workDay){
         String[] columns = {"userId", "workDayID"};
         String[] values = { String.valueOf(userId), workDay.getDate().toString()};
-        executeInsert("Attendance", columns, values);
+        insertRecord("Attendance", columns, values);
     }
 
     public void addWorkDay(String date){
         String[] value = {date};
         String[] columns = {"date"};
-        executeInsert("WorkDay", columns, value);
+        insertRecord("WorkDay", columns, value);
     }
 
     public void insertAssignment(String name, String description, int moduleId) {
@@ -138,7 +138,7 @@ public class UserDao extends SQLDao implements IDao{
         for (int i=0; i<values.length; i++) {
             values[i] = "'"+valuesRaw[i]+"'";
         }
-        executeInsert("Assigment", columns, values);
+        insertRecord("Assigment", columns, values);
     }
 
     public void insertUser(String[] values) {
@@ -147,7 +147,7 @@ public class UserDao extends SQLDao implements IDao{
         for (int i = 0; i < 5; i++) {
             values[i] = String.format("'%s'", values[i]);
         }
-        executeInsert("User", columns, values);
+        insertRecord("User", columns, values);
     }
 
     public void updateUser(String id, String column, String newValue) {

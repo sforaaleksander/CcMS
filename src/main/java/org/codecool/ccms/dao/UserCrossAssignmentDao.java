@@ -10,24 +10,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserCrossAssignmentDao extends SQLDao {
+public class UserCrossAssignmentDao extends SQLDao<Assignment> implements IDao<Assignment>{
     private final String[] columns = {"id", "userId", "assignmentId", "isPassed", "answer"};
+    private final String table = "UserCrossAssignment";
 
     @Override
-    public void update(String ... values) throws SQLException {
-        executeUpdate("UserCrossAssignment", columns, values);
+    protected String[] objectToArray(Assignment assignment) {
+        String id = String.valueOf(assignment.getId());
+        String name = assignment.getName();
+        String module = assignment.getModule().toString();
+        String content = assignment.getContent();
+        String isPassed = assignment.getPassed().toString();
+        return new String[]{id, name, module, content, isPassed};
+    }
+
+    @Override
+    public void update(Assignment assignment) throws SQLException {
+        String[] values = objectToArray(assignment);
+        updateRecord(values);
     }
 
 
     @Override
-    public void remove(String id) {
-        executeRemove("UserCrossAssignment", id);
+    public void remove(Assignment assignment) {
+        removeRecord(Integer.toString(assignment.getId()));
     }
 
     @Override
-    public void insert(String... values) {
-        String[] columns = {"userId", "assignmentId", "answer"};
-        executeInsert("UserCrossAssignment", columns, values);
+    public void insert(Assignment assignment) {
+        String[] values = objectToArray(assignment);
+        insertRecord(values);
     }
 
     @Override
